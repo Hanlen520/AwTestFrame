@@ -49,9 +49,9 @@ public class Log{
 		prop.setProperty("log4j.appender.E.layout.ConversionPattern", "[%d{YYYY-MM-dd HH:mm:ss,SSS}] %-5p %c %m%n");
 
 		prop.setProperty("log4j.appender.F","org.apache.log4j.FileAppender");
-//		
-//		String filepathHtml=dir.getAbsolutePath()+"/"+"log_"+date+".html";
-//		prop.setProperty("log4j.appender.F.file",filepathHtml);
+
+		String filepathHtml=dir.getAbsolutePath()+"/"+"log.html";
+		prop.setProperty("log4j.appender.F.file",filepathHtml);
 		prop.setProperty("log4j.appender.F.layout","org.apache.log4j.HTMLLayout");
 
 		PropertyConfigurator.configure(prop);

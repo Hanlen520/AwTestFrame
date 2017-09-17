@@ -4,7 +4,6 @@ import java.net.URL;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.AndroidServerFlag;
-import io.appium.java_client.service.local.flags.GeneralServerFlag;
 
 /**
  * @author xiaoM
@@ -51,7 +50,7 @@ public class AppiumServerUtils {
 		AppiumServiceBuilder builder = new AppiumServiceBuilder();
 		builder.withIPAddress(ipAddress);
 		builder.usingPort(port);
-		builder.withArgument(GeneralServerFlag.LOG_LEVEL,"info");
+//		builder.withArgument(GeneralServerFlag.LOG_LEVEL,"info");
 		builder.withArgument(AndroidServerFlag.BOOTSTRAP_PORT_NUMBER, bp);
 		service = AppiumDriverLocalService.buildService(builder);
 		service.start();

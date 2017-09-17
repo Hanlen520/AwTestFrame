@@ -100,7 +100,6 @@ public class IOMananger {
 			int sheetNum = workbook.getNumberOfSheets();
 			for(int i=0;i<sheetNum;i++){
 				list.add(workbook.getSheetName(i));
-				System.out.println(workbook.getSheetName(i));
 			}
 			for(int i=0;i<list.size();i++){
 				if(list.get(i).contains(TestListener.RunDevices.toString())){

@@ -1,5 +1,6 @@
 package com.xiaoM.Utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -10,7 +11,6 @@ import com.xiaoM.ReportUtils.TestListener;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -27,14 +27,13 @@ public class BaseDriver {
 			String[][] DeviceBase = IOMananger.readExcelDataXlsx(device,devicesPath);
 			AppiumServer = new AppiumServerUtils(DeviceBase[1][2],Port,String.valueOf(PortProber.getFreePort()));
 			url = AppiumServer.startServer();
-			String appMainPackage =TestListener.PackageName;
-			String appActivity =TestListener.Activity;
+			File appDir=new File(TestListener.ProjectPath,"Apps");
+			File app =new File(appDir,TestListener.AppName+".apk");
 			capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.APPIUM);
 			capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
 			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, DeviceBase[2][2]);
 			capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, DeviceBase[3][2]);
-			capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, appMainPackage);
-			capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, appActivity);
+			capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
 			capabilities.setCapability(MobileCapabilityType.NO_RESET, TestListener.ResetApp);
 			capabilities.setCapability(MobileCapabilityType.UDID, DeviceBase[2][2]);
 			capabilities.setCapability("unicodeKeyboard", "True");

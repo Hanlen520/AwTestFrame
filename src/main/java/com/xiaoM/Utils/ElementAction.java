@@ -1,6 +1,7 @@
 package com.xiaoM.Utils;
 
 import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,7 +29,7 @@ public class ElementAction{
 				new ExpectedCondition<WebElement>() {
 					@Override
 					public WebElement apply(WebDriver dr) {
-						return  dr.findElement(by);
+						return  driver.findElement(by);
 					}
 				});
 		return webElement;
@@ -38,7 +39,7 @@ public class ElementAction{
 	 * @param locator 元素定位信息
 	 * @return
 	 */
-	public static List<WebElement> waitForElements(AppiumDriver <MobileElement> driver ,By by,int timeOut){
+	public static List<WebElement> waitForElements(AppiumDriver <?> driver ,By by,int timeOut){
 		List<WebElement>  webElements=(new WebDriverWait(driver, timeOut)).until(
 				new ExpectedCondition<List<WebElement>>() {
 					@Override

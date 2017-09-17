@@ -1,8 +1,10 @@
 package com.xiaoM.Utils;
 
 import java.io.File;
+
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+
 import com.google.common.io.Files;
 import com.xiaoM.ReportUtils.TestListener;
 

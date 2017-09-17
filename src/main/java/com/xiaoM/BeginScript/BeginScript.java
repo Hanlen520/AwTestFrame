@@ -15,13 +15,13 @@ public class BeginScript{
 		return TestListener.RunCase;
 	}
 
-	@Test(dataProvider = "TestCases")
-	public void runCase(String Type,String CaseName) throws Exception{
-		String RunDevice = "Sony L36h";
-		TestListener.RunDevices.add(RunDevice);
-		Run run = new Run();
-		run.runCase(RunDevice,Type, CaseName);
-	}
+//	@Test(dataProvider = "TestCases")
+//	public void runCase(String Type,String CaseName) throws Exception{
+//		String RunDevice = "iphone 5S";
+//		TestListener.RunDevices.add(RunDevice);
+//		Run run = new Run();
+//		run.runCase(RunDevice,Type, CaseName);
+//	}
 	
 	@Test(dataProvider = "TestCases")
 	public void runCase2(String Type,String CaseName) throws Exception{
