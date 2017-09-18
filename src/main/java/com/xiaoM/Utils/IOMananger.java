@@ -101,11 +101,13 @@ public class IOMananger {
 			for(int i=0;i<sheetNum;i++){
 				list.add(workbook.getSheetName(i));
 			}
+			String devicesList = TestListener.RunDevices.toString();
 			for(int i=0;i<list.size();i++){
-				if(list.get(i).contains(TestListener.RunDevices.toString())){
+				if(devicesList.contains(list.get(i))){
 					devicelist.add(list.get(i));
 				}
-			}	
+			}
+				System.out.println(devicelist);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -200,6 +202,10 @@ public class IOMananger {
 		}
 	}
 	public static void main(String[]args) throws IOException{
-		IOMananger.getRunDevices();
+		TestListener.RunDevices.add("三星 i9192");
+		List<String> runDevices = IOMananger.getRunDevices();
+		for(int i=0;i<runDevices.size();i++){
+			IOMananger.DealwithRunLog(runDevices.get(i));
+		}
 	}
 }
