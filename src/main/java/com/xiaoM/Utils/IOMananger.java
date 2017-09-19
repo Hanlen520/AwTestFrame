@@ -107,7 +107,6 @@ public class IOMananger {
 					devicelist.add(list.get(i));
 				}
 			}
-				System.out.println(devicelist);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -202,7 +201,9 @@ public class IOMananger {
 		}
 	}
 	public static void main(String[]args) throws IOException{
-		TestListener.RunDevices.add("三星 i9192");
+		TestListener.RunDevices.add("三星i9192");
+		TestListener.RunDevices.add("模拟器2");
+		TestListener.RunDevices.add("模拟器");
 		List<String> runDevices = IOMananger.getRunDevices();
 		for(int i=0;i<runDevices.size();i++){
 			IOMananger.DealwithRunLog(runDevices.get(i));

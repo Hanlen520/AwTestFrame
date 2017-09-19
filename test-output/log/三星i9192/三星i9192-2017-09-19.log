@@ -1,0 +1,17 @@
+[2017-09-19 17:48:50,693] INFO  com.xiaoM.Utils.Run 三星i9192  测试用例:AndroidTest---Start
+[2017-09-19 17:48:50,694] INFO  com.xiaoM.Utils.Run 三星i9192 --------------------------------------
+[2017-09-19 17:48:50,694] INFO  com.xiaoM.Utils.Run 三星i9192  MethodName:Login163
+[2017-09-19 17:48:50,694] INFO  com.xiaoM.Utils.Run 三星i9192  PackageName:com.xiaoM.PageObject
+[2017-09-19 17:48:50,695] INFO  com.xiaoM.Utils.Run 三星i9192  ClassName:Android163Mail
+[2017-09-19 17:48:50,695] INFO  com.xiaoM.Utils.Run 三星i9192  执行步骤：Steps01
+[2017-09-19 17:48:50,695] INFO  com.xiaoM.Utils.Run 三星i9192  步骤名称：登录163邮箱
+[2017-09-19 17:49:11,998] INFO  com.xiaoM.Utils.Run 三星i9192  返回值:true
+[2017-09-19 17:49:11,998] INFO  com.xiaoM.Utils.Run 三星i9192 --------------------------------------
+[2017-09-19 17:49:11,998] INFO  com.xiaoM.Utils.Run 三星i9192  MethodName:SendMail
+[2017-09-19 17:49:11,998] INFO  com.xiaoM.Utils.Run 三星i9192  PackageName:com.xiaoM.PageObject
+[2017-09-19 17:49:11,998] INFO  com.xiaoM.Utils.Run 三星i9192  ClassName:Android163Mail
+[2017-09-19 17:49:11,998] INFO  com.xiaoM.Utils.Run 三星i9192  执行步骤：Steps02
+[2017-09-19 17:49:11,998] INFO  com.xiaoM.Utils.Run 三星i9192  步骤名称：发送邮件
+[2017-09-19 17:49:51,230] INFO  com.xiaoM.Utils.Run 三星i9192  返回值:true
+[2017-09-19 17:49:55,772] INFO  com.xiaoM.Utils.Run 三星i9192 --------------------------------------
+[2017-09-19 17:49:55,773] INFO  com.xiaoM.Utils.Run 三星i9192  测试用例:AndroidTest---End
