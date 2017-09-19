@@ -52,7 +52,6 @@ public class PortProber {
 
 			int freeAbove = HIGHEST_PORT - ephemeralRangeDetector.getHighestEphemeralPort();
 			int freeBelow = max(0, ephemeralRangeDetector.getLowestEphemeralPort() - START_OF_USER_PORTS);
-
 			if (freeAbove > freeBelow) {
 				FIRST_PORT = ephemeralRangeDetector.getHighestEphemeralPort();
 				LAST_PORT = 65535;
@@ -86,6 +85,23 @@ public class PortProber {
 			return -1;
 		}
 	}
+	private static int createWdaPort(){
+		Random rand = new Random();
+		int i = rand.nextInt(100) + 8100;
+		return i;
+	}
+	
+	public static int getWDAFreePort() {
+		for (int i = 0; i < 5; i++) {
+			int seedPort = createWdaPort();
+			int suggestedPort = checkPortIsFree(seedPort);
+			if (suggestedPort != -1) {
+				return suggestedPort;
+			}
+		}
+		throw new RuntimeException("Unable to find a free port");
+	}
+	
 
 	public static void main(String[] args) {
 		System.out.println(getFreePort());

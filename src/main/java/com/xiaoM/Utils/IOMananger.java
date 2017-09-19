@@ -205,7 +205,9 @@ public class IOMananger {
 		TestListener.RunDevices.add("模拟器2");
 		TestListener.RunDevices.add("模拟器");
 		List<String> runDevices = IOMananger.getRunDevices();
+		
 		for(int i=0;i<runDevices.size();i++){
+			System.out.println(runDevices.get(i));
 			IOMananger.DealwithRunLog(runDevices.get(i));
 		}
 	}

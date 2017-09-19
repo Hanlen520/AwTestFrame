@@ -11,7 +11,6 @@ import com.xiaoM.ReportUtils.TestListener;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -35,8 +34,8 @@ public class BaseDriver {
 			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, DeviceBase[2][2]);
 			capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, DeviceBase[3][2]);
 			capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
-			capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.netease.mail");
-			capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, "com.netease.mobimail.activity.LaunchActivity");
+//			capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.netease.mail");
+//			capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, "com.netease.mobimail.activity.LaunchActivity");
 			capabilities.setCapability(MobileCapabilityType.NO_RESET, TestListener.ResetApp);
 			capabilities.setCapability(MobileCapabilityType.UDID, DeviceBase[2][2]);
 			capabilities.setCapability("unicodeKeyboard", "True");
@@ -53,6 +52,8 @@ public class BaseDriver {
 			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, DeviceBase[3][2]);
 			capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, DeviceBase[4][2]);
 			capabilities.setCapability(IOSMobileCapabilityType.LAUNCH_TIMEOUT, 500000);
+			capabilities.setCapability(IOSMobileCapabilityType.USE_NEW_WDA, true);//iOS并发必须要重新装WDA
+			capabilities.setCapability(IOSMobileCapabilityType.WDA_LOCAL_PORT,PortProber.getWDAFreePort());//WDA端口
 			capabilities.setCapability(MobileCapabilityType.UDID, DeviceBase[2][2]);
 			capabilities.setCapability(IOSMobileCapabilityType.BUNDLE_ID,bundleId);
 		}	

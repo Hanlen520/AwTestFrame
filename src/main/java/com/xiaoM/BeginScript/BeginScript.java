@@ -17,7 +17,7 @@ public class BeginScript{
 
 	@Test(dataProvider = "TestCases")
 	public void runCase(String Type,String CaseName) throws Exception{
-		String RunDevice = "三星i9192";
+		String RunDevice = "iphone 6SP";
 		TestListener.RunDevices.add(RunDevice);
 		Run run = new Run();
 		run.runCase(RunDevice,Type, CaseName);
@@ -25,18 +25,18 @@ public class BeginScript{
 	
 	@Test(dataProvider = "TestCases")
 	public void runCase2(String Type,String CaseName) throws Exception{
-		String RunDevice = "夜神";
+		String RunDevice = "iphone 5S";
 		TestListener.RunDevices.add(RunDevice);
 		Run run = new Run();
 		run.runCase(RunDevice,Type, CaseName);
 	}
-	
-	@Test(dataProvider = "TestCases")
-	public void runCase3(String Type,String CaseName) throws Exception{
-		String RunDevice = "模拟器2";
-		TestListener.RunDevices.add(RunDevice);
-		Run run = new Run();
-		run.runCase(RunDevice,Type, CaseName);
-	}
+//	
+//	@Test(dataProvider = "TestCases")
+//	public void runCase3(String Type,String CaseName) throws Exception{
+//		String RunDevice = "模拟器2";
+//		TestListener.RunDevices.add(RunDevice);
+//		Run run = new Run();
+//		run.runCase(RunDevice,Type, CaseName);
+//	}
 	
 }
