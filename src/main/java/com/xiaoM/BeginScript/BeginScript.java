@@ -20,7 +20,7 @@ public class BeginScript{
 //		String RunDevice = "iphone 6SP";
 //		TestListener.RunDevices.add(RunDevice);
 //		Run run = new Run();
-//		run.runCase(RunDevice,Type, CaseName);
+//		run.runCase(RusnDevice,Type, CaseName);
 //	}
 //	
 //	@Test(dataProvider = "TestCases")

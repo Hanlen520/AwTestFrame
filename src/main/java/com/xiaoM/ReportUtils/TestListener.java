@@ -28,8 +28,11 @@ public class TestListener  extends TestListenerAdapter{
 	public static List<String> RunDevices=new ArrayList<String>();
 	public static String DeviceType;//设备类型
 	public static String ResetApp;//是否重置应用
-	public static String AppName;
-	public static String bundleId;
+	public static String AppName;//Android APP的文件名
+	public static String Resource_Monitoring;
+	public static String PackageName;//Android APP的包名
+	public static String Activity;//Android APP的Activity
+	public static String bundleId;//IOS应用的标识名
 	public static String OS;
 	public static String ProjectPath;//工程路径
 	public static String TestCase;//测试用例所在的表
@@ -62,6 +65,9 @@ public class TestListener  extends TestListenerAdapter{
 		ResetApp = pp.getProperty("NORESET_APP");
 		if(DeviceType.equals("Android")){
 			AppName = pp.getProperty("APP_NAME");
+			Resource_Monitoring = pp.getProperty("RESOURCE_MONITORING");
+			PackageName = pp.getProperty("APP_PACKAGENAME");
+			Activity = pp.getProperty("APP_ACTIVITY");
 		}else{
 			bundleId = pp.getProperty("BUNDIEID");
 		}

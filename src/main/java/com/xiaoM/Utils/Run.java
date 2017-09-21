@@ -3,6 +3,7 @@ package com.xiaoM.Utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.xiaoM.Android.ResourceMonitoring;
 import com.xiaoM.ReportUtils.TestListener;
 
 import io.appium.java_client.AppiumDriver;
@@ -25,6 +26,12 @@ public class Run {
 			testStart = IOMananger.readExcelDataXlsx(CaseName,TestListener.CasePath);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		ResourceMonitoring RM = new ResourceMonitoring();
+		boolean StartRM = false;
+		if(TestListener.Resource_Monitoring.equals("True") && Type.equals("APP")){
+			RM.startMonitoring(driver, DeviceName);
+			StartRM = true;
 		}
 		long StartTime = System.currentTimeMillis();
 		log.info(DeviceName+"  测试用例:"+ CaseName +"---Start");
@@ -50,12 +57,15 @@ public class Run {
 				}	
 			}
 			TestListener.runSuccessMessageList.add(DeviceName+"-"+CaseName);
-			driver.quit();
 			log.info(DeviceName+" --------------------------------------");
 			log.info(DeviceName+"  测试用例:"+ CaseName +"---End");
 			long EndTime = System.currentTimeMillis();
 			TestListener.RuntimeStart.put(DeviceName+"-"+CaseName,StartTime);
-			TestListener.RuntimeEnd.put(DeviceName+"-"+CaseName,EndTime);	
+			TestListener.RuntimeEnd.put(DeviceName+"-"+CaseName,EndTime);
+			if(StartRM){
+				RM.stopMonitoring(DeviceName);
+			}
+			driver.quit();
 		} catch (Exception e) {
 			TestListener.runFailMessageList.add(DeviceName+"-"+CaseName);
 			AppiumScreenShot screenShot = new AppiumScreenShot(driver);

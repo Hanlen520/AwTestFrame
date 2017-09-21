@@ -200,6 +200,59 @@ public class IOMananger {
 			}
 		}
 	}
+	
+	/**
+	 *判断电脑本地是否存在某文件，存在则删除
+	 * @param path 文件路径
+	 * @return
+	 */
+	public static void deleteFile(String[] Paths){
+		for(String path:Paths){
+			try {
+				File file = new File(path);
+				if(file.exists()){
+					file.delete();
+				}
+			} catch (Exception e) {
+				System.out.println("删除文件失败，文件路径："+ path);
+			}
+		}	
+	}
+	/**
+	 * 写入数据到txt文本中
+	 * @param fileDir 路径
+	 * @param FileName	文件名
+	 * @param conent
+	 */
+	public static void saveToFile(String fileDir,String FileName, String conent) {
+		File destDir = new File(fileDir);
+		if (!destDir.exists()) {
+			destDir.mkdirs();
+		}
+		String Path = fileDir +"/"+ FileName+".txt";
+		BufferedWriter bw = null;
+		try {
+			/**
+			 * 追加文件：使用FileOutputStream，在构造FileOutputStream时，把第二个参数设为true
+			 * 清空重新写入：把第二个参数设为false
+			 */
+			FileOutputStream fo = new FileOutputStream(Path, true);
+			OutputStreamWriter ow = new OutputStreamWriter(fo);
+			bw = new BufferedWriter(ow);
+			bw.append(conent);
+			bw.newLine();
+			bw.flush();
+			bw.close();
+		} catch (Exception e) {
+			System.out.println("写入数据失败！！！");
+		} finally {
+			try {
+				bw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	public static void main(String[]args) throws IOException{
 		TestListener.RunDevices.add("三星i9192");
 		TestListener.RunDevices.add("模拟器2");
