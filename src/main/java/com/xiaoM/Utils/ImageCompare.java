@@ -89,7 +89,7 @@ public class ImageCompare {
 	 * @param targetName(不能为中文名称)
 	 */
 	public static void imageClick(AppiumDriver <MobileElement> driver,String targetName){
-		int[] targetLoc = ImageCompare.getImageRecognitionLoc(driver, "denglu2");
+		int[] targetLoc = ImageCompare.getImageRecognitionLoc(driver, targetName);
 		TouchAction action = new TouchAction (driver);
 		action.tap(targetLoc[0], targetLoc[1]).perform();
 	}
