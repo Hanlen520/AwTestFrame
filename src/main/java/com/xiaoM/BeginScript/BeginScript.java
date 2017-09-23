@@ -11,7 +11,7 @@ import com.xiaoM.Utils.Run;
 public class BeginScript{
 	
 	@DataProvider
-	public String[][]TestCases() throws IOException{
+	public Object[][]TestCases() throws IOException{
 		return TestListener.RunCase;
 	}
 
@@ -38,5 +38,4 @@ public class BeginScript{
 		Run run = new Run();
 		run.runCase(RunDevice,Type, CaseName);
 	}
-	
 }

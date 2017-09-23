@@ -29,7 +29,7 @@ public class Run {
 		}
 		ResourceMonitoring RM = new ResourceMonitoring();
 		boolean StartRM = false;
-		if(TestListener.Resource_Monitoring.equals("True") && Type.equals("APP")){
+		if(TestListener.Resource_Monitoring.equals("True") && Type.equals("APP")&&TestListener.DeviceType.equals("Android")){
 			RM.startMonitoring(driver, DeviceName);
 			StartRM = true;
 		}
