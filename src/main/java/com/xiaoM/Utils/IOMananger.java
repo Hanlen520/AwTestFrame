@@ -29,10 +29,6 @@ public class IOMananger {
 	static String date=dateFormat.format(new Date()).toString();
 	/**
 	 * 读取excel
-	 * @param sheetName
-	 * @param path
-	 * @return
-	 * @throws IOException
 	 */
 	public static String[][] readExcelDataXlsx(String sheetName,String path) throws IOException {
 		InputStream is = new FileInputStream(path);
@@ -83,43 +79,8 @@ public class IOMananger {
 		}
 		return runTime;
 	}
-	
-	public static List<String> getRunDevices(){
-		List<String> list = new ArrayList<String>();
-		List<String> devicelist = new ArrayList<String>();
-		XSSFWorkbook workbook = null ;
-		String devicesPath ;
-		if(TestListener.DeviceType.equals("Android")){
-			devicesPath = TestListener.ProjectPath + "/devices/AndroidDevices.xlsx";
-		}else{
-			devicesPath = TestListener.ProjectPath + "/devices/iOSDevices.xlsx";
-		}
-		try {
-			InputStream is = new FileInputStream(devicesPath);
-			workbook = new XSSFWorkbook(is);//读取Excel
-			int sheetNum = workbook.getNumberOfSheets();
-			for(int i=0;i<sheetNum;i++){
-				list.add(workbook.getSheetName(i));
-			}
-			String devicesList = TestListener.RunDevices.toString();
-			for(int i=0;i<list.size();i++){
-				if(devicesList.contains(list.get(i))){
-					devicelist.add(list.get(i));
-				}
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				workbook.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return devicelist;
-	}
+
+
 	/**
 	 * 功能：Java读取txt文件的内容
 	 * 步骤：1：先获得文件句柄
@@ -145,8 +106,6 @@ public class IOMananger {
 	
 	/**
 	 * 写入数据到txt文本中
-	 * @param fileDir 路径
-	 * @param FileName	文件名
 	 * @param conent
 	 */
 	public static void saveToFile(String Path, String conent) {
@@ -176,9 +135,6 @@ public class IOMananger {
 	
 	/**
 	 * 处理日志
-	 * @param workSpase
-	 * @param data
-	 * @throws IOException
 	 */
 	public static void DealwithRunLog(String DeviceName) {	
 		String logPath = TestListener.ProjectPath+"/test-output/log/";
@@ -203,8 +159,6 @@ public class IOMananger {
 	
 	/**
 	 *判断电脑本地是否存在某文件，存在则删除
-	 * @param path 文件路径
-	 * @return
 	 */
 	public static void deleteFile(String[] Paths){
 		for(String path:Paths){
@@ -254,14 +208,6 @@ public class IOMananger {
 		}
 	}
 	public static void main(String[]args) throws IOException{
-		TestListener.RunDevices.add("三星i9192");
-		TestListener.RunDevices.add("模拟器2");
-		TestListener.RunDevices.add("模拟器");
-		List<String> runDevices = IOMananger.getRunDevices();
-		
-		for(int i=0;i<runDevices.size();i++){
-			System.out.println(runDevices.get(i));
-			IOMananger.DealwithRunLog(runDevices.get(i));
-		}
+
 	}
 }

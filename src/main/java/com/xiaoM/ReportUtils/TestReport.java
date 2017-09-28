@@ -1,10 +1,7 @@
 package com.xiaoM.ReportUtils;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.testng.IReporter;
 import org.testng.IResultMap;
@@ -50,9 +47,15 @@ public class TestReport implements IReporter {
 			extent.setTestRunnerOutput(s);
 		}
 		extent.flush();
-		List<String> runDevices = IOMananger.getRunDevices();
-		for(int i=0;i<runDevices.size();i++){
-			IOMananger.DealwithRunLog(runDevices.get(i));
+		Set set = new HashSet();
+		List newList = new  ArrayList();
+		for (String cd:TestListener.RunDevices) {
+			if(set.add(cd)){
+				newList.add(cd);
+			}
+		}
+		for(int i=0;i<newList.size();i++){
+			IOMananger.DealwithRunLog(newList.get(i).toString());
 		}
 	}  
 	private void init(String ReportName) {
