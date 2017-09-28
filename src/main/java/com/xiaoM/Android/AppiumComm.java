@@ -15,7 +15,7 @@ public class AppiumComm {
 	
 	/**
 	 * 获得应用的UID
-	 * @param appPackage应用包名
+	 * @param appPackage 应用包名b
 	 * @return UID
 	 * @throws IOException
 	 */
@@ -109,7 +109,6 @@ public class AppiumComm {
 	}
 	/**
 	 * app启动时延
-	 * @param cpuList
 	 * @return
 	 */
 	public static String appLuanchTime(String appPackageActivity,String device){
