@@ -1,9 +1,12 @@
 package com.xiaoM.Utils;
 
 import java.net.URL;
+
+import com.xiaoM.ReportUtils.TestListener;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.AndroidServerFlag;
+import io.appium.java_client.service.local.flags.GeneralServerFlag;
 
 /**
  * @author xiaoM
@@ -50,7 +53,7 @@ public class AppiumServerUtils {
 		AppiumServiceBuilder builder = new AppiumServiceBuilder();
 		builder.withIPAddress(ipAddress);
 		builder.usingPort(port);
-//		builder.withArgument(GeneralServerFlag.LOG_LEVEL,"info");
+		builder.withArgument(GeneralServerFlag.LOG_LEVEL, TestListener.Log_Level.toLowerCase());
 		builder.withArgument(AndroidServerFlag.BOOTSTRAP_PORT_NUMBER, bp);
 		service = AppiumDriverLocalService.buildService(builder);
 		service.start();
@@ -70,24 +73,5 @@ public class AppiumServerUtils {
 			throw new RuntimeException("An appium server node is not started!");
 		}
 		return service.getUrl();
-	}
-	
-	public URL startIosWapServer(String ipAddress,int port) {
-		AppiumServiceBuilder builder = new AppiumServiceBuilder();
-		builder.withIPAddress(ipAddress);
-		builder.usingPort(port);
-//		builder.withArgument(IOSServerFlag.WEBKIT_DEBUG_PROXY_PORT, "27753");
-		service = AppiumDriverLocalService.buildService(builder);
-		service.start();
-		if (service == null || !service.isRunning()) {
-			throw new RuntimeException("An appium server node is not started!");
-		}
-		return service.getUrl();
-	}
-	
-	public void stopServer(){
-		if(service!=null){
-			 service.stop();
-		}
 	}
 }

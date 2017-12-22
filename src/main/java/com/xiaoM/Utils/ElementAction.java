@@ -20,9 +20,6 @@ public class ElementAction{
 
 	/**
 	 * 等待元素出现
-	 * @param by
-	 * @param timeout
-	 * @return
 	 */
 	public static WebElement waitForElement(AppiumDriver <MobileElement> driver ,By by,int timeOut){
 		WebElement webElement=(new WebDriverWait(driver, timeOut)).until(
@@ -36,10 +33,8 @@ public class ElementAction{
 	}
 	/**
 	 * 查找一组元素
-	 * @param locator 元素定位信息
-	 * @return
 	 */
-	public static List<WebElement> waitForElements(AppiumDriver <?> driver ,By by,int timeOut){
+	public static List<WebElement> waitForElements(AppiumDriver <MobileElement> driver ,By by,int timeOut){
 		List<WebElement>  webElements=(new WebDriverWait(driver, timeOut)).until(
 				new ExpectedCondition<List<WebElement>>() {
 					@Override

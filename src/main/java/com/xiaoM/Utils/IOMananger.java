@@ -36,24 +36,24 @@ public class IOMananger {
 		XSSFSheet sheet = workbook.getSheet(sheetName);//读取sheet
 		if(sheet!=null){
 			int lastrowNum = sheet.getLastRowNum()+1;//获取总行数
-			int collNum = sheet.getRow(0).getLastCellNum();//获取列数	 
+			int collNum = sheet.getRow(0).getLastCellNum();//获取列数
 			String[][] user = new String[lastrowNum][collNum];
 			for(int rowNum=0;rowNum<lastrowNum;rowNum++){
 				XSSFRow row = sheet.getRow(rowNum);
 				for(int j=0;j<collNum;j++){
 					if(row.getCell(j)!=null){
-						row.getCell(j).setCellType(CellType.STRING);	
+						row.getCell(j).setCellType(CellType.STRING);
 						user[rowNum][j] = row.getCell(j).getStringCellValue();
 					}
-				}	
+				}
 			}
 			workbook.close();
 			return user;
 		}else{
-			System.out.println(sheet+"is null!");
+			System.out.println(sheetName +" 不存在，请确认正确");
 			workbook.close();
 			return null;
-		}	
+		}
 	}
 	/**
 	 * 获取执行测试用例

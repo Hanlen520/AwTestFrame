@@ -4,11 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import org.testng.TestListenerAdapter;
 
@@ -26,6 +22,9 @@ public class TestListener extends TestListenerAdapter {
     public static List<String> runSuccessMessageList = new ArrayList<String>();
     public static List<String> runFailMessageList = new ArrayList<String>();
     public static List<String> RunDevices = new ArrayList<String>();
+    public static List<String> deviceList = new ArrayList<String>();
+    public static List<String> notDescriptionFailCaseName = new ArrayList<String>();
+    public static String Log_Level;
     public static String DeviceType;//设备类型
     public static String ResetApp;//是否重置应用
     public static String AppName;//Android APP的文件名
@@ -37,8 +36,9 @@ public class TestListener extends TestListenerAdapter {
     public static String ProjectPath;//工程路径
     public static String TestCase;//测试用例所在的表
     public static String CasePath;
-    public static long StartTime;
-    public static long EndTime;
+
+    /*public static long StartTime;
+    public static long EndTime;*/
 
     //配置初始化
     static {
@@ -54,11 +54,21 @@ public class TestListener extends TestListenerAdapter {
         String os = System.getProperty("os.name");
         if (os.contains("Mac")) {
             OS = "MAC";
-            String appiumPath = pp.getProperty("APPIUM_JS_PATH");
+            String appiumPath = "/usr/local/lib/node_modules/appium/build/lib/main.js";
             System.setProperty(AppiumServiceBuilder.APPIUM_PATH, appiumPath);
         } else if (os.contains("Windows")) {
             OS = "WINDOWS";
         }
+        if(pp.getProperty("UING_DEVICES").contains(",")){
+            String[] devices = pp.getProperty("UING_DEVICES").split(",");
+            for(String device:devices){
+                deviceList.add(device);
+            }
+        }else{
+            deviceList.add(pp.getProperty("UING_DEVICES"));
+        }
+        RunDevices = deviceList;
+        Log_Level = pp.getProperty("LOG_LEVEL");
         ProjectPath = new File(System.getProperty("user.dir")).getPath();// 工程根目录
         TestCase = pp.getProperty("TESTCASE");
         CasePath = ProjectPath + "/testCase/" + TestCase + ".xlsx";

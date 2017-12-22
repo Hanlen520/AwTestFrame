@@ -87,21 +87,27 @@ public class TestReport implements IReporter {
 					test.log(status, "Test " + status.toString().toLowerCase() + "ed");
 					break;
 				case 2://失败用例
-					String DeviceAndCase2 = TestListener.runFailMessageList.get(0);
-					TestListener.runFailMessageList.remove(0);
-					ExtentTest test2 = extent.createTest(DeviceAndCase2);
-					test2.assignCategory(DeviceAndCase2.split("-")[0]);//根据设备分类
-					test2.getModel().setStartTime(getTime(TestListener.RuntimeStart.get(DeviceAndCase2)));
-					test2.getModel().setEndTime(getTime(TestListener.RuntimeEnd.get(DeviceAndCase2)));
-					try {
-						test2.fail("报错截图：",MediaEntityBuilder.createScreenCaptureFromPath(TestListener.screenMessageList.get(DeviceAndCase2)).build());
-						TestListener.screenMessageList.remove(0);
-					} catch (IOException e) {
-						e.printStackTrace();
+					if (TestListener.runFailMessageList.size()==0){
+						ExtentTest test2 = extent.createTest(TestListener.notDescriptionFailCaseName.get(0));
+						test2.log(status, result.getThrowable()); //testng捕抓报错
+						TestListener.notDescriptionFailCaseName.remove(0);
+					}else{
+						String DeviceAndCase2 = TestListener.runFailMessageList.get(0);
+						TestListener.runFailMessageList.remove(0);
+						ExtentTest test2 = extent.createTest(DeviceAndCase2);
+						test2.assignCategory(DeviceAndCase2.split("-")[0]);//根据设备分类
+						test2.getModel().setStartTime(getTime(TestListener.RuntimeStart.get(DeviceAndCase2)));
+						test2.getModel().setEndTime(getTime(TestListener.RuntimeEnd.get(DeviceAndCase2)));
+						try {
+							test2.fail("报错截图：",MediaEntityBuilder.createScreenCaptureFromPath(TestListener.screenMessageList.get(DeviceAndCase2)).build());
+							TestListener.screenMessageList.remove(0);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						test2.log(status, TestListener.failMessageList.get(DeviceAndCase2));  //添加自定义报错
+						TestListener.failMessageList.remove(0);
+						test2.log(status, result.getThrowable()); //testng捕抓报错
 					}
-					test2.log(status, TestListener.failMessageList.get(DeviceAndCase2));  //添加自定义报错 
-					TestListener.failMessageList.remove(0);
-					test2.log(status, result.getThrowable()); //testng捕抓报错 	
 					break;
 				}
 			}
