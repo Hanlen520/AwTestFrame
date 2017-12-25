@@ -23,7 +23,6 @@ public class TestListener extends TestListenerAdapter {
     public static List<String> runFailMessageList = new ArrayList<String>();
     public static List<String> RunDevices = new ArrayList<String>();
     public static List<String> deviceList = new ArrayList<String>();
-    public static List<String> notDescriptionFailCaseName = new ArrayList<String>();
     public static String Log_Level;
     public static String DeviceType;//设备类型
     public static String ResetApp;//是否重置应用

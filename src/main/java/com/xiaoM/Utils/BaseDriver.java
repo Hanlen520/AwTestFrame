@@ -29,7 +29,7 @@ public class BaseDriver {
 				devicesPath = TestListener.ProjectPath + "/devices/AndroidDevices.xlsx";
 				DeviceBase  = IOMananger.readExcelDataXlsx(device,devicesPath);
 				if(DeviceBase==null){
-					TestListener.notDescriptionFailCaseName.add(CaseName);
+					TestListener.runFailMessageList.add(CaseName);
 					UseDevice.addDevice(device);
 					throw new Exception("设备不存在，请确认 AndroidDevices.xlsx 中存在 "+device +" 的设备参数");
 				}
@@ -56,7 +56,7 @@ public class BaseDriver {
 				devicesPath = TestListener.ProjectPath + "/devices/iOSDevices.xlsx";
 				DeviceBase  = IOMananger.readExcelDataXlsx(device,devicesPath);
 				if(DeviceBase==null){
-					TestListener.notDescriptionFailCaseName.add(CaseName);
+					TestListener.runFailMessageList.add(CaseName);
 					UseDevice.addDevice(device);
 					throw new Exception("设备不存在，请确认 iOSDevices.xlsx 中存在 "+device +" 的设备参数");
 				}
@@ -74,7 +74,7 @@ public class BaseDriver {
 				capabilities.setCapability(IOSMobileCapabilityType.BUNDLE_ID,bundleId);
 				break;
 			default:
-				TestListener.notDescriptionFailCaseName.add(CaseName);
+				TestListener.runFailMessageList.add(CaseName);
 				UseDevice.addDevice(device);
 				throw new Exception("请在 config.properties 中配置 "+device+" 正确的设备系统类型：Android/iOS");
 		}
@@ -92,7 +92,7 @@ public class BaseDriver {
 				devicesPath = TestListener.ProjectPath + "/devices/AndroidDevices.xlsx";
 				DeviceBase = IOMananger.readExcelDataXlsx(device,devicesPath);
 				if(DeviceBase==null){
-					TestListener.notDescriptionFailCaseName.add(CaseName);
+					TestListener.runFailMessageList.add(CaseName);
 					UseDevice.addDevice(device);
 					throw new Exception("设备不存在，请确认 AndroidDevices.xlsx 中存在 "+device +" 的设备参数");
 				}
@@ -111,7 +111,7 @@ public class BaseDriver {
 				devicesPath = TestListener.ProjectPath + "/devices/iOSDevices.xlsx";
 				DeviceBase = IOMananger.readExcelDataXlsx(device,devicesPath);
 				if(DeviceBase==null){
-					TestListener.notDescriptionFailCaseName.add(CaseName);
+					TestListener.runFailMessageList.add(CaseName);
 					UseDevice.addDevice(device);
 					throw new Exception("设备不存在，请确认 iOSDevices.xlsx 中存在 "+device +" 的设备参数");
 				}
@@ -126,7 +126,7 @@ public class BaseDriver {
 				capabilities.setCapability(MobileCapabilityType.UDID, DeviceBase[2][2]);
 				break;
 			default:
-				TestListener.notDescriptionFailCaseName.add(CaseName);
+				TestListener.runFailMessageList.add(CaseName);
 				UseDevice.addDevice(device);
 				throw new Exception("请在 config.properties 中配置 "+device+" 正确的设备系统类型：Android/iOS");
 		}

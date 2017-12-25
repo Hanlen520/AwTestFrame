@@ -25,7 +25,7 @@ public class Run {
 				driver = base.setUpWap(DeviceName,CaseName);
 				break;
 			default:
-				TestListener.notDescriptionFailCaseName.add(CaseName);
+				TestListener.runFailMessageList.add(CaseName);
 				UseDevice.addDevice(DeviceName);
 				throw new Exception( "请在 "+TestListener.TestCase+".xlsx 中选择正确的测试类型：APP/WAP");
 		}
