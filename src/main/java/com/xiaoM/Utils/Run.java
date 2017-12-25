@@ -21,7 +21,7 @@ public class Run {
 				driver = base.setUpApp(DeviceName,CaseName);
 				break;
 			case  "wap":
-				BaseDriver base = new BaseDriver();
+				base = new BaseDriver();
 				driver = base.setUpWap(DeviceName,CaseName);
 				break;
 			default:
