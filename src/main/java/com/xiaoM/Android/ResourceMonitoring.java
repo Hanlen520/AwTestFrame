@@ -14,11 +14,11 @@ import io.appium.java_client.MobileElement;
 public class ResourceMonitoring {
 	public Log log=new Log(this.getClass());
 	DecimalFormat df =new DecimalFormat("0.00");//格式化数值，保留两位小数
-	public void startMonitoring(AppiumDriver <MobileElement> driver,String DeviceName) throws Exception {
+	public void startMonitoring(String DeviceName,String TestCategory) throws Exception {
 		try {
 			String devicesPath = TestListener.ProjectPath + "/devices/AndroidDevices.xlsx";
 			String[][] DeviceBase = IOMananger.readExcelDataXlsx(DeviceName,devicesPath);
-			log.info("设备： "+DeviceName+" "+"启动资源监控器");
+			log.info(TestCategory +" 启动资源监控器");
 			String CpuPath = TestListener.ProjectPath+"/test-output/MonitorResoure/Cpu/"+DeviceName+".txt";
 			String MenPath = TestListener.ProjectPath+"/test-output/MonitorResoure/Mem/"+DeviceName+".txt";
 			String NetPath = TestListener.ProjectPath+"/test-output/MonitorResoure/Net/"+DeviceName+".txt";
@@ -30,12 +30,12 @@ public class ResourceMonitoring {
 			cpuThread.start();// CPU监控线程启动
 			memThread.start();// 内存监控线程启动
 		} catch (Exception e) {
-			log.error("设备： "+DeviceName+" "+"启动资源监控器失败");
+			log.error(TestCategory +" 启动资源监控器失败");
 			throw e;
 		}
 	}
 
-	public void stopMonitoring(String DeviceName) throws Exception {
+	public void stopMonitoring(String DeviceName,String TestCategory) throws Exception {
 		String devicesPath = TestListener.ProjectPath + "/devices/AndroidDevices.xlsx";
 		String[][] DeviceBase = IOMananger.readExcelDataXlsx(DeviceName,devicesPath);
 		AppiumComm.getMobileAppNet(TestListener.PackageName,DeviceBase[2][2],DeviceName);
@@ -45,15 +45,15 @@ public class ResourceMonitoring {
 		List<Integer> cpuList = new ArrayList<Integer>();
 		List<Double> menList = new ArrayList<Double>();
 		List<Integer> NetList = new ArrayList<Integer>();
-		String[] Men = null;
-		String[] Cpu = null;
+		String[] Men ;
+		String[] Cpu ;
 		AppiumComm.adbClearCache(TestListener.PackageName, DeviceName);
 		AppiumComm.forceStop(TestListener.PackageName, DeviceName);
 		String appPackageActivity = TestListener.PackageName+"/"+TestListener.Activity;
 		String luanchTime = AppiumComm.appLuanchTime(appPackageActivity, DeviceBase[2][2]);
 		try {
-			int cpuMax  = 0;
-			Double memMax = null;		
+			int cpuMax;
+			Double memMax;
 			List<String> Cpus = IOMananger.readTxtFile(CpuPath);
 			int a;
 			double k;
@@ -76,7 +76,7 @@ public class ResourceMonitoring {
 				int i = Integer.parseInt(net);
 				NetList.add(i);
 			}
-			PieChartPicture picture = new PieChartPicture (DeviceName,CpuPath,MenPath);
+			PieChartPicture picture = new PieChartPicture (DeviceName,CpuPath,MenPath,TestCategory);
 			picture.createScreen();
 			cpuMax = AppiumComm.cpuMaxComp(cpuList);
 			memMax = AppiumComm.memMaxComp(menList);
@@ -84,16 +84,16 @@ public class ResourceMonitoring {
 			double menAvg = AppiumComm.menAvg(menList);
 			String netshangxing = df.format((double) (NetList.get(2)-NetList.get(0))/1024.0);
 			String netxiaxing = df.format((double) (NetList.get(3)-NetList.get(1))/1024.0);
-			log.info("设备： "+DeviceName+" "+"首次启动时延为：" + luanchTime +"ms");
-			log.info("设备： "+DeviceName+" "+"执行业务时CPU峰值为：" + cpuMax +"%");
-			log.info("设备： "+DeviceName+" "+"执行业务时CPU均值为：" + cpuAvg +"%");
-			log.info("设备： "+DeviceName+" "+"执行业务时内存峰值为：" + df.format(memMax)+"MB");
-			log.info("设备： "+DeviceName+" "+"执行业务时内存均值为：" + df.format(menAvg)+"MB");
-			log.info("设备： "+DeviceName+" "+"上行流量："+ netshangxing+"KB");
-			log.info("设备： "+DeviceName+" "+"下行流量："+ netxiaxing+"KB");
-			log.info("设备： "+DeviceName+" "+"关闭资源监控器");
+			log.info(TestCategory +" "+ DeviceName +" 首次启动时延为：" + luanchTime +"ms");
+			log.info(TestCategory +" "+ DeviceName +" 执行业务时CPU峰值为：" + cpuMax +"%");
+			log.info(TestCategory +" "+ DeviceName +" 执行业务时CPU均值为：" + cpuAvg +"%");
+			log.info(TestCategory +" "+ DeviceName +" 执行业务时内存峰值为：" + df.format(memMax)+"MB");
+			log.info(TestCategory +" "+ DeviceName +" 执行业务时内存均值为：" + df.format(menAvg)+"MB");
+			log.info(TestCategory +" "+ DeviceName +" 上行流量："+ netshangxing+"KB");
+			log.info(TestCategory +" "+ DeviceName +" 下行流量："+ netxiaxing+"KB");
+			log.info(TestCategory +" "+ DeviceName +" 关闭资源监控器");
 		} catch (Exception e) {
-			log.error("设备： "+DeviceName+" "+"读取资源监控信息失败！");
+			log.error(TestCategory +" "+ DeviceName +" 读取资源监控信息失败");
 			throw e;
 		}
 	}

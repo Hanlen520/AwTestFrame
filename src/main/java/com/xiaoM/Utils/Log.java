@@ -12,9 +12,9 @@ import java.util.Properties;
  */
 public class Log{
 	private final Class<?> clazz;
-	private  Logger logger;
-	static String projectRootPath = new File(System.getProperty("user.dir")).getPath().concat("/");
-	static String src="test-output/log";
+	private Logger logger;
+	private static String projectRootPath = new File(System.getProperty("user.dir")).getPath().concat("/");
+	private static String src="test-output/log";
 //	//设置日期格式
 //	static SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
 //	//获取当前日期
@@ -27,7 +27,8 @@ public class Log{
 	public Log(Class<?> clazz){
 		this.clazz=clazz;
 		//Logger.getLogger的方法是调用的是LogManager.getLogger()方法，所以这两个方法都是返回logger
-		this.logger=Logger.getLogger(this.clazz);
+		/*this.logger=Logger.getLogger(this.clazz);*/
+		this.logger=Logger.getLogger("|");
 		Log.initlog4j();
 	}
 	//初始化log4j，设置log4j的配置文件log4j.Properties
@@ -41,7 +42,7 @@ public class Log{
 		prop.setProperty("log4j.appender.CONSOLE.layout", "org.apache.log4j.PatternLayout");
 		prop.setProperty("log4j.appender.CONSOLE.layout.ConversionPattern", "[%d{YYYY-MM-dd HH:mm:ss,SSS}] %-5p %c %m%n");
 		File dir = new File(projectRootPath+src);
-		String filepath=dir.getAbsolutePath()+"/"+"RunLog.log";
+		String filepath=dir.getAbsolutePath()+"/"+"runLog.log";
 		
 		prop.setProperty("log4j.appender.E","org.apache.log4j.FileAppender");
 		prop.setProperty("log4j.appender.E.file",filepath);

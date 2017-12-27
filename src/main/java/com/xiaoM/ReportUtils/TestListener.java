@@ -13,15 +13,14 @@ import com.xiaoM.Utils.Log;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 
 public class TestListener extends TestListenerAdapter {
-    Log log = new Log(this.getClass());
     public static String[][] RunCase;//执行测试case
     public static Map<String, String> screenMessageList = new HashMap<String, String>();
     public static Map<String, String> failMessageList = new HashMap<String, String>();
+    public static Map<String, String> Category = new HashMap<String, String>();
+    public static Map<String, String> logList = new HashMap<String, String>();
     public static Map<String, Long> RuntimeStart = new HashMap<String, Long>();
     public static Map<String, Long> RuntimeEnd = new HashMap<String, Long>();
-    public static List<String> runSuccessMessageList = new ArrayList<String>();
-    public static List<String> runFailMessageList = new ArrayList<String>();
-    public static List<String> RunDevices = new ArrayList<String>();
+    public static Map<String, String> RmPicture = new HashMap<String, String>();
     public static List<String> deviceList = new ArrayList<String>();
     public static String Log_Level;
     public static String DeviceType;//设备类型
@@ -31,13 +30,9 @@ public class TestListener extends TestListenerAdapter {
     public static String PackageName;//Android APP的包名
     public static String Activity;//Android APP的Activity
     public static String bundleId;//IOS应用的标识名
-    public static String OS;
     public static String ProjectPath;//工程路径
     public static String TestCase;//测试用例所在的表
     public static String CasePath;
-
-    /*public static long StartTime;
-    public static long EndTime;*/
 
     //配置初始化
     static {
@@ -52,21 +47,16 @@ public class TestListener extends TestListenerAdapter {
         //获取操作系统
         String os = System.getProperty("os.name");
         if (os.contains("Mac")) {
-            OS = "MAC";
             String appiumPath = "/usr/local/lib/node_modules/appium/build/lib/main.js";
             System.setProperty(AppiumServiceBuilder.APPIUM_PATH, appiumPath);
-        } else if (os.contains("Windows")) {
-            OS = "WINDOWS";
         }
         if(pp.getProperty("UING_DEVICES").contains(",")){
             String[] devices = pp.getProperty("UING_DEVICES").split(",");
-            for(String device:devices){
-                deviceList.add(device);
-            }
+            deviceList.addAll(Arrays.asList(devices));
         }else{
             deviceList.add(pp.getProperty("UING_DEVICES"));
         }
-        RunDevices = deviceList;
+//        RunDevices = deviceList;
         Log_Level = pp.getProperty("LOG_LEVEL");
         ProjectPath = new File(System.getProperty("user.dir")).getPath();// 工程根目录
         TestCase = pp.getProperty("TESTCASE");
@@ -84,7 +74,7 @@ public class TestListener extends TestListenerAdapter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String logPath = ProjectPath + "/test-output/log/RunLog.log";
+        String logPath = ProjectPath + "/test-output/log/runLog.log";
         File path = new File(logPath);
         if (path.exists()) {
             path.delete();//删除日志文件

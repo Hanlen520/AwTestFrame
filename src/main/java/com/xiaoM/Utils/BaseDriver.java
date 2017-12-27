@@ -18,7 +18,7 @@ import io.appium.java_client.remote.MobileCapabilityType;
 public class BaseDriver {
 	Log log= new Log(this.getClass());
 	AppiumServerUtils  AppiumServer = null;
-	public AppiumDriver <MobileElement> setUpApp(String device,String CaseName) throws Exception{
+	public AppiumDriver setUpApp(String device,String CaseName,String TestCategory ) throws Exception{
 		URL url ;
 		String devicesPath ;
 		String[][] DeviceBase;
@@ -29,9 +29,11 @@ public class BaseDriver {
 				devicesPath = TestListener.ProjectPath + "/devices/AndroidDevices.xlsx";
 				DeviceBase  = IOMananger.readExcelDataXlsx(device,devicesPath);
 				if(DeviceBase==null){
-					TestListener.runFailMessageList.add(CaseName);
 					UseDevice.addDevice(device);
-					throw new Exception("设备不存在，请确认 AndroidDevices.xlsx 中存在 "+device +" 的设备参数");
+					log.error("设备不存在，请确认 AndroidDevices.xlsx 中存在 "+ device +" 的设备参数");
+					log.error(TestCategory +" --------------------------------------");
+					log.error(TestCategory +"  测试用例:"+ CaseName +"---End");
+					throw new Exception();
 				}
 				AppiumServer = new AppiumServerUtils(DeviceBase[1][2],Port,String.valueOf(PortProber.getFreePort()));
 				url = AppiumServer.startServer();
@@ -48,17 +50,19 @@ public class BaseDriver {
 				}
 				capabilities.setCapability(MobileCapabilityType.NO_RESET, TestListener.ResetApp);
 				capabilities.setCapability(MobileCapabilityType.UDID, DeviceBase[2][2]);
-				capabilities.setCapability("unicodeKeyboard", "True");
-				capabilities.setCapability("resetKeyboard", "True");
-				capabilities.setCapability("noSign", "True");
+				capabilities.setCapability("unicodeKeyboard", true);
+				capabilities.setCapability("resetKeyboard", true);
+				capabilities.setCapability("noSign", true);
 				break;
 			case "ios":
 				devicesPath = TestListener.ProjectPath + "/devices/iOSDevices.xlsx";
 				DeviceBase  = IOMananger.readExcelDataXlsx(device,devicesPath);
 				if(DeviceBase==null){
-					TestListener.runFailMessageList.add(CaseName);
 					UseDevice.addDevice(device);
-					throw new Exception("设备不存在，请确认 iOSDevices.xlsx 中存在 "+device +" 的设备参数");
+					log.error("设备不存在，请确认 iOSDevices.xlsx 中存在 "+device +" 的设备参数");
+					log.error(TestCategory +" --------------------------------------");
+					log.error(TestCategory +"  测试用例:"+ CaseName +"---End");
+					throw new Exception();
 				}
 				AppiumServer = new AppiumServerUtils();
 				url = AppiumServer.startServer(DeviceBase[1][2],Port);
@@ -74,14 +78,16 @@ public class BaseDriver {
 				capabilities.setCapability(IOSMobileCapabilityType.BUNDLE_ID,bundleId);
 				break;
 			default:
-				TestListener.runFailMessageList.add(CaseName);
 				UseDevice.addDevice(device);
-				throw new Exception("请在 config.properties 中配置 "+device+" 正确的设备系统类型：Android/iOS");
+				log.error("请在 config.properties 中配置 "+device+" 正确的设备系统类型：Android/iOS");
+				log.error(TestCategory +" --------------------------------------");
+				log.error(TestCategory +"  测试用例:"+ CaseName +"---End");
+				throw new Exception();
 		}
 		return new AppiumDriver<MobileElement>(url, capabilities);
 	}
 
-	public AppiumDriver <MobileElement> setUpWap(String device,String CaseName) throws Exception {
+	public AppiumDriver setUpWap(String device,String CaseName,String TestCategory) throws Exception {
 		URL url = null;
 		String devicesPath ;
 		String[][] DeviceBase;
@@ -92,9 +98,11 @@ public class BaseDriver {
 				devicesPath = TestListener.ProjectPath + "/devices/AndroidDevices.xlsx";
 				DeviceBase = IOMananger.readExcelDataXlsx(device,devicesPath);
 				if(DeviceBase==null){
-					TestListener.runFailMessageList.add(CaseName);
 					UseDevice.addDevice(device);
-					throw new Exception("设备不存在，请确认 AndroidDevices.xlsx 中存在 "+device +" 的设备参数");
+					log.error("设备不存在，请确认 AndroidDevices.xlsx 中存在 "+device +" 的设备参数");
+					log.error(TestCategory +" --------------------------------------");
+					log.error(TestCategory +"  测试用例:"+ CaseName +"---End");
+					throw new Exception();
 				}
 				AppiumServer = new AppiumServerUtils(DeviceBase[1][2],Port,String.valueOf(PortProber.getFreePort()));
 				url = AppiumServer.startServer();
@@ -104,16 +112,18 @@ public class BaseDriver {
 				capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, DeviceBase[2][2]);
 				capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, DeviceBase[3][2]);
 				capabilities.setCapability(MobileCapabilityType.UDID, DeviceBase[2][2]);
-				capabilities.setCapability("unicodeKeyboard", "True");
-				capabilities.setCapability("resetKeyboard", "True");
+				capabilities.setCapability("unicodeKeyboard", true);
+				capabilities.setCapability("resetKeyboard", true);
 				break;
 			case "ios":
 				devicesPath = TestListener.ProjectPath + "/devices/iOSDevices.xlsx";
 				DeviceBase = IOMananger.readExcelDataXlsx(device,devicesPath);
 				if(DeviceBase==null){
-					TestListener.runFailMessageList.add(CaseName);
 					UseDevice.addDevice(device);
-					throw new Exception("设备不存在，请确认 iOSDevices.xlsx 中存在 "+device +" 的设备参数");
+					log.error("设备不存在，请确认 iOSDevices.xlsx 中存在 "+device +" 的设备参数");
+					log.error(TestCategory +" --------------------------------------");
+					log.error(TestCategory +"  测试用例:"+ CaseName +"---End");
+					throw new Exception();
 				}
 				AppiumServer = new AppiumServerUtils();
 				url = AppiumServer.startServer(DeviceBase[1][2],Port);
@@ -126,11 +136,13 @@ public class BaseDriver {
 				capabilities.setCapability(MobileCapabilityType.UDID, DeviceBase[2][2]);
 				break;
 			default:
-				TestListener.runFailMessageList.add(CaseName);
 				UseDevice.addDevice(device);
-				throw new Exception("请在 config.properties 中配置 "+device+" 正确的设备系统类型：Android/iOS");
+				log.error("请在 config.properties 中配置 "+device+" 正确的设备系统类型：Android/iOS");
+				log.error(TestCategory +" --------------------------------------");
+				log.error(TestCategory +"  测试用例:"+ CaseName +"---End");
+				throw new Exception();
 		}
-		return new AppiumDriver <MobileElement>(url, capabilities);
+		return new AppiumDriver  <MobileElement>(url, capabilities);
 	}
 
 	public AppiumServerUtils getAppiumServer(){

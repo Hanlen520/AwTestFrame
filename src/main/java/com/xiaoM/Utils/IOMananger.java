@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.gargoylesoftware.htmlunit.javascript.configuration.BrowserName;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -24,9 +25,9 @@ import com.xiaoM.ReportUtils.TestListener;
 
 public class IOMananger {
 	//设置日期格式
-	static SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	//获取当前日期
-	static String date=dateFormat.format(new Date()).toString();
+	private static String date = dateFormat.format(new Date());
 	/**
 	 * 读取excel
 	 */
@@ -57,25 +58,27 @@ public class IOMananger {
 	}
 	/**
 	 * 获取执行测试用例
-	 * @param sheetName
-	 * @param path
-	 * @return
-	 * @throws IOException
 	 */
-	public static String[][] runTime(String sheetName,String path) throws IOException{
-		String[][] Date =  readExcelDataXlsx(sheetName,path);
-		List<String> BrowserName = new LinkedList<String>();
-		List<String> caseName = new LinkedList<String>();
+	public static String[][] runTime(String sheetname,String path) throws IOException{
+		String[][] Date =  readExcelDataXlsx(sheetname,path);
+		List<String> ID = new LinkedList<String>();
+		List<String> Type = new LinkedList<String>();
+		List<String> Description = new LinkedList<String>();
+		List<String> CaseName = new LinkedList<String>();
 		for(int i=1;i<Date.length;i++){
 			if(Date[i][0].equals("YES")){
-				BrowserName.add(Date[i][2]);
-				caseName.add(Date[i][4]);	
+				ID.add(Date[i][1]);
+				Type.add(Date[i][2]);
+				Description.add(Date[i][3]);
+				CaseName.add(Date[i][4]);
 			}
 		}
-		String[][] runTime  = new String[caseName.size()][2];
-		for(int k =0;k<caseName.size();k++){
-			runTime[k][0]=BrowserName.get(k);
-			runTime[k][1]=caseName.get(k);
+		String[][] runTime  = new String[CaseName.size()][4];
+		for(int k =0;k<CaseName.size();k++){
+			runTime[k][0]=ID.get(k);
+			runTime[k][1]=Type.get(k);
+			runTime[k][2]=Description.get(k);
+			runTime[k][3]=CaseName.get(k);
 		}
 		return runTime;
 	}
@@ -91,16 +94,25 @@ public class IOMananger {
 	 * @param filePath
 	 * @throws FileNotFoundException 
 	 */
-	public static List<String> readTxtFile(String filePath) throws FileNotFoundException{
-		List<String> txt = new ArrayList<String>();
-		Scanner in = new Scanner(new File(filePath));  
-        while(in.hasNext()){ 
-        	String str=in.nextLine(); 
-        	if(!str.isEmpty()){
-        		txt.add(str.toString());
-        	}
-        }
-        in.close();
+	public static List<String> readTxtFile(String filePath) {
+		List<String> txt = null;
+		Scanner in = null;
+		try {
+			txt = new ArrayList<String>();
+			in = new Scanner(new File(filePath));
+			while(in.hasNext()){
+				String str=in.nextLine();
+				if(!str.isEmpty()){
+					txt.add(str.toString());
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}finally {
+			if (in!=null){
+				in.close();
+			}
+		}
 		return txt;
 	}
 	
@@ -136,25 +148,24 @@ public class IOMananger {
 	/**
 	 * 处理日志
 	 */
-	public static void DealwithRunLog(String DeviceName) {	
-		String logPath = TestListener.ProjectPath+"/test-output/log/";
-		List<String> DriversLog = null;
-		try {
-			DriversLog = IOMananger.readTxtFile(logPath+"RunLog.log");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		logPath = logPath + DeviceName;
+	public static void DealwithRunLog(String TestCategory) {
+		String logPath = TestListener.ProjectPath+"/test-output/log/runlogs/"+date;
+		List<String> BrowserLog = IOMananger.readTxtFile(TestListener.ProjectPath+"/test-output/log/runLog.log");
 		File destDir = new File(logPath);
 		if (!destDir.exists()) {
 			destDir.mkdirs();
 		}
-		String logDriverPath  = logPath +"/"+ DeviceName+"-"+date+".log";	
-		for(String logDriver:DriversLog){
-			if(logDriver.contains(DeviceName)){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd(HH.mm.ss)");
+		String date = dateFormat.format(System.currentTimeMillis());
+		String logDriverPath  = logPath +"/"+ TestCategory+"_"+date+".log";
+		StringBuilder sb = new StringBuilder();
+		for(String logDriver:BrowserLog){
+			if(logDriver.contains(TestCategory)){
+				sb.append(logDriver +"\r\n");
 				IOMananger.saveToFile(logDriverPath, logDriver);
 			}
 		}
+		TestListener.logList.put(TestCategory,"<spen>运行日志：</spen></br><pre>"+sb.toString()+"</pre>");
 	}
 	
 	/**
@@ -208,6 +219,6 @@ public class IOMananger {
 		}
 	}
 	public static void main(String[]args) throws IOException{
-
+		DealwithRunLog("1_三星I9192_AndroidTest");
 	}
 }

@@ -15,19 +15,16 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 
 public class ExecuteScript  {
-	public AppiumDriver <MobileElement> driver;
-	public  ExecuteScript(AppiumDriver <MobileElement> driver) {
+	public AppiumDriver  driver;
+	public  ExecuteScript(AppiumDriver driver) {
 		this.driver = driver;
 	}
 
 	/**
 	 * 执行指定的方法
 	 * @param MethodName 方法名
-	 * @throws MalformedURLException 
-	 * @throws ClassNotFoundException 
-	 * @throws InstantiationException 
 	 */
-	public Object runScript(String ClassName,String MethodName,Map<String, Object> map,String Steps,String DeviceAndCase){
+	public Object runScript(String ClassName,String MethodName,Map<String, Object> map,String Steps,String TestCategory ){
 		Object result = null;
 		try {
 			File file=new File(TestListener.ProjectPath+"/src/main/java");//类路径(包文件上一层)  
@@ -94,28 +91,28 @@ public class ExecuteScript  {
 				result = cls.getMethod(MethodName).invoke(obj);
 			}
 		} catch (IllegalArgumentException e) {
-			TestListener.failMessageList.put(DeviceAndCase,"【出错步骤】 > "+Steps);
+			TestListener.failMessageList.put(TestCategory ,"【出错步骤】 > "+Steps);
 			e.printStackTrace();
 		} catch (SecurityException e) {
-			TestListener.failMessageList.put(DeviceAndCase,"【出错步骤】 > "+Steps);
+			TestListener.failMessageList.put(TestCategory,"【出错步骤】 > "+Steps);
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			TestListener.failMessageList.put(DeviceAndCase,"【出错步骤】 > "+Steps);
+			TestListener.failMessageList.put(TestCategory,"【出错步骤】 > "+Steps);
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			TestListener.failMessageList.put(DeviceAndCase,"【出错步骤】 > "+Steps);
+			TestListener.failMessageList.put(TestCategory,"【出错步骤】 > "+Steps);
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {	
-			TestListener.failMessageList.put(DeviceAndCase,"【出错步骤】 > "+Steps);
+			TestListener.failMessageList.put(TestCategory,"【出错步骤】 > "+Steps);
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
-			TestListener.failMessageList.put(DeviceAndCase,"【出错步骤】 > "+Steps);
+			TestListener.failMessageList.put(TestCategory,"【出错步骤】 > "+Steps);
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			TestListener.failMessageList.put(DeviceAndCase,"【出错步骤】 > "+Steps);
+			TestListener.failMessageList.put(TestCategory,"【出错步骤】 > "+Steps);
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			TestListener.failMessageList.put(DeviceAndCase,"【出错步骤】 > "+Steps);
+			TestListener.failMessageList.put(TestCategory,"【出错步骤】 > "+Steps);
 			e.printStackTrace();
 		}
 		return result;	

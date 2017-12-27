@@ -8,8 +8,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import com.xiaoM.ReportUtils.TestListener;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -30,15 +33,18 @@ import org.jfree.ui.RectangleInsets;
 
 import com.xiaoM.Utils.IOMananger;
 
-public class PieChartPicture { 
-	
+public class PieChartPicture {
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd(HH.mm.ss)");
+	private static String date = dateFormat.format(new Date());
 	String PictureName;
 	String CpuPath;
 	String MenPath;
-	public PieChartPicture(String name,String CpuPath,String MenPath){
+	String TestCategory;
+	public PieChartPicture(String name,String CpuPath,String MenPath,String TestCategory){
 		this.PictureName = name;
 		this.CpuPath = CpuPath;
 		this.MenPath = MenPath;
+		this.TestCategory = TestCategory;
 	}
 	private static String NO_DATA_MSG = "数据加载失败";
 	private static Font FONT = new Font("宋体", Font.PLAIN, 12);
@@ -217,8 +223,7 @@ public class PieChartPicture {
 	}  
 	/**
 	 * 设置类别图表(CategoryPlot) X坐标轴线条颜色和样式
-	 * 
-	 * @param axis
+	 *
 	 */
 	public static void setXAixs(CategoryPlot plot) {
 		Color lineColor = new Color(31, 121, 170);
@@ -229,8 +234,7 @@ public class PieChartPicture {
 
 	/**
 	 * 设置类别图表(CategoryPlot) Y坐标轴线条颜色和样式 同时防止数据无法显示
-	 * 
-	 * @param axis
+	 *
 	 */
 	public static void setYAixs(CategoryPlot plot) {
 		Color lineColor = new Color(192, 208, 224);
@@ -294,7 +298,8 @@ public class PieChartPicture {
 		if (!dir.exists()){
 			dir.mkdirs();
 		}
-		String screenPath = dir.getAbsolutePath() + "/"+PictureName+"_CPU.jpg";
+		String screenPath = dir.getAbsolutePath() + "/"+PictureName +"_"+ date +"_CPU.jpg";
+		TestListener.RmPicture.put(TestCategory + "_CPU","../test-output/snapshot/"+PictureName +"_"+ date +"_CPU.jpg");
 		drawToOutputStream(screenPath, chart); // step4: 输出图表到指定的磁盘 
 	}
 	public void MenScreen() throws FileNotFoundException{
@@ -304,8 +309,9 @@ public class PieChartPicture {
 		if (!dir.exists()){
 			dir.mkdirs();
 		}
-		String screenPath = dir.getAbsolutePath() + "/"+PictureName+"_Men.jpg";
-		drawToOutputStream(screenPath, chart); // step4: 输出图表到指定的磁盘 
+		String screenPath = dir.getAbsolutePath() + "/"+PictureName  +"_"+ date + "_Men.jpg";
+		TestListener.RmPicture.put(TestCategory + "_Men","../test-output/snapshot/"+PictureName +"_"+ date +"_Men.jpg");
+		drawToOutputStream(screenPath, chart); // step4: 输出图表到指定的磁盘
 	}
 	
 	public void createScreen() throws FileNotFoundException{

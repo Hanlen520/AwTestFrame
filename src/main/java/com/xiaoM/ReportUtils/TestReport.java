@@ -1,6 +1,7 @@
 package com.xiaoM.ReportUtils;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.testng.IReporter;
@@ -23,12 +24,14 @@ import com.xiaoM.Utils.IOMananger;
 
 public class TestReport implements IReporter {
 
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd(HH.mm.ss)");
+	private static String date = dateFormat.format(new Date());
 	private static final String OUTPUT_FOLDER = "test-output/";
-	private static final String FILE_NAME = "TestReport.html";
+	private static final String FILE_NAME = "TestReport_"+ date +".html";
 	private ExtentReports extent;
 
 	@Override
-	public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {     
+	public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
 		init(TestListener.TestCase);//html文件配置
 		for (ISuite suite : suites) {
 			Map<String, ISuiteResult>  result = suite.getResults(); 
@@ -47,20 +50,10 @@ public class TestReport implements IReporter {
 			extent.setTestRunnerOutput(s);
 		}
 		extent.flush();
-		Set set = new HashSet();
-		List newList = new  ArrayList();
-		for (String cd:TestListener.RunDevices) {
-			if(set.add(cd)){
-				newList.add(cd);
-			}
-		}
-		for(int i=0;i<newList.size();i++){
-			IOMananger.DealwithRunLog(newList.get(i).toString());
-		}
 	}  
 	private void init(String ReportName) {
 		ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(OUTPUT_FOLDER + FILE_NAME);
-		htmlReporter.config().setDocumentTitle("AppUiXM designed by xiaoM");//html标题
+		htmlReporter.config().setDocumentTitle("AppiumUiXM designed by xiaoM");//html标题
 		htmlReporter.config().setReportName(ReportName);//报告主题
 		htmlReporter.config().setTheme(Theme.STANDARD);//主题：黑/白
 		htmlReporter.config().setEncoding("utf-8");
@@ -76,36 +69,40 @@ public class TestReport implements IReporter {
 	private void buildTestNodes(IResultMap tests, Status status) {
 		if (tests.size() > 0) {
 			for (ITestResult result : tests.getAllResults()) {
+				String ID = result.getParameters()[0].toString();
+				String TestCategory = TestListener.Category.get(ID);
+				String DeviceName = TestCategory.split("_")[1];
+				IOMananger.DealwithRunLog(TestCategory);//处理日志文件
+				ExtentTest test = extent.createTest(TestCategory);//根据设备分类
+				test.assignCategory(DeviceName);
+				test.getModel().setStartTime(getTime(TestListener.RuntimeStart.get(TestCategory)));
+				test.getModel().setEndTime(getTime(TestListener.RuntimeEnd.get(TestCategory)));
 				switch (result.getStatus()) {
-				case 1://成功用例s
-					String DeviceAndCase = TestListener.runSuccessMessageList.get(0);
-					TestListener.runSuccessMessageList.remove(0);
-					ExtentTest test = extent.createTest(DeviceAndCase);
-					test.assignCategory(DeviceAndCase.split("-")[0]);
-					test.getModel().setStartTime(getTime(TestListener.RuntimeStart.get(DeviceAndCase)));
-					test.getModel().setEndTime(getTime(TestListener.RuntimeEnd.get(DeviceAndCase)));
-					test.log(status, "Test " + status.toString().toLowerCase() + "ed");
-					break;
-				case 2://失败用例
-					String DeviceAndCase2 = TestListener.runFailMessageList.get(0);
-					TestListener.runFailMessageList.remove(0);
-					ExtentTest test2 = extent.createTest(DeviceAndCase2);
-					if(DeviceAndCase2.contains("-")){
-						test2.assignCategory(DeviceAndCase2.split("-")[0]);//根据设备分类
-						test2.getModel().setStartTime(getTime(TestListener.RuntimeStart.get(DeviceAndCase2)));
-						test2.getModel().setEndTime(getTime(TestListener.RuntimeEnd.get(DeviceAndCase2)));
+				case 1://成功用例
+					if(TestListener.RmPicture.containsKey(TestCategory +"_CPU")&&TestListener.RmPicture.containsKey(TestCategory +"_Men")&&TestListener.Resource_Monitoring.toLowerCase().equals("true")){
 						try {
-							test2.fail("报错截图：",MediaEntityBuilder.createScreenCaptureFromPath(TestListener.screenMessageList.get(DeviceAndCase2)).build());
-							TestListener.screenMessageList.remove(DeviceAndCase2);
+							test.addScreenCaptureFromPath(TestListener.RmPicture.get(TestCategory +"_CPU"));
+							test.addScreenCaptureFromPath(TestListener.RmPicture.get(TestCategory +"_Men"));
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-						test2.log(status, TestListener.failMessageList.get(DeviceAndCase2));  //添加自定义报错
-						TestListener.failMessageList.remove(DeviceAndCase2);
-						test2.log(status, result.getThrowable()); //testng捕抓报错
+					}
+					test.log(status, "Test " + status.toString().toLowerCase() + "ed");
+					test.log(status,TestListener.logList.get(TestCategory));//测试日志
+					break;
+				case 2://失败用例
+					if(TestListener.screenMessageList.containsKey(TestCategory)){
+						try {
+							test.fail("报错截图：",MediaEntityBuilder.createScreenCaptureFromPath(TestListener.screenMessageList.get(TestCategory)).build());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						test.log(status, TestListener.failMessageList.get(TestCategory));  //添加自定义报错
+						test.log(status,TestListener.logList.get(TestCategory));//测试日志
+						test.log(status, result.getThrowable()); //testng捕抓报错
 					}else{
-						test2.assignCategory("设备启动失败");
-						test2.log(status, result.getThrowable()); //testng捕抓报错
+						test.log(status,TestListener.logList.get(TestCategory));//测试日志
+						test.log(status, result.getThrowable()); //testng捕抓报错
 					}
 					break;
 				}

@@ -18,6 +18,7 @@ import io.appium.java_client.TouchAction;
 
 public class ImageCompare {
 
+	private static String picturePath = TestListener.ProjectPath+"/picture/";
 	
 	/**
 	 * 获取目标图片在当前页面的坐标</p>
@@ -27,7 +28,7 @@ public class ImageCompare {
 	 * @return
 	 */
 	public static int[] getImageRecognitionLoc(AppiumDriver <MobileElement> driver,String targetName){
-		String screenPath = TestListener.ProjectPath+"/img/"+targetName+"main.png";
+		String screenPath = picturePath + targetName+"main.png";
 		try {
 			driver.context("NATIVE_APP");//切换到NATIVE_APP进行app截图
 			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -35,8 +36,8 @@ public class ImageCompare {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		IplImage src = opencv_imgcodecs.cvLoadImage(TestListener.ProjectPath+"/img/"+targetName+"main.png"); 
-		IplImage tmp = opencv_imgcodecs.cvLoadImage(TestListener.ProjectPath+"/img/"+targetName+".png");
+		IplImage src = opencv_imgcodecs.cvLoadImage(picturePath + targetName+"main.png");
+		IplImage tmp = opencv_imgcodecs.cvLoadImage(picturePath + targetName+".png");
 		IplImage result = opencv_core.cvCreateImage(opencv_core.cvSize(src.width()-tmp.width()+1, src.height()-    tmp.height()+1), opencv_core.IPL_DEPTH_32F, 1);
 		opencv_core.cvZero(result);
 		opencv_imgproc.cvMatchTemplate(src, tmp, result, opencv_imgproc.CV_TM_CCORR_NORMED);
@@ -63,7 +64,7 @@ public class ImageCompare {
 	 */
 	public boolean matchTemplate(AppiumDriver <MobileElement> driver,String targetName) {
 		boolean matchRes;
-		String screenPath = TestListener.ProjectPath+"/img/"+targetName+"main.png";
+		String screenPath = picturePath + targetName+"main.png";
 		try {
 			driver.context("NATIVE_APP");//切换到NATIVE_APP进行app截图
 			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -71,13 +72,13 @@ public class ImageCompare {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		IplImage src = opencv_imgcodecs.cvLoadImage(TestListener.ProjectPath+"/img/"+targetName+"main.png"); 
-		IplImage tmp = opencv_imgcodecs.cvLoadImage(TestListener.ProjectPath+"/img/"+targetName+".png");
+		IplImage src = opencv_imgcodecs.cvLoadImage(picturePath + targetName+"main.png");
+		IplImage tmp = opencv_imgcodecs.cvLoadImage(picturePath + targetName+".png");
 		IplImage result = opencv_core.cvCreateImage(opencv_core.cvSize(src.width()-tmp.width()+1, src.height()-    tmp.height()+1), opencv_core.IPL_DEPTH_32F, 1);
 		double[] minVal = new double[2];
 		double[] maxVal = new double[2];
 		opencv_core.cvMinMaxLoc(result, minVal, maxVal);
-		matchRes = maxVal[0] > 0.99f ? true : false; 
+		matchRes = maxVal[0] > 0.99f ? true : false;
 		opencv_core.cvReleaseImage(result);//释放图像
 		new File(screenPath).delete();
 		return matchRes;
