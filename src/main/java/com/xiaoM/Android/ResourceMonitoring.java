@@ -12,8 +12,8 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 
 public class ResourceMonitoring {
-	public Log log=new Log(this.getClass());
-	DecimalFormat df =new DecimalFormat("0.00");//格式化数值，保留两位小数
+	private Log log=new Log(this.getClass());
+	private DecimalFormat df =new DecimalFormat("0.00");//格式化数值，保留两位小数
 	public void startMonitoring(String DeviceName,String TestCategory) throws Exception {
 		try {
 			String devicesPath = TestListener.ProjectPath + "/devices/AndroidDevices.xlsx";

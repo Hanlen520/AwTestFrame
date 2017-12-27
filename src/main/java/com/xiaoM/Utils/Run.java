@@ -37,6 +37,10 @@ public class Run {
 				RM = new ResourceMonitoring();
 				RM.startMonitoring(DeviceName,TestCategory);
 				StartRM = true;
+			}else if(TestListener.Resource_Monitoring.toLowerCase().equals("true") && !Type.toLowerCase().equals("app")){
+				throw new Exception("资源监控只适用于 Android 平台的APP");
+			}else if(TestListener.Resource_Monitoring.toLowerCase().equals("true") &&!TestListener.DeviceType.toLowerCase().equals("android")){
+				throw new Exception("资源监控只适用于 Android 平台的APP");
 			}
 			long StartTime = System.currentTimeMillis();
 			try {
@@ -56,9 +60,9 @@ public class Run {
 						if(result.equals(false)){
 							log.error(TestCategory +" 返回值:" + result);
 							throw new Exception("返回值为：false");
-						}else{
-							log.info(TestCategory +" 返回值:" + result);
 						}
+						log.info(TestCategory +" 返回值:" + result);
+
 					}
 				}
 				log.info(TestCategory +" -----------------------------------");

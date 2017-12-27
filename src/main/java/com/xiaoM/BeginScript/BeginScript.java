@@ -12,14 +12,14 @@ import com.xiaoM.ReportUtils.TestListener;
 import com.xiaoM.Utils.Run;
 
 public class BeginScript{
-	Log log= new Log(this.getClass());
+	private Log log= new Log(this.getClass());
 	@DataProvider(parallel=true)
 	public Object[][]TestCases() throws IOException{
 		return TestListener.RunCase;
 	}
 
 	@Test(dataProvider = "TestCases")
-	public void runCase3(String ID, String Type, String Description, String CaseName) throws Exception{
+	public void runCase(String ID, String Type, String Description, String CaseName) throws Exception{
 		String RunDevice = UseDevice.getDevice();
 		String TestCategory = ID+"_"+RunDevice+"_"+CaseName;
 		TestListener.Category.put(ID,TestCategory);
