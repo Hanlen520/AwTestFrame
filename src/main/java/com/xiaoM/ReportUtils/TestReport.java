@@ -75,8 +75,6 @@ public class TestReport implements IReporter {
 				IOMananger.DealwithRunLog(TestCategory);//处理日志文件
 				ExtentTest test = extent.createTest(TestCategory);//根据设备分类
 				test.assignCategory(DeviceName);
-				test.getModel().setStartTime(getTime(TestListener.RuntimeStart.get(TestCategory)));
-				test.getModel().setEndTime(getTime(TestListener.RuntimeEnd.get(TestCategory)));
 				switch (result.getStatus()) {
 				case 1://成功用例
 					if(TestListener.RmPicture.containsKey(TestCategory +"_CPU")&&TestListener.RmPicture.containsKey(TestCategory +"_Men")&&TestListener.Resource_Monitoring.toLowerCase().equals("true")){
@@ -87,11 +85,15 @@ public class TestReport implements IReporter {
 							e.printStackTrace();
 						}
 					}
+					test.getModel().setStartTime(getTime(TestListener.RuntimeStart.get(TestCategory)));
+					test.getModel().setEndTime(getTime(TestListener.RuntimeEnd.get(TestCategory)));
 					test.log(status, "Test " + status.toString().toLowerCase() + "ed");
 					test.log(status,TestListener.logList.get(TestCategory));//测试日志
 					break;
 				case 2://失败用例
 					if(TestListener.screenMessageList.containsKey(TestCategory)){
+						test.getModel().setStartTime(getTime(TestListener.RuntimeStart.get(TestCategory)));
+						test.getModel().setEndTime(getTime(TestListener.RuntimeEnd.get(TestCategory)));
 						try {
 							test.fail("报错截图：",MediaEntityBuilder.createScreenCaptureFromPath(TestListener.screenMessageList.get(TestCategory)).build());
 						} catch (IOException e) {
@@ -101,6 +103,8 @@ public class TestReport implements IReporter {
 						test.log(status,TestListener.logList.get(TestCategory));//测试日志
 						test.log(status, result.getThrowable()); //testng捕抓报错
 					}else{
+						test.getModel().setStartTime(getTime(result.getStartMillis()));
+						test.getModel().setEndTime(getTime(result.getEndMillis()));
 						test.log(status,TestListener.logList.get(TestCategory));//测试日志
 						test.log(status, result.getThrowable()); //testng捕抓报错
 					}
