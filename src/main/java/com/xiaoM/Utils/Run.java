@@ -1,101 +1,119 @@
 package com.xiaoM.Utils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import com.xiaoM.Android.ResourceMonitoring;
 import com.xiaoM.ReportUtils.TestListener;
 
 import io.appium.java_client.AppiumDriver;
 
 public class Run {
-	private Log log= new Log(this.getClass());
-	private BaseDriver base;
-	public void  runCase(String ID,String DeviceName,String Type ,String CaseName) throws Exception{
-		AppiumDriver driver;
-		String TestCategory = TestListener.Category.get(ID);
-		Map<String, Object> map = new HashMap<String, Object>();
-		switch (Type.toLowerCase()){
-			case "app":
-				base = new BaseDriver();
-				driver = base.setUpApp(DeviceName,CaseName,TestCategory);
-				break;
-			case  "wap":
-				base = new BaseDriver();
-				driver = base.setUpWap(DeviceName,CaseName,TestCategory);
-				break;
-			default:
-				UseDevice.addDevice(DeviceName);
-				log.error( "请在 "+TestListener.TestCase+".xlsx 中选择正确的测试类型：APP/WAP");
-				throw new Exception( "请在 "+TestListener.TestCase+".xlsx 中选择正确的测试类型：APP/WAP");
-		}
-		String[][] testStart = IOMananger.readExcelDataXlsx(CaseName,TestListener.CasePath);
-		if(testStart!=null){
-			ResourceMonitoring RM = null;
-			boolean StartRM = false;
-			if(TestListener.Resource_Monitoring.toLowerCase().equals("true") && Type.toLowerCase().equals("app")&&TestListener.DeviceType.toLowerCase().equals("android")){
-				RM = new ResourceMonitoring();
-				RM.startMonitoring(DeviceName,TestCategory);
-				StartRM = true;
-			}else if(TestListener.Resource_Monitoring.toLowerCase().equals("true") && !Type.toLowerCase().equals("app")){
-				throw new Exception("资源监控只适用于 Android 平台的APP");
-			}else if(TestListener.Resource_Monitoring.toLowerCase().equals("true") &&!TestListener.DeviceType.toLowerCase().equals("android")){
-				throw new Exception("资源监控只适用于 Android 平台的APP");
-			}
-			long StartTime = System.currentTimeMillis();
-			try {
-				for(int a=1;a<testStart.length;a++){
-					if(testStart[a][0].equals("YES")){
-						String ClassName = testStart[a][4].split("::")[0];
-						String MethodName = testStart[a][4].split("::")[1];
-						log.info(TestCategory +" MethodName:"+MethodName.split("\\(")[0]);
-						log.info(TestCategory +" PackageName:com.xiaoM.PageObject");
-						log.info(TestCategory +" ClassName:"+ ClassName);
-						log.info(TestCategory +" 执行步骤：" + testStart[a][1]);
-						log.info(TestCategory +" 步骤名称：" + testStart[a][2]);
-						String Steps = testStart[a][1]+":"+testStart[a][2];
-						ExecuteScript Method = new ExecuteScript(driver);
-						Object result = Method.runScript(ClassName,MethodName,map,Steps,TestCategory);
-						map.put(testStart[a][1], result);
-						if(result.equals(false)){
-							log.error(TestCategory +" 返回值:" + result);
-							throw new Exception("返回值为：false");
-						}
-						log.info(TestCategory +" 返回值:" + result);
+    private StringBuilder sb;
+    private BaseDriver base;
 
-					}
-				}
-				log.info(TestCategory +" -----------------------------------");
-				log.info(TestCategory +" 测试用例:"+ CaseName +"---End");
-				long EndTime = System.currentTimeMillis();
-				TestListener.RuntimeStart.put(TestCategory,StartTime);
-				TestListener.RuntimeEnd.put(TestCategory,EndTime);
-				if(StartRM){
-					RM.stopMonitoring(DeviceName,TestCategory);
-				}
-			} catch (Exception e) {
-				ScreenShot screenShot = new ScreenShot(driver);
-				screenShot.setscreenName(TestCategory);
-				screenShot.takeScreenshot();
-				log.info(TestCategory +" -----------------------------------");
-				log.info(TestCategory +" 测试用例:"+ CaseName +"---End");
-				long EndTime = System.currentTimeMillis();
-				TestListener.RuntimeStart.put(TestCategory,StartTime);
-				TestListener.RuntimeEnd.put(TestCategory,EndTime);
-				throw e;
-			}finally {
-				driver.quit();
-				UseDevice.addDevice(DeviceName);
-				if(base.getAppiumServer().service!=null|| base.getAppiumServer().service.isRunning()){
-					base.getAppiumServer().service.stop();
-				}
-			}
-		}else{
-			log.error("该测试用例:"+ CaseName +"在 "+TestListener.TestCase+".xlsx 中没有对应的命名的 sheet");
-			log.error(TestCategory +" 测试用例:"+ CaseName +"---End");
-			log.error(TestCategory +" -----------------------------------");
-			throw new Exception();
-		}
-
-	}
+    public void runCase(String DeviceName, String Type, String CaseName, String TestCategory, ExtentTest extentTest) throws Exception {
+        AppiumDriver driver;
+        Location location;
+        switch (Type.toLowerCase()) {
+            case "app":
+                base = new BaseDriver();
+                driver = base.setUpApp(DeviceName, extentTest);
+                break;
+            case "wap":
+                base = new BaseDriver();
+                driver = base.setUpWap(DeviceName, extentTest);
+                break;
+            default:
+                UseDevice.addDevice(DeviceName);
+                extentTest.fail("请在 " + TestListener.TestCase + ".xlsx 中选择正确的测试类型：APP/WAP");
+                throw new Exception();
+        }
+        extentTest.getModel().setStartTime(new Date());
+        String[][] testStart = IOMananger.readExcelDataXlsx(TestListener.workbook,CaseName);
+        if (testStart != null) {
+            ResourceMonitoring RM = null;
+            boolean StartRM = false;
+            if (TestListener.Resource_Monitoring.toLowerCase().equals("true") && Type.toLowerCase().equals("app") && TestListener.DeviceType.toLowerCase().equals("android")) {
+                RM = new ResourceMonitoring();
+                RM.startMonitoring(DeviceName, TestCategory);
+                StartRM = true;
+            } else if (TestListener.Resource_Monitoring.toLowerCase().equals("true") && !Type.toLowerCase().equals("app")) {
+                extentTest.fail("资源监控只适用于 Android 平台的APP");
+                throw new Exception();
+            } else if (TestListener.Resource_Monitoring.toLowerCase().equals("true") && !TestListener.DeviceType.toLowerCase().equals("android")) {
+                extentTest.fail("资源监控只适用于 Android 平台的APP");
+                throw new Exception();
+            }
+            Map<String, Object> returnMap = new HashMap<>();
+            int b = 0;
+            try {
+                for (int a = 1; a < testStart.length; a++) {
+                    b = a;
+                    List<String> parameteres = new ArrayList<>(Arrays.asList(testStart[a]));
+                    location = new Location();
+                    location.setLocation(parameteres);
+                    if (location.getIsRun().equals("YES")) {
+                        sb = new StringBuilder();
+                        String Step = location.getStep();
+                        String Description = location.getDescription();
+                        String Action = location.getAction();
+                        String Key = location.getKey();
+                        String Value = location.getValue();
+                        String Parameter = location.getParameter();
+                        if (Parameter.contains("${")) {
+                            Parameter = Match.replaceKeys(returnMap, Parameter);
+                            location.setParameter(Parameter);
+                        }
+                        if (Value.contains("${")) {
+                            Value = Match.replaceKeys(returnMap, Value);
+                            location.setValue(Value);
+                        }
+                        sb.append("[步骤]: " + Step + "\r\n");
+                        sb.append("[步骤描述]: " + Description + "\r\n");
+                        sb.append("[操作方式]:" + Action + "\r\n");
+                        sb.append("[关键字]:" + Key + "\r\n");
+                        sb.append("[属性值]:" + Value + "\r\n");
+                        sb.append("[参数]：" + Parameter + "\r\n");
+                        ElementAction elementAction = new ElementAction(driver, TestCategory, returnMap);
+                        Object result = elementAction.action(location);
+                        if (result != null) {
+                            if (result.toString().toLowerCase().equals("false")) {
+                                sb.append("[返回值]：False\r\n");
+                                throw new Exception("返回值为 False");
+                            }
+                        }
+                        sb.append("[返回值]：" + result);
+                        returnMap.put(Step, result);
+                        extentTest.log(Status.INFO, "<pre>" + sb.toString() + "</pre>");
+                    }
+                }
+                if (StartRM) {
+                    RM.stopMonitoring(DeviceName, TestCategory);
+                }
+                extentTest.info("<pre>" + sb.toString() + "</pre>");
+            } catch (Exception e) {
+                ScreenShot screenShot = new ScreenShot(driver);
+                screenShot.setScreenName(TestCategory);
+                screenShot.takeScreenshot();
+                sb.append("[异常截图如下]：");
+                extentTest.fail("<pre>" + sb.toString() + "</pre>", MediaEntityBuilder.createScreenCaptureFromPath(TestListener.screenMessageList.get(TestCategory)).build());
+                extentTest.error(e);
+                FailStep.dealWithFailStep(b, testStart, extentTest);
+                throw e;
+            } finally {
+                extentTest.getModel().setEndTime(new Date());
+                driver.quit();
+                UseDevice.addDevice(DeviceName);
+                if (base.getAppiumServer().service != null || base.getAppiumServer().service.isRunning()) {
+                    base.getAppiumServer().service.stop();
+                }
+            }
+        } else {
+            extentTest.fail("该测试用例:" + CaseName + "在 " + TestListener.TestCase + ".xlsx 中没有对应的命名的 sheet");
+            throw new Exception();
+        }
+    }
 }

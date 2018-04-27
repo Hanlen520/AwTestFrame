@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Paint;
 import java.io.File;
 import java.io.FileNotFoundException;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -202,10 +203,10 @@ public class PieChartPicture {
 	 * @param destPath 
 	 * @param chart 
 	 */  
-	public static void drawToOutputStream(String destPath, JFreeChart chart) {  
-		FileOutputStream fos = null;  
+	public static void drawToresultStream(String destPath, JFreeChart chart) {  
+		FileOutputStream fos = null;
 		try {  
-			fos = new FileOutputStream(destPath);  
+			fos = new FileOutputStream(destPath);
 			ChartUtilities.writeChartAsJPEG( fos, 
 					chart, // 图表对象  
 					1600, // 宽  
@@ -294,24 +295,24 @@ public class PieChartPicture {
 	public void CpuScreen() throws FileNotFoundException{
 		CategoryDataset dataset = createCpuDataSet();// step1:创建数据集对象    
 		JFreeChart chart = createCpuChart(dataset,PictureName);// step2:创建折线图  
-		File dir = new File("test-output/snapshot");// step3: 输出图表到磁盘  
+		File dir = new File("test-result/snapshot");// step3: 输出图表到磁盘  
 		if (!dir.exists()){
 			dir.mkdirs();
 		}
 		String screenPath = dir.getAbsolutePath() + "/"+PictureName +"_"+ date +"_CPU.jpg";
-		TestListener.RmPicture.put(TestCategory + "_CPU","../test-output/snapshot/"+PictureName +"_"+ date +"_CPU.jpg");
-		drawToOutputStream(screenPath, chart); // step4: 输出图表到指定的磁盘 
+		TestListener.RmPicture.put(TestCategory + "_CPU","../test-result/snapshot/"+PictureName +"_"+ date +"_CPU.jpg");
+		drawToresultStream(screenPath, chart); // step4: 输出图表到指定的磁盘 
 	}
 	public void MenScreen() throws FileNotFoundException{
 		CategoryDataset dataset = createMenDataSet();// step1:创建数据集对象    
 		JFreeChart chart = createMenChart(dataset,PictureName);// step2:创建折线图  
-		File dir = new File("test-output/snapshot");// step3: 输出图表到磁盘  
+		File dir = new File("test-result/snapshot");// step3: 输出图表到磁盘  
 		if (!dir.exists()){
 			dir.mkdirs();
 		}
 		String screenPath = dir.getAbsolutePath() + "/"+PictureName  +"_"+ date + "_Men.jpg";
-		TestListener.RmPicture.put(TestCategory + "_Men","../test-output/snapshot/"+PictureName +"_"+ date +"_Men.jpg");
-		drawToOutputStream(screenPath, chart); // step4: 输出图表到指定的磁盘
+		TestListener.RmPicture.put(TestCategory + "_Men","../test-result/snapshot/"+PictureName +"_"+ date +"_Men.jpg");
+		drawToresultStream(screenPath, chart); // step4: 输出图表到指定的磁盘
 	}
 	
 	public void createScreen() throws FileNotFoundException{

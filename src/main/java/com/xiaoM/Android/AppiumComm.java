@@ -15,7 +15,7 @@ public class AppiumComm {
 	
 	/**
 	 * 获得应用的UID
-	 * @param appPackage 应用包名b
+	 * @param appPackage 应用包名
 	 * @return UID
 	 * @throws IOException
 	 */
@@ -60,7 +60,7 @@ public class AppiumComm {
 					}
 				}
 			}
-			String workSpace = TestListener.ProjectPath+"/test-output/MonitorResoure/Net";
+			String workSpace = TestListener.ProjectPath+"/test-result/MonitorResoure/Net";
 			IOMananger.saveToFile(workSpace, driverName, String.valueOf(rx));
 			IOMananger.saveToFile(workSpace, driverName, String.valueOf(st));
 		} catch (IOException e) {

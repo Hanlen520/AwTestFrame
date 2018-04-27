@@ -25,12 +25,12 @@ public class CpuThread extends Thread {
 
 	@Override
 	public void run() {
-		String workSpace = TestListener.ProjectPath+"/test-output/MonitorResoure/Cpu";
+		String workSpace = TestListener.ProjectPath+"/test-result/MonitorResoure/Cpu";
 		while(true){
 			try {
 				Thread.sleep(50);
 				cpuForThisTime = getCpu(appPackage,device);
-				date =dateFormat.format(new Date()).toString();
+				date =dateFormat.format(new Date());
 				IOMananger.saveToFile(workSpace, driverName, String.valueOf(cpuForThisTime+" "+date));
 			} catch (IOException | InterruptedException e) {
 				e.printStackTrace();

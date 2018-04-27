@@ -2,7 +2,6 @@ package com.xiaoM.PageObject;
 
 import org.openqa.selenium.By;
 
-import com.xiaoM.Utils.ElementAction;
 import com.xiaoM.Utils.ImageCompare;
 
 import io.appium.java_client.AppiumDriver;
@@ -10,7 +9,7 @@ import io.appium.java_client.MobileElement;
 
 public class Android163Mail {
 	
-	public static boolean Login163(AppiumDriver driver,String userName,String passWord){
+	/*public static boolean Login163(AppiumDriver driver,String userName,String passWord){
 		ElementAction.waitForElement(driver, By.id("com.netease.mail:id/editor_email"), 15).sendKeys(userName);
 		ElementAction.waitForElement(driver, By.id("com.netease.mail:id/editor_password"), 15).sendKeys(passWord);
 		ImageCompare.imageClick(driver, "denglu2");
@@ -27,5 +26,5 @@ public class Android163Mail {
 		driver.findElement(By.id("com.netease.mail:id/mailcompose_content")).sendKeys(content);
 		ElementAction.waitForElement(driver, By.id("com.netease.mail:id/tv_done"), 5).click();
 		return true;
-	}
+	}*/
 }

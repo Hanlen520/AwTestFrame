@@ -3,9 +3,6 @@
 <suite name="Suite" parallel="methods" data-provider-thread-count="1">
 	<listeners>
 		<listener class-name="com.xiaoM.ReportUtils.TestListener" />
-		<listener class-name="com.xiaoM.ReportUtils.TestReport" />
-		<!--<listener class-name="org.uncommons.reportng.HTMLReporter"/>
-		<listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>-->
 	</listeners>
 	<test name="TestCase">
 		<classes>

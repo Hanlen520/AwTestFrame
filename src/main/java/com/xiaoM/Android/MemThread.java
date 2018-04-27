@@ -27,12 +27,12 @@ public class MemThread extends Thread {
 	public void run() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		String date;
-		String workSpace = TestListener.ProjectPath+"/test-output/MonitorResoure/Mem";
+		String workSpace = TestListener.ProjectPath+"/test-result/MonitorResoure/Mem";
 		while(true){
 			try {
 				Thread.sleep(50);
 				memForThisTime = getMobileMem(appPackage,device);
-				date = dateFormat.format(new Date()).toString();
+				date = dateFormat.format(new Date());
 				IOMananger.saveToFile(workSpace, driverName, String.valueOf(memForThisTime+" "+date));
 			} catch (IOException | InterruptedException e) {
 				e.printStackTrace();

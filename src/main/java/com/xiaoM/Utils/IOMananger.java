@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-import com.gargoylesoftware.htmlunit.javascript.configuration.BrowserName;
+import com.aventstack.extentreports.ExtentTest;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -31,9 +31,7 @@ public class IOMananger {
 	/**
 	 * 读取excel
 	 */
-	public static String[][] readExcelDataXlsx(String sheetName,String path) throws IOException {
-		InputStream is = new FileInputStream(path);
-		XSSFWorkbook workbook = new XSSFWorkbook(is);//读取Excel
+	public static String[][] readExcelDataXlsx(XSSFWorkbook workbook,String sheetName){
 		XSSFSheet sheet = workbook.getSheet(sheetName);//读取sheet
 		if(sheet!=null){
 			int lastrowNum = sheet.getLastRowNum()+1;//获取总行数
@@ -48,19 +46,18 @@ public class IOMananger {
 					}
 				}
 			}
-			workbook.close();
 			return user;
 		}else{
 			System.out.println(sheetName +" 不存在，请确认正确");
-			workbook.close();
 			return null;
 		}
 	}
+
 	/**
 	 * 获取执行测试用例
 	 */
-	public static String[][] runTime(String sheetname,String path) throws IOException{
-		String[][] Date =  readExcelDataXlsx(sheetname,path);
+	public static String[][] runTime(String sheetname){
+		String[][] Date =  readExcelDataXlsx(TestListener.workbook,sheetname);
 		List<String> ID = new LinkedList<String>();
 		List<String> Type = new LinkedList<String>();
 		List<String> Description = new LinkedList<String>();
@@ -218,7 +215,43 @@ public class IOMananger {
 			}
 		}
 	}
+	public static XSSFWorkbook getCaseExcel(String path) {
+		XSSFWorkbook workbook = null;//读取Excel
+		try {
+			InputStream is = new FileInputStream(path);
+			workbook = new XSSFWorkbook(is);
+			workbook.close();
+		} catch (Exception e) {
+			ExtentTest extentTest = TestListener.extent.createTest("启动测试失败");
+			extentTest.fail(e.getMessage());
+			TestListener.extent.flush();
+			System.exit(0);
+		}
+		return workbook;
+	}
+
+	public static XSSFWorkbook getDeviceExcel() {
+		XSSFWorkbook workbook = null;
+		String devicesPath;
+		try {
+			if(TestListener.DeviceType.toLowerCase().equals("android")){
+				devicesPath = TestListener.ProjectPath + "/devices/AndroidDevices.xlsx";
+			}else{
+				devicesPath = TestListener.ProjectPath + "/devices/iOSDevices.xlsx";
+			}
+			InputStream is = new FileInputStream(devicesPath);
+			workbook =  new XSSFWorkbook(is);
+			workbook.close();
+		} catch (Exception e) {
+			ExtentTest extentTest = TestListener.extent.createTest("启动测试失败");
+			extentTest.fail(e.getMessage());
+			TestListener.extent.flush();
+			System.exit(0);
+		}
+		return workbook;
+	}
+
 	public static void main(String[]args) throws IOException{
-		DealwithRunLog("1_三星I9192_AndroidTest");
+
 	}
 }

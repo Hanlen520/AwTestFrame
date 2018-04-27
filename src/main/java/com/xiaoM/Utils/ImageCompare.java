@@ -2,6 +2,7 @@ package com.xiaoM.Utils;
 
 import java.io.File;
 
+import io.appium.java_client.android.AndroidDriver;
 import org.bytedeco.javacpp.opencv_core;
 import org.bytedeco.javacpp.opencv_core.IplImage;
 import org.bytedeco.javacpp.opencv_imgcodecs;

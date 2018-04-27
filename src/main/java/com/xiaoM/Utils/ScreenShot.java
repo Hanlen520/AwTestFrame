@@ -23,7 +23,7 @@ public class ScreenShot{
 	private String TestCategory;
 	Log log =new Log(this.getClass());
 	
-	public void setscreenName(String TestCategory){
+	public void setScreenName(String TestCategory){
 		this.TestCategory = TestCategory;
 	}
 	public ScreenShot(AppiumDriver driver){
@@ -43,13 +43,13 @@ public class ScreenShot{
 
 	public void takeScreenshot() {
 		String screenName = TestCategory;
-		File dir = new File("test-output/snapshot");
+		File dir = new File("test-result/snapshot");
 		if (!dir.exists()){
 			dir.mkdirs();
 			}
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd(HH.mm.ss)");
 		String date = dateFormat.format(new Date());
-		String path = "../test-output/snapshot/"+ screenName +"_"+ date +".jpg";
+		String path = "../test-result/snapshot/"+ screenName +"_"+ date +".jpg";
 		TestListener.screenMessageList.put(TestCategory, path);
 		String screenPath = dir.getAbsolutePath() + "\\" + screenName  +"_"+  date + ".jpg";
 		takeScreenshot(screenPath);
