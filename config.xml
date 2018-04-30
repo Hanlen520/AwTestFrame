@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configlist>
+    <TestCase>163mailTest</TestCase>
+    <DeviceType>Android</DeviceType>
+    <DeviceType_Android >
+        <AppName>163mail.apk</AppName>
+        <NoRestApp>false</NoRestApp>
+        <ResourceMonitoring  type="false">
+            <PackageName>com.netease.mail</PackageName>
+            <Activity>com.netease.mobimail.activity.LaunchActivity</Activity>
+        </ResourceMonitoring>
+    </DeviceType_Android>
+    <DeviceType_IOS>
+        <bundleId>com.netease.mailmaster</bundleId>
+    </DeviceType_IOS>
+</configlist>
