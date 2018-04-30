@@ -101,9 +101,4 @@ public class PortProber {
 		}
 		throw new RuntimeException("Unable to find a free port");
 	}
-	
-
-	public static void main(String[] args) {
-		System.out.println(getFreePort());
-	}
 }

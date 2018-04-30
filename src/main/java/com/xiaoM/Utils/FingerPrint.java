@@ -274,10 +274,4 @@ public class FingerPrint {
     public static float compare(BufferedImage image1, BufferedImage image2){
         return new FingerPrint(image1).compare(new FingerPrint(image2));
     }
-
-    public static void main(String[]args) throws IOException {
-        FingerPrint fp1 = new FingerPrint(ImageIO.read(new File("E:\\xiaoM\\isoftStoneAuto\\locationPicture\\button.png")));
-        FingerPrint fp2 =new FingerPrint(ImageIO.read(new File("E:\\xiaoM\\isoftStoneAuto\\locationPicture\\5.png")));
-        System.out.printf("sim=%f",fp1.compare(fp2));
-    }
 }

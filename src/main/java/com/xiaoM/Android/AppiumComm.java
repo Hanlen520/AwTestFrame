@@ -174,8 +174,4 @@ public class AppiumComm {
 		menAvg = menSum/menList.size();		
 		return menAvg;
 	}
-	
-	public static void main(String[] args) throws IOException {
-
-	}
 }

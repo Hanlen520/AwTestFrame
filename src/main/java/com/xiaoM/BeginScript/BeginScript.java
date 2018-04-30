@@ -25,12 +25,14 @@ public class BeginScript {
         log.info(TestCategory + " --- Start");
         ExtentTest extentTest = TestListener.extent.createTest(TestCategory, Description);
         try {
-            new Run().runCase(RunDevice, Type, CaseName,TestCategory, extentTest);
+            new Run().runCase(RunDevice, Type, CaseName, TestCategory, extentTest);
         } catch (Exception e) {
             log.error(TestCategory + " --- Fail");
-           throw e;
+            extentTest.pass(TestCategory + " --- Fail");
+            throw e;
         }
         log.info(TestCategory + " --- Pass");
+        extentTest.pass(TestCategory + " --- Pass");
     }
 
     @AfterSuite

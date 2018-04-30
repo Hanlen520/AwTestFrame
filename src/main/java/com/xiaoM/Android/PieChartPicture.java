@@ -319,6 +319,4 @@ public class PieChartPicture {
 		CpuScreen();
 		MenScreen();
 	}
-	public static void main(String[] args) {
-	}
 } 

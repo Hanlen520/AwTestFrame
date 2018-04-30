@@ -96,10 +96,4 @@ public class ResourceMonitoring {
             throw e;
         }
     }
-
-    public static void main(String[] args) {
-        String appPackageActivity = TestListener.PackageName + "/" + TestListener.Activity;
-        String luanchTime = AppiumComm.appLuanchTime(appPackageActivity, "209e61b5");
-        System.out.println(luanchTime);
-    }
 }

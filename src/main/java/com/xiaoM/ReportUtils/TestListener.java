@@ -7,6 +7,7 @@ import java.util.*;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.xiaoM.Utils.BaseConfig;
 import com.xiaoM.Utils.ExtentManager;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.testng.TestListenerAdapter;
@@ -18,11 +19,13 @@ public class TestListener extends TestListenerAdapter {
     public static ExtentReports extent;
     public static XSSFWorkbook workbook;
     public static XSSFWorkbook DeviceConfig;
+    public static Map<String, String[]> DataBaseConfig = new HashMap<>();
+    /*public static Map<String, String[]> OcrConfig = new HashMap<>();*/
     public static String[][] RunCase;//执行测试case
-    public static Map<String, String> screenMessageList = new HashMap<String, String>();
-    public static Map<String, String> logList = new HashMap<String, String>();
-    public static Map<String, String> RmPicture = new HashMap<String, String>();
-    public static List<String> deviceList = new ArrayList<String>();
+    public static Map<String, String> screenMessageList = new HashMap<>();
+    public static Map<String, String> logList = new HashMap<>();
+    public static Map<String, String> RmPicture = new HashMap<>();
+    public static List<String> deviceList = new ArrayList<>();
     public static String Log_Level;
     public static String DeviceType;//设备类型
     public static String ResetApp;//是否重置应用
@@ -37,21 +40,18 @@ public class TestListener extends TestListenerAdapter {
 
     //配置初始化
     static {
+        try {
             //读取配置文件
             Properties pp = new Properties();
-            try {
-                InputStreamReader reader = new InputStreamReader(new FileInputStream("config.properties"), "UTF-8");
-                pp.load(reader);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        try {
+            InputStreamReader reader = new InputStreamReader(new FileInputStream("config.properties"), "UTF-8");
+            pp.load(reader);
             //获取操作系统
             String os = System.getProperty("os.name");
             if (os.contains("Mac")) {
                 String appiumPath = "/usr/local/lib/node_modules/appium/build/lib/main.js";
                 System.setProperty(AppiumServiceBuilder.APPIUM_PATH, appiumPath);
             }
+            //获取测试设备
             if(pp.getProperty("UING_DEVICES").contains(",")){
                 String[] devices = pp.getProperty("UING_DEVICES").split(",");
                 deviceList.addAll(Arrays.asList(devices));
@@ -71,10 +71,11 @@ public class TestListener extends TestListenerAdapter {
             bundleId = pp.getProperty("BUNDIEID");
 
             extent = ExtentManager.createHtmlReportInstance();//初始化测试报告
-
             workbook = IOMananger.getCaseExcel(CasePath);//获取测试用例Excel内容
             DeviceConfig = IOMananger.getDeviceExcel();//获取测试设备Excel内容
             RunCase = IOMananger.runTime("TestCases");//获取具体需要执行的测试用例
+            DataBaseConfig = BaseConfig.getDataBaseConfigXlsx();//获取数据库配置
+            /*OcrConfig = BaseConfig.getOcrConfigXlsx();//获取百度在线文字识别配置*/
 
         } catch (Exception e) {
             ExtentTest extentTest = extent.createTest("启动测试失败");

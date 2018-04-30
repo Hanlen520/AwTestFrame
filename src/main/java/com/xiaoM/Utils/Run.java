@@ -93,7 +93,6 @@ public class Run {
                 if (StartRM) {
                     RM.stopMonitoring(DeviceName, TestCategory);
                 }
-                extentTest.info("<pre>" + sb.toString() + "</pre>");
             } catch (Exception e) {
                 ScreenShot screenShot = new ScreenShot(driver);
                 screenShot.setScreenName(TestCategory);

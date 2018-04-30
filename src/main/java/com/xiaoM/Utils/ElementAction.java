@@ -2,21 +2,18 @@ package com.xiaoM.Utils;
 
 import com.xiaoM.ReportUtils.TestListener;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.TouchAction;
 import org.bytedeco.javacpp.opencv_core;
 import org.bytedeco.javacpp.opencv_imgcodecs;
 import org.bytedeco.javacpp.opencv_imgproc;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.sql.ResultSet;
 import java.util.Map;
-import java.util.Set;
-
 
 class ElementAction {
     private Log log = new Log(this.getClass());
@@ -154,12 +151,24 @@ class ElementAction {
         return webElement;
     }
 
+    /**
+     * *********************************************************************************************************
+     * 输值模式
+     * *********************************************************************************************************
+     */
+
     private boolean sendKeysMethod(Location location) throws Exception {
         WebElement element = waitForElement(location);
         element.clear();
         element.sendKeys(location.getParameter());
         return true;
     }
+
+    /**
+     * *********************************************************************************************************
+     * 取值模式
+     * *********************************************************************************************************
+     */
 
     private Object getMethod(Location location) throws Exception {
         String value = null;
@@ -184,7 +193,7 @@ class ElementAction {
                 break;
             case "getpicturetext":
                 element = waitForElement(location);
-                /*value = BaiduOCR.getPictureText(driver, element);*/
+                value = BaiduOCR.getPictureText(driver, element);
                 break;
             default:
                 throw new Exception(" 该控件获取值方式不存在：" + method);
@@ -192,47 +201,52 @@ class ElementAction {
         return value;
     }
 
-    private boolean selectMethod(Location location) throws Exception {
+    /**
+     * *********************************************************************************************************
+     * 三种选择控件操作模式
+     * *********************************************************************************************************
+     */
+    private boolean selectByIndexMethod(Location location) throws Exception {
         WebElement element = waitForElement(location);
-        String method = location.getParameter().toLowerCase();
+        String index = location.getParameter();
         Select SelectMethod = new Select(element);
-        if (method.contains("=")) {
-            String method_0 = method.split("=")[0];
-            String method_1 = method.split("=")[1];
-            switch (method_0) {
-                case "index":
-                    int i = Integer.valueOf(method_1);
-                    SelectMethod.selectByIndex(i);
-                    break;
-                case "value":
-                    SelectMethod.selectByValue(method_1);
-                    break;
-            }
-        } else {
-            SelectMethod.selectByVisibleText(method);
-        }
+        int i = Integer.valueOf(index);
+        SelectMethod.selectByIndex(i);
         return true;
     }
 
-    private String alertMethod(Location location) {
-        Alert alert = driver.switchTo().alert();
-        String action = location.getValue().toLowerCase();
-        String alertText = alert.getText();
-        switch (action) {
-            case "accept":
-                alert.accept();
-                break;
-            case "dismiss":
-                alert.dismiss();
-                break;
-        }
-        return alertText;
+    private boolean selectByValueMethod(Location location) throws Exception {
+        WebElement element = waitForElement(location);
+        String value = location.getParameter();
+        Select SelectMethod = new Select(element);
+        SelectMethod.selectByValue(value);
+        return true;
     }
+
+    private boolean selectByTextMethod(Location location) throws Exception {
+        WebElement element = waitForElement(location);
+        String Text = location.getParameter();
+        Select SelectMethod = new Select(element);
+        SelectMethod.selectByVisibleText(Text);
+        return true;
+    }
+
+    /**
+     * *********************************************************************************************************
+     * 点击操作
+     * *********************************************************************************************************
+     */
 
     private boolean clickMethod(Location location) throws Exception {
         waitForElement(location).click();
         return true;
     }
+
+    /**
+     * *********************************************************************************************************
+     * 等待模式
+     * *********************************************************************************************************
+     */
 
     private boolean waitMethod(Location location) throws Exception {
         String method = location.getKey().toLowerCase();
@@ -247,15 +261,20 @@ class ElementAction {
         return true;
     }
 
+    /**
+     * *********************************************************************************************************
+     * 设置参数模式
+     * *********************************************************************************************************
+     */
 
-    private boolean setMethod(Location location) throws Exception {
+    private boolean setMethod(Location location) {
         String key = location.getValue();
         String value = location.getParameter();
         returnMap.put(key, value);
         return true;
     }
 
-    private boolean mouseMethod(Location location) throws Exception {
+    /*private boolean mouseMethod(Location location) throws Exception {
         WebElement element;
         String method = location.getParameter().toLowerCase();
         switch (method) {
@@ -290,9 +309,9 @@ class ElementAction {
                 throw new Exception("[异常]: 无法识别该鼠标操作类型[ " + location.getParameter() + " ]");
         }
         return true;
-    }
+    }*/
 
-    private boolean browserMethod(Location location) throws Exception {
+    /*private boolean browserMethod(Location location) throws Exception {
         String method = location.getValue().toLowerCase();
         Thread.sleep(3);
         switch (method) {
@@ -309,7 +328,7 @@ class ElementAction {
                 Set<String> allWindowsId = driver.getWindowHandles();
                 for (String windowId : allWindowsId) {
                     if (driver.switchTo().window(windowId).getTitle().contains(location.getParameter())) {
-                        /*driver = driver.switchTo().window(windowId);*/
+                        *//*driver = driver.switchTo().window(windowId);*//*
                         break;
                     }
                 }
@@ -326,7 +345,7 @@ class ElementAction {
                 throw new Exception("[异常]: 不支持该操作类型[ " + location.getValue() + " ]");
         }
         return true;
-    }
+    }*/
 
     private boolean iframeMethod(Location location) throws Exception {
         String method = location.getParameter().toLowerCase();
@@ -356,19 +375,15 @@ class ElementAction {
         return true;
     }
 
-    private Object javaScriptMethod(Location location) throws Exception {
-        String method = location.getParameter().toLowerCase();
+    /**
+     * *********************************************************************************************************
+     * 执行js脚本
+     * *********************************************************************************************************
+     */
+
+    private Object javaScriptMethod(Location location) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        Object value;
-        switch (method) {
-            case "click":
-                WebElement element = waitForElement(location);
-                value = js.executeScript("arguments[0].click();", element);
-                break;
-            default:
-                value = js.executeScript(location.getValue());
-        }
-        return value;
+        return js.executeScript(location.getValue());
     }
 
     private Object compareMethod(Location location) throws Exception {
@@ -414,7 +429,7 @@ class ElementAction {
                 switch (location.getValue().toLowerCase()) {
                     case "opencv":
                         opencv_core.IplImage src = opencv_imgcodecs.cvLoadImage(value_0.toString());
-                        opencv_core.IplImage tmp = opencv_imgcodecs.cvLoadImage(TestListener.ProjectPath + "/locationPicture/" + value_1);
+                        opencv_core.IplImage tmp = opencv_imgcodecs.cvLoadImage(TestListener.ProjectPath + "/picture/" + value_1);
                         opencv_core.IplImage result = opencv_core.cvCreateImage(opencv_core.cvSize(src.width() - tmp.width() + 1, src.height() - tmp.height() + 1), opencv_core.IPL_DEPTH_32F, 1);
                         opencv_core.cvZero(result);
                         opencv_imgproc.cvMatchTemplate(src, tmp, result, opencv_imgproc.CV_TM_CCORR_NORMED);
@@ -431,7 +446,7 @@ class ElementAction {
                         throw new Exception("图像相识度为：" + compare_result + " OpenCV相似度小于0.95，判断为不通过");
                     case "hash":
                         FingerPrint fp1 = new FingerPrint(ImageIO.read(new File(value_0.toString())));
-                        FingerPrint fp2 = new FingerPrint(ImageIO.read(new File(TestListener.ProjectPath + "/locationPicture/" + value_1)));
+                        FingerPrint fp2 = new FingerPrint(ImageIO.read(new File(TestListener.ProjectPath + "/picture/" + value_1)));
                         compare_result = fp1.compare(fp2);
                         if (compare_result >= 0.8f) {
                             return "相似度 [ " + compare_result + " ]";
@@ -462,7 +477,7 @@ class ElementAction {
     }
 
     private Object databaseMethod(Location location) throws Exception {
-       /* Map<String, String[]> dataBaseConfig = TestListener.DataBaseConfig;
+        Map<String, String[]> dataBaseConfig = TestListener.DataBaseConfig;
         String[] dataBase = dataBaseConfig.get(location.getParameter());
         String dataBaseType = dataBase[2].toLowerCase();
         String dataBaseDriver;
@@ -473,9 +488,6 @@ class ElementAction {
             case "mysql":
                 url = url + "?useSSL=false&serverTimezone=UTC";
                 dataBaseDriver = "com.mysql.cj.jdbc.Driver";
-                break;
-            case "oracle":
-                dataBaseDriver = "oracle.jdbc.driver.OracleDriver";
                 break;
             default:
                 throw new Exception("[异常]: 不支持该数据库操作[ " + dataBaseType + " ]");
@@ -495,13 +507,33 @@ class ElementAction {
                 break;
             default:
                 throw new Exception("[异常]: 不支持该操作类型[ " + method + " ]");
-        }*/
+        }
         return null;
     }
 
     private Object scriptMethod(Location location) throws Exception {
         ExecuteScript executeScript = new ExecuteScript(driver);
         return executeScript.runScript(location);
+    }
+
+    private Object switchMethod(Location location) throws Exception {
+        String value = location.getValue().toLowerCase();
+        switch (value) {
+            case "webview":
+                driver.getContextHandles().forEach((handle) -> {
+                    if (handle.toString().contains("WEBVIEW")) {
+                        driver.context(handle.toString());
+                    }
+                });
+            case "native":
+                driver.getContextHandles().forEach((handle) -> {
+                    if (handle.toString().contains("Native")) {
+                        driver.context(handle.toString());
+                    }
+                });
+            default:
+                throw new Exception("无法识别该操作类型[ " + value + " ]");
+        }
     }
 
     Object action(Location location) throws Exception {
@@ -517,15 +549,12 @@ class ElementAction {
                 return setMethod(location);
             case "get":
                 return getMethod(location);
-            case "select":
-                return selectMethod(location);
-
-            case "mouse":
-                return mouseMethod(location);
-            case "browser":
-                return browserMethod(location);
-            case "iframe":
-                return iframeMethod(location);
+            case "selectbyindex":
+                return selectByIndexMethod(location);
+            case "selectbyvalue":
+                return selectByValueMethod(location);
+            case "selectbytext":
+                return selectByTextMethod(location);
             case "javascript":
                 return javaScriptMethod(location);
             case "compare":
@@ -534,7 +563,15 @@ class ElementAction {
                 return databaseMethod(location);
             case "script":
                 return scriptMethod(location);
+            case "switch":
+                return switchMethod(location);
+            case "iframe":
+                return iframeMethod(location);
         }
         return true;
     }
+
+
+
+
 }

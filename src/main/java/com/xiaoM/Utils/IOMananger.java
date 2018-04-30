@@ -54,6 +54,35 @@ public class IOMananger {
 	}
 
 	/**
+	 * 获取指定单元格所在的行数
+	 * @param sheetName Sheet
+	 * @param cellContent 文本
+	 */
+	static int locateTextFromExcel(String sheetName, String cellContent) throws IOException {
+		int i = 0;
+		XSSFSheet sheet = TestListener.workbook.getSheet(sheetName);//读取sheet
+		if (sheet != null) {
+			int rowNum = sheet.getLastRowNum();
+			for (int j = 0; j <= rowNum; j++) {
+				XSSFRow row = sheet.getRow(j);
+				if (row != null) {
+					if (row.getCell(0) != null) {
+						row.getCell(0).setCellType(CellType.STRING);
+						if (row.getCell(0).getRichStringCellValue().getString().trim().equals(cellContent)) {
+							return i;
+						}
+					}
+				}
+				i++;
+			}
+		} else {
+			throw new IOException("该 Sheet [ " + sheetName + " ] 不存在");
+		}
+		return i;
+	}
+
+
+	/**
 	 * 获取执行测试用例
 	 */
 	public static String[][] runTime(String sheetname){
@@ -251,7 +280,4 @@ public class IOMananger {
 		return workbook;
 	}
 
-	public static void main(String[]args) throws IOException{
-
-	}
 }

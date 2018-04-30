@@ -47,8 +47,8 @@ public class MemThread extends Thread {
 	 * @throws InterruptedException
 	 */
 	public static Double getMobileMem(String appPackage,String device) throws IOException, InterruptedException {
-		String line = null;
-		String mem = null;
+		String line;
+		String mem;
 		ProcessBuilder pb = new ProcessBuilder(AppiumComm.adb, "-s",device, "shell", "dumpsys meminfo | grep " + appPackage);
 		Process process = pb.start();
 		InputStream is = process.getInputStream();
