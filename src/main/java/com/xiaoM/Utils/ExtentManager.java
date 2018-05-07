@@ -14,14 +14,14 @@ public class ExtentManager {
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
     //获取当前日期
     private static String date = dateFormat.format(new Date());
-    private static final String FILE_NAME = "test-result/TestReport_" + date + ".html";
+    private static final String FILE_NAME = "testCase/"+TestListener.TestCase+"/test-result/TestReport_" + date + ".html";
 
     public static ExtentReports createHtmlReportInstance() {
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(FILE_NAME);
         htmlReporter.config().setDocumentTitle("移动端自动化测试报告 -- designed by xiaoM");//html标题
         htmlReporter.config().setReportName(TestListener.TestCase + " 测试报告");
         htmlReporter.config().setTheme(Theme.STANDARD);//主题：黑/白
-        htmlReporter.config().setEncoding("utf-8");//gb2312
+        htmlReporter.config().setEncoding("gb2312");//gb2312
         htmlReporter.config().setChartVisibilityOnOpen(false);
         htmlReporter.config().setResourceCDN(ResourceCDN.EXTENTREPORTS);
         htmlReporter.config().setTimeStampFormat("yyyy-MM-dd HH:mm:ss");

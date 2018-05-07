@@ -2,6 +2,8 @@ package com.xiaoM.Utils;
 
 import com.xiaoM.ReportUtils.TestListener;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.bytedeco.javacpp.opencv_core;
 import org.bytedeco.javacpp.opencv_imgcodecs;
 import org.bytedeco.javacpp.opencv_imgproc;
@@ -12,7 +14,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 class ElementAction {
@@ -189,7 +196,7 @@ class ElementAction {
                 } else {
                     element = waitForElement(location);
                 }
-                value = PictureCompare.captureElement(driver, element);
+                value = Picture.captureElement(driver, element);
                 break;
             case "getpicturetext":
                 element = waitForElement(location);
@@ -233,12 +240,24 @@ class ElementAction {
 
     /**
      * *********************************************************************************************************
-     * 点击操作
+     * 点击操作(控件、坐标、图片)
      * *********************************************************************************************************
      */
 
     private boolean clickMethod(Location location) throws Exception {
-        waitForElement(location).click();
+        String method = location.getKey().toLowerCase();
+        switch (method) {
+            case "coordinate":
+                int x = Integer.valueOf(location.getParameter().split(",")[0]);
+                int y = Integer.valueOf(location.getParameter().split(",")[1]);
+                new TouchAction(driver).tap(x, y).perform();
+                break;
+            case "picture":
+                Picture.pictureClick(driver, location.getParameter());
+                break;
+            default:
+                waitForElement(location).click();
+        }
         return true;
     }
 
@@ -255,6 +274,16 @@ class ElementAction {
                 int millis = Integer.valueOf(location.getValue()) * 1000;
                 Thread.sleep(millis);
                 break;
+            case "picture":
+                long time = System.currentTimeMillis();
+                while (true) {
+                    if (System.currentTimeMillis() > time + 6000) {
+                        throw new Exception("60S内目标图片没有匹配成功");
+                    }
+                    if (Picture.matchTemplate(driver,location.getParameter())){
+                        return true;
+                    }
+                }
             default:
                 throw new Exception("[异常]: 不支持该[ " + location.getKey() + " ]操作");
         }
@@ -536,6 +565,42 @@ class ElementAction {
         }
     }
 
+    private Object moduleMethod(Location location2) throws Exception {
+        String moudlePath = TestListener.ProjectPath + "/testCase/" + TestListener.TestCase + "/module.xlsx";
+        String sheetName = location2.getValue();
+        InputStream is = new FileInputStream(moudlePath);
+        XSSFWorkbook workbook = new XSSFWorkbook(is);
+        workbook.close();
+        String[][] moduleStep = IOMananger.readExcelDataXlsx(workbook, sheetName);
+        for (int a = 1; a < moduleStep.length; a++) {
+            List<String> parameteres = new ArrayList<>(Arrays.asList(moduleStep[a]));
+            Location location = new Location();
+            location.setLocation(parameteres);
+            if (location.getIsRun().equals("YES")) {
+                String Step = location.getStep();
+                String Value = location.getValue();
+                String Parameter = location.getParameter();
+                if (Parameter.contains("${")) {
+                    Parameter = Match.replaceKeys(returnMap, Parameter);
+                    location.setParameter(Parameter);
+                }
+                if (Value.contains("${")) {
+                    Value = Match.replaceKeys(returnMap, Value);
+                    location.setValue(Value);
+                }
+                ElementAction elementAction = new ElementAction(driver, TestCategory, returnMap);
+                Object result = elementAction.action(location);
+                if (result != null) {
+                    if (result.toString().toLowerCase().equals("false")) {
+                        throw new Exception("返回值为 False");
+                    }
+                }
+                returnMap.put(sheetName + "." + Step, result);
+            }
+        }
+        return true;
+    }
+
     Object action(Location location) throws Exception {
         String method = location.getAction().toLowerCase();
         switch (method) {
@@ -567,11 +632,9 @@ class ElementAction {
                 return switchMethod(location);
             case "iframe":
                 return iframeMethod(location);
+            case "module":
+                return moduleMethod(location);
         }
         return true;
     }
-
-
-
-
 }

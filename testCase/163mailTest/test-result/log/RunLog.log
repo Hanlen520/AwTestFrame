@@ -1,0 +1,13 @@
+[2018-05-02 11:25:33,258] INFO  | 1_夜神_AndroidTest --- Start
+[2018-05-02 11:26:50,227] ERROR | 1_夜神_AndroidTest --- Fail
+[2018-05-02 11:28:40,942] INFO  | 1_夜神_AndroidTest --- Start
+[2018-05-02 11:30:37,281] INFO  | 1_夜神_AndroidTest --- Pass
+[2018-05-07 12:52:18,842] INFO  | 1_夜神_AndroidTest --- Start
+[2018-05-07 12:54:01,114] ERROR | 1_夜神_AndroidTest --- Fail
+[2018-05-07 12:54:13,354] INFO  | 1_夜神_AndroidTest --- Start
+[2018-05-07 12:55:08,861] INFO  | 1_夜神_AndroidTest --- Start
+[2018-05-07 12:59:58,511] INFO  | 1_夜神_AndroidTest --- Start
+[2018-05-07 13:01:37,001] ERROR | 1_夜神_AndroidTest --- Fail
+[2018-05-07 15:06:01,360] INFO  | 1_夜神_AndroidTest --- Start
+[2018-05-07 15:07:27,749] INFO  | 1_夜神_AndroidTest --- Start
+[2018-05-07 15:10:03,337] INFO  | 1_夜神_AndroidTest --- Start

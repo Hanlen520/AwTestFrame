@@ -43,7 +43,7 @@ public class ScreenShot{
 
 	public void takeScreenshot() {
 		String screenName = TestCategory;
-		File dir = new File("test-result/snapshot");
+		File dir = new File("testCase/"+TestListener.TestCase+"/test-result/snapshot");
 		if (!dir.exists()){
 			dir.mkdirs();
 			}

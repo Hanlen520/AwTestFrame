@@ -17,6 +17,7 @@ public class XmlUtils {
         return document.getRootElement();
     }
     public static void main(String []args) throws DocumentException {
-        System.out.println(readXml().element("DeviceType_Android").element("ResourceMonitoring").attribute("type").getValue());
+        Element config = readXml();
+        System.out.println(config.elementText("Devices"));
     }
 }

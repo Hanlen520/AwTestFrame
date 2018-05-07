@@ -1,5 +1,6 @@
 package com.xiaoM.Utils;
 
+import com.xiaoM.ReportUtils.TestListener;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -13,7 +14,7 @@ public class Log {
     private final Class<?> clazz;
     private Logger logger;
     private static String projectRootPath = new File(System.getProperty("user.dir")).getPath().concat("/");
-    private static String src = "test-result/log";
+    private static String src = "testCase/"+TestListener.TestCase+"/test-result/log";
 //	//设置日期格式
 //	static SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
 //	//获取当前日期

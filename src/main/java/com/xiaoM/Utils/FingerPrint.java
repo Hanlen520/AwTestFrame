@@ -1,12 +1,10 @@
 package com.xiaoM.Utils;
 
-import javax.imageio.ImageIO;
+
 import java.awt.*;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 
 public class FingerPrint {

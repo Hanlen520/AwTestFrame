@@ -24,6 +24,7 @@ import io.appium.java_client.remote.MobileCapabilityType;
         URL url;
         String[][] DeviceBase = IOMananger.readExcelDataXlsx(TestListener.DeviceConfig, DeviceName);
         int Port = PortProber.getFreePort();
+        System.out.println("---------------------->>>>>>>>>>>>>>>"+System.currentTimeMillis());
         DesiredCapabilities capabilities = new DesiredCapabilities();
         switch (TestListener.DeviceType.toLowerCase()) {
             case "android":
@@ -32,9 +33,13 @@ import io.appium.java_client.remote.MobileCapabilityType;
                     extentTest.fail("设备不存在，请确认 AndroidDevices.xlsx 中存在 " + DeviceName + " 的设备参数");
                     throw new Exception();
                 }
+                System.out.println("---------------------->>>>>>>>>>>>>>>"+System.currentTimeMillis());
                 AppiumServer = new AppiumServerUtils(DeviceBase[1][2], Port, String.valueOf(PortProber.getFreePort()));
-                url = AppiumServer.startServer();
-                File appDir = new File(TestListener.ProjectPath, "apps");
+                //url = AppiumServer.startServer();
+                url = AppiumServer.startAppiumServerByDefault();
+                System.out.println("---------------------->>>>>>>>>>>>>>>"+System.currentTimeMillis());
+                System.exit(0);
+                File appDir = new File(TestListener.ProjectPath+"/testCase/"+TestListener.TestCase, "apps");
                 File app = new File(appDir, TestListener.AppName + ".apk");
                 capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.APPIUM);
                 capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
@@ -72,7 +77,7 @@ import io.appium.java_client.remote.MobileCapabilityType;
                 break;
             default:
                 UseDevice.addDevice(DeviceName);
-                extentTest.fail("请在 config.properties 中配置 " + DeviceName + " 正确的设备系统类型：Android/iOS");
+                extentTest.fail("请在 config.xml 中配置 " + DeviceName + " 正确的设备系统类型：Android/iOS");
                 throw new Exception();
         }
         return new AppiumDriver<MobileElement>(url, capabilities);
@@ -119,7 +124,7 @@ import io.appium.java_client.remote.MobileCapabilityType;
                 break;
             default:
                 UseDevice.addDevice(DeviceName);
-                extentTest.fail("请在 config.properties 中配置 " + DeviceName + " 正确的设备系统类型：Android/iOS");
+                extentTest.fail("请在 config.xml 中配置 " + DeviceName + " 正确的设备系统类型：Android/iOS");
                 throw new Exception();
         }
         return new AppiumDriver<MobileElement>(url, capabilities);

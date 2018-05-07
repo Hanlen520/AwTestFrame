@@ -28,11 +28,14 @@ public class BeginScript {
             new Run().runCase(RunDevice, Type, CaseName, TestCategory, extentTest);
         } catch (Exception e) {
             log.error(TestCategory + " --- Fail");
-            extentTest.pass(TestCategory + " --- Fail");
+            extentTest.error(TestCategory + " --- Fail");
             throw e;
+        }finally {
+            UseDevice.addDevice(RunDevice);
         }
         log.info(TestCategory + " --- Pass");
         extentTest.pass(TestCategory + " --- Pass");
+
     }
 
     @AfterSuite

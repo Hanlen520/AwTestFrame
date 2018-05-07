@@ -9,7 +9,9 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.xiaoM.Utils.BaseConfig;
 import com.xiaoM.Utils.ExtentManager;
+import com.xiaoM.Utils.XmlUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.dom4j.Element;
 import org.testng.TestListenerAdapter;
 
 import com.xiaoM.Utils.IOMananger;
@@ -42,9 +44,7 @@ public class TestListener extends TestListenerAdapter {
     static {
         try {
             //读取配置文件
-            Properties pp = new Properties();
-            InputStreamReader reader = new InputStreamReader(new FileInputStream("config.properties"), "UTF-8");
-            pp.load(reader);
+            Element config = XmlUtils.readXml();
             //获取操作系统
             String os = System.getProperty("os.name");
             if (os.contains("Mac")) {
@@ -52,23 +52,23 @@ public class TestListener extends TestListenerAdapter {
                 System.setProperty(AppiumServiceBuilder.APPIUM_PATH, appiumPath);
             }
             //获取测试设备
-            if(pp.getProperty("UING_DEVICES").contains(",")){
-                String[] devices = pp.getProperty("UING_DEVICES").split(",");
+            if(config.elementText("Devices").contains(",")){
+                String[] devices = config.elementText("Devices").split(",");
                 deviceList.addAll(Arrays.asList(devices));
             }else{
-                deviceList.add(pp.getProperty("UING_DEVICES"));
+                deviceList.add(config.elementText("Devices"));
             }
-            Log_Level = pp.getProperty("LOG_LEVEL");
+            Log_Level = config.elementText("Appium-Server");
             ProjectPath = new File(System.getProperty("user.dir")).getPath();// 工程根目录
-            TestCase = pp.getProperty("TESTCASE");
-            CasePath = ProjectPath + "/testCase/" + TestCase + ".xlsx";
-            DeviceType = pp.getProperty("DEVICE_TYPE");
-            ResetApp = pp.getProperty("NORESET_APP");
-            AppName = pp.getProperty("APP_NAME");
-            Resource_Monitoring = pp.getProperty("RESOURCE_MONITORING");
-            PackageName = pp.getProperty("APP_PACKAGENAME");
-            Activity = pp.getProperty("APP_ACTIVITY");
-            bundleId = pp.getProperty("BUNDIEID");
+            TestCase = config.elementText("TestCase");
+            CasePath = ProjectPath + "/testCase/" + TestCase + "/main.xlsx";
+            DeviceType = config.elementText("DeviceType");
+            ResetApp = config.element("DeviceType_Android").elementText("NoRestApp");
+            AppName = config.element("DeviceType_Android").elementText("AppName");
+            Resource_Monitoring = config.element("DeviceType_Android").element("ResourceMonitoring").attribute("type").getValue();
+            PackageName = config.element("DeviceType_Android").element("ResourceMonitoring").elementText("PackageName");
+            Activity = config.element("DeviceType_Android").element("ResourceMonitoring").elementText("Activity");
+            bundleId = config.element("DeviceType_IOS").elementText("bundleId");
 
             extent = ExtentManager.createHtmlReportInstance();//初始化测试报告
             workbook = IOMananger.getCaseExcel(CasePath);//获取测试用例Excel内容

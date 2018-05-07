@@ -19,8 +19,8 @@ public class ExecuteScript  {
 		String jarName = location.getParameter();
 		String className = location.getValue().split("::")[0];
 		String methodName = location.getValue().split("::")[1];
-		Object result ;
-		File file = new File(TestListener.ProjectPath + "/script/" + jarName);//类路径(包文件上一层)
+		Object result  ;
+		File file = new File(TestListener.ProjectPath + "/testCase/"+TestListener.TestCase+"/script/" + jarName);//类路径(包文件上一层)
 		URLClassLoader loader = new URLClassLoader(new URL[]{file.toURI().toURL()});//创建类加载器
 		Class<?> cls = loader.loadClass(className);//加载指定类，注意一定要带上类的包名
 		Object obj = cls.newInstance();//初始化一个实例

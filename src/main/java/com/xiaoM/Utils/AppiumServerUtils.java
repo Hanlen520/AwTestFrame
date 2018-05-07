@@ -54,6 +54,7 @@ public class AppiumServerUtils {
 		builder.withIPAddress(ipAddress);
 		builder.usingPort(port);
 		builder.withArgument(GeneralServerFlag.LOG_LEVEL, TestListener.Log_Level.toLowerCase());
+		builder.withArgument(GeneralServerFlag.SESSION_OVERRIDE);
 		builder.withArgument(AndroidServerFlag.BOOTSTRAP_PORT_NUMBER, bp);
 		service = AppiumDriverLocalService.buildService(builder);
 		service.start();

@@ -15,7 +15,7 @@ public class Run {
     private BaseDriver base;
 
     public void runCase(String DeviceName, String Type, String CaseName, String TestCategory, ExtentTest extentTest) throws Exception {
-        AppiumDriver driver;
+        AppiumDriver driver = null;
         Location location;
         switch (Type.toLowerCase()) {
             case "app":
@@ -27,7 +27,6 @@ public class Run {
                 driver = base.setUpWap(DeviceName, extentTest);
                 break;
             default:
-                UseDevice.addDevice(DeviceName);
                 extentTest.fail("请在 " + TestListener.TestCase + ".xlsx 中选择正确的测试类型：APP/WAP");
                 throw new Exception();
         }
@@ -105,7 +104,6 @@ public class Run {
             } finally {
                 extentTest.getModel().setEndTime(new Date());
                 driver.quit();
-                UseDevice.addDevice(DeviceName);
                 if (base.getAppiumServer().service != null || base.getAppiumServer().service.isRunning()) {
                     base.getAppiumServer().service.stop();
                 }
