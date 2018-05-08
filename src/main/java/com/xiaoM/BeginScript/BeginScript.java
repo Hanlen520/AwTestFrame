@@ -20,10 +20,11 @@ public class BeginScript {
 
     @Test(dataProvider = "TestCases")
     public void runCase(String ID, String Type, String Description, String CaseName) throws Exception {
-        String RunDevice = UseDevice.getDevice();
+        String RunDevice = UseDevice.getDevice();//获取设备
         String TestCategory = ID + "_" + RunDevice + "_" + CaseName;
         log.info(TestCategory + " --- Start");
-        ExtentTest extentTest = TestListener.extent.createTest(TestCategory, Description);
+        ExtentTest extentTest = TestListener.extent.createTest(TestCategory, Description);//测试报告增加一个节点
+        extentTest.assignCategory(RunDevice);//根据设备来分类
         try {
             new Run().runCase(RunDevice, Type, CaseName, TestCategory, extentTest);
         } catch (Exception e) {

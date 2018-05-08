@@ -44,7 +44,7 @@ public class TestListener extends TestListenerAdapter {
     static {
         try {
             //读取配置文件
-            Element config = XmlUtils.readXml();
+            Element config = XmlUtils.readConfigXml();
             //获取操作系统
             String os = System.getProperty("os.name");
             if (os.contains("Mac")) {
@@ -60,7 +60,7 @@ public class TestListener extends TestListenerAdapter {
             }
             Log_Level = config.elementText("Appium-Server");
             ProjectPath = new File(System.getProperty("user.dir")).getPath();// 工程根目录
-            TestCase = config.elementText("TestCase");
+            TestCase = XmlUtils.getTestCase();
             CasePath = ProjectPath + "/testCase/" + TestCase + "/main.xlsx";
             DeviceType = config.elementText("DeviceType");
             ResetApp = config.element("DeviceType_Android").elementText("NoRestApp");
@@ -75,7 +75,7 @@ public class TestListener extends TestListenerAdapter {
             DeviceConfig = IOMananger.getDeviceExcel();//获取测试设备Excel内容
             RunCase = IOMananger.runTime("TestCases");//获取具体需要执行的测试用例
             DataBaseConfig = BaseConfig.getDataBaseConfigXlsx();//获取数据库配置
-            /*OcrConfig = BaseConfig.getOcrConfigXlsx();//获取百度在线文字识别配置*/
+           /* OcrConfig = BaseConfig.getOcrConfigXlsx();//获取百度在线文字识别配置*/
 
         } catch (Exception e) {
             ExtentTest extentTest = extent.createTest("启动测试失败");

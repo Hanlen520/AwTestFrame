@@ -4,7 +4,7 @@
 	<listeners>
 		<listener class-name="com.xiaoM.ReportUtils.TestListener" />
 	</listeners>
-	<test name="TestCase">
+	<test name="163mailTest">
 		<classes>
 			<class name="com.xiaoM.BeginScript.BeginScript" />
 		</classes>

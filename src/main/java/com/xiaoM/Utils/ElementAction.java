@@ -1,5 +1,8 @@
 package com.xiaoM.Utils;
 
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import com.xiaoM.ReportUtils.TestListener;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
@@ -27,11 +30,13 @@ class ElementAction {
     private AppiumDriver driver;
     private String TestCategory;
     private Map<String, Object> returnMap;
+    private ExtentTest extentTest;
 
-    ElementAction(AppiumDriver driver, String TestCategory, Map<String, Object> returnMap) {
+    ElementAction(AppiumDriver driver, String TestCategory, Map<String, Object> returnMap, ExtentTest extentTest) {
         this.driver = driver;
         this.TestCategory = TestCategory;
         this.returnMap = returnMap;
+        this.extentTest = extentTest;
     }
 
     private WebElement getLocationElement(Location location) {
@@ -129,12 +134,7 @@ class ElementAction {
         }
         try {
             webElement = (new WebDriverWait(driver, timeout)).until(
-                    new ExpectedCondition<WebElement>() {
-                        @Override
-                        public WebElement apply(WebDriver dr) {
-                            return getLocationElement(location);
-                        }
-                    });
+                    (ExpectedCondition<WebElement>) dr -> getLocationElement(location));
         } catch (Exception e) {
             return "null";
         }
@@ -149,12 +149,7 @@ class ElementAction {
             timeout = Integer.valueOf(location.getTimeOut());
         }
         WebElement webElement = (new WebDriverWait(driver, timeout)).until(
-                new ExpectedCondition<WebElement>() {
-                    @Override
-                    public WebElement apply(WebDriver dr) {
-                        return getLocationElement(location_Str);
-                    }
-                });
+                (ExpectedCondition<WebElement>) dr -> getLocationElement(location_Str));
         return webElement;
     }
 
@@ -248,8 +243,8 @@ class ElementAction {
         String method = location.getKey().toLowerCase();
         switch (method) {
             case "coordinate":
-                int x = Integer.valueOf(location.getParameter().split(",")[0]);
-                int y = Integer.valueOf(location.getParameter().split(",")[1]);
+                int x = Integer.valueOf(location.getValue().split(":")[0]);
+                int y = Integer.valueOf(location.getValue().split(":")[1]);
                 new TouchAction(driver).tap(x, y).perform();
                 break;
             case "picture":
@@ -280,7 +275,7 @@ class ElementAction {
                     if (System.currentTimeMillis() > time + 6000) {
                         throw new Exception("60S内目标图片没有匹配成功");
                     }
-                    if (Picture.matchTemplate(driver,location.getParameter())){
+                    if (Picture.matchTemplate(driver, location.getParameter())) {
                         return true;
                     }
                 }
@@ -302,79 +297,6 @@ class ElementAction {
         returnMap.put(key, value);
         return true;
     }
-
-    /*private boolean mouseMethod(Location location) throws Exception {
-        WebElement element;
-        String method = location.getParameter().toLowerCase();
-        switch (method) {
-            case "hover":
-                element = waitForElement(location);
-                new Actions(driver).moveToElement(element).perform();
-                break;
-            case "draganddrop":
-                if (location.getValue().contains(";")) {
-                    String location_Str_0 = location.getValue().split(";")[0];
-                    String location_Str_1 = location.getValue().split(";")[1];
-                    WebElement element_Begin = waitForElement(location_Str_0, location);
-                    WebElement element_End = waitForElement(location_Str_1, location);
-                    new Actions(driver).dragAndDrop(element_Begin, element_End).perform();
-                } else {
-                    throw new Exception("[异常]: 拖拽实现的必要条件没达到[ " + location.getValue() + " ]");
-                }
-                break;
-            case "click":
-                element = waitForElement(location);
-                new Actions(driver).click(element).perform();
-                break;
-            case "doubleclick":
-                element = waitForElement(location);
-                new Actions(driver).doubleClick(element).perform();
-                break;
-            case "rightclick":
-                element = waitForElement(location);
-                new Actions(driver).contextClick(element).perform();
-                break;
-            default:
-                throw new Exception("[异常]: 无法识别该鼠标操作类型[ " + location.getParameter() + " ]");
-        }
-        return true;
-    }*/
-
-    /*private boolean browserMethod(Location location) throws Exception {
-        String method = location.getValue().toLowerCase();
-        Thread.sleep(3);
-        switch (method) {
-            case "refresh":
-                driver.navigate().refresh();
-                break;
-            case "back":
-                driver.navigate().back();
-                break;
-            case "forward":
-                driver.navigate().forward();
-                break;
-            case "switchtowindow":
-                Set<String> allWindowsId = driver.getWindowHandles();
-                for (String windowId : allWindowsId) {
-                    if (driver.switchTo().window(windowId).getTitle().contains(location.getParameter())) {
-                        *//*driver = driver.switchTo().window(windowId);*//*
-                        break;
-                    }
-                }
-                break;
-            case "maximize":
-                driver.manage().window().maximize();
-                break;
-            case "setsize":
-                int width = Integer.valueOf(location.getParameter().split(",")[0]);
-                int height = Integer.valueOf(location.getParameter().split(",")[1]);
-                driver.manage().window().setSize(new Dimension(width, height));
-                break;
-            default:
-                throw new Exception("[异常]: 不支持该操作类型[ " + location.getValue() + " ]");
-        }
-        return true;
-    }*/
 
     private boolean iframeMethod(Location location) throws Exception {
         String method = location.getParameter().toLowerCase();
@@ -571,32 +493,59 @@ class ElementAction {
         InputStream is = new FileInputStream(moudlePath);
         XSSFWorkbook workbook = new XSSFWorkbook(is);
         workbook.close();
+        StringBuilder sb = null;
         String[][] moduleStep = IOMananger.readExcelDataXlsx(workbook, sheetName);
-        for (int a = 1; a < moduleStep.length; a++) {
-            List<String> parameteres = new ArrayList<>(Arrays.asList(moduleStep[a]));
-            Location location = new Location();
-            location.setLocation(parameteres);
-            if (location.getIsRun().equals("YES")) {
-                String Step = location.getStep();
-                String Value = location.getValue();
-                String Parameter = location.getParameter();
-                if (Parameter.contains("${")) {
-                    Parameter = Match.replaceKeys(returnMap, Parameter);
-                    location.setParameter(Parameter);
-                }
-                if (Value.contains("${")) {
-                    Value = Match.replaceKeys(returnMap, Value);
-                    location.setValue(Value);
-                }
-                ElementAction elementAction = new ElementAction(driver, TestCategory, returnMap);
-                Object result = elementAction.action(location);
-                if (result != null) {
-                    if (result.toString().toLowerCase().equals("false")) {
-                        throw new Exception("返回值为 False");
+        int b = 0;
+        try {
+            for (int a = 1; a < moduleStep.length; a++) {
+                b=a;
+                List<String> parameteres = new ArrayList<>(Arrays.asList(moduleStep[a]));
+                Location location = new Location();
+                location.setLocation(parameteres);
+                sb = new StringBuilder();
+                if (location.getIsRun().equals("YES")) {
+                    String Step = sheetName + "." + location.getStep();
+                    String Description = location.getDescription();
+                    String Action = location.getAction();
+                    String Key = location.getKey();
+                    String Value = location.getValue();
+                    String Parameter = location.getParameter();
+                    if (Parameter.contains("${")) {
+                        Parameter = Match.replaceKeys(returnMap, Parameter);
+                        location.setParameter(Parameter);
                     }
+                    if (Value.contains("${")) {
+                        Value = Match.replaceKeys(returnMap, Value);
+                        location.setValue(Value);
+                    }
+                    sb.append("[模块]: " + location2.getDescription() + "\r\n");
+                    sb.append("[步骤]: " + Step + "\r\n");
+                    sb.append("[步骤描述]: " + Description + "\r\n");
+                    sb.append("[操作方式]:" + Action + "\r\n");
+                    sb.append("[关键字]:" + Key + "\r\n");
+                    sb.append("[属性值]:" + Value + "\r\n");
+                    sb.append("[参数]：" + Parameter + "\r\n");
+                    ElementAction elementAction = new ElementAction(driver, TestCategory, returnMap, extentTest);
+                    Object result = elementAction.action(location);
+                    if (result != null) {
+                        if (result.toString().toLowerCase().equals("false")) {
+                            throw new Exception("返回值为 False");
+                        }
+                    }
+                    sb.append("[返回值]：" + result);
+                    returnMap.put(Step, result);
+                    extentTest.log(Status.INFO, "<pre>" + sb.toString() + "</pre>");
                 }
-                returnMap.put(sheetName + "." + Step, result);
             }
+        } catch (Exception e) {
+            ScreenShot screenShot = new ScreenShot(driver);
+            screenShot.setScreenName(TestCategory);
+            screenShot.takeScreenshot();
+            sb.append("[异常截图如下]：");
+            extentTest.fail("<pre>" + sb.toString() + "</pre>", MediaEntityBuilder.createScreenCaptureFromPath(TestListener.screenMessageList.get(TestCategory)).build());
+            extentTest.error(e);
+            FailStep.dealWithMoubleFailStep(b, moduleStep, extentTest,location2);
+            throw e;
         }
         return true;
     }

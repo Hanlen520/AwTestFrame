@@ -24,7 +24,6 @@ import io.appium.java_client.remote.MobileCapabilityType;
         URL url;
         String[][] DeviceBase = IOMananger.readExcelDataXlsx(TestListener.DeviceConfig, DeviceName);
         int Port = PortProber.getFreePort();
-        System.out.println("---------------------->>>>>>>>>>>>>>>"+System.currentTimeMillis());
         DesiredCapabilities capabilities = new DesiredCapabilities();
         switch (TestListener.DeviceType.toLowerCase()) {
             case "android":
@@ -33,19 +32,14 @@ import io.appium.java_client.remote.MobileCapabilityType;
                     extentTest.fail("设备不存在，请确认 AndroidDevices.xlsx 中存在 " + DeviceName + " 的设备参数");
                     throw new Exception();
                 }
-                System.out.println("---------------------->>>>>>>>>>>>>>>"+System.currentTimeMillis());
                 AppiumServer = new AppiumServerUtils(DeviceBase[1][2], Port, String.valueOf(PortProber.getFreePort()));
-                //url = AppiumServer.startServer();
-                url = AppiumServer.startAppiumServerByDefault();
-                System.out.println("---------------------->>>>>>>>>>>>>>>"+System.currentTimeMillis());
-                System.exit(0);
-                File appDir = new File(TestListener.ProjectPath+"/testCase/"+TestListener.TestCase, "apps");
-                File app = new File(appDir, TestListener.AppName + ".apk");
+                url = AppiumServer.startServer();
+                String appPath = TestListener.ProjectPath+"/testCase/"+TestListener.TestCase+"/apps/"+TestListener.AppName + ".apk";
                 capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.APPIUM);
                 capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
                 capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, DeviceBase[2][2]);
                 capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, DeviceBase[3][2]);
-                capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
+                capabilities.setCapability(MobileCapabilityType.APP, appPath);
                 if (TestListener.PackageName != null && TestListener.Activity != null) {
                     capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, TestListener.PackageName);
                     capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, TestListener.Activity);

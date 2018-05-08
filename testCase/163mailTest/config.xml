@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configlist>
-    <TestCase>163mailTest</TestCase><!-- 执行的测试用例 -->
     <DeviceType>Android</DeviceType><!-- 测试设备系统(Android\iOS) -->
     <DeviceType_Android>
         <AppName>163mail</AppName><!-- 测试应用名称 -->

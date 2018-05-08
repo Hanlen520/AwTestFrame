@@ -13,9 +13,10 @@ import io.appium.java_client.AppiumDriver;
 public class Run {
     private StringBuilder sb;
     private BaseDriver base;
+    private String FailAction;
 
     public void runCase(String DeviceName, String Type, String CaseName, String TestCategory, ExtentTest extentTest) throws Exception {
-        AppiumDriver driver = null;
+        AppiumDriver driver ;
         Location location;
         switch (Type.toLowerCase()) {
             case "app":
@@ -62,6 +63,7 @@ public class Run {
                         String Key = location.getKey();
                         String Value = location.getValue();
                         String Parameter = location.getParameter();
+                        FailAction = Action;
                         if (Parameter.contains("${")) {
                             Parameter = Match.replaceKeys(returnMap, Parameter);
                             location.setParameter(Parameter);
@@ -76,7 +78,7 @@ public class Run {
                         sb.append("[关键字]:" + Key + "\r\n");
                         sb.append("[属性值]:" + Value + "\r\n");
                         sb.append("[参数]：" + Parameter + "\r\n");
-                        ElementAction elementAction = new ElementAction(driver, TestCategory, returnMap);
+                        ElementAction elementAction = new ElementAction(driver, TestCategory, returnMap,extentTest);
                         Object result = elementAction.action(location);
                         if (result != null) {
                             if (result.toString().toLowerCase().equals("false")) {
@@ -86,19 +88,23 @@ public class Run {
                         }
                         sb.append("[返回值]：" + result);
                         returnMap.put(Step, result);
-                        extentTest.log(Status.INFO, "<pre>" + sb.toString() + "</pre>");
+                        if (!Action.toLowerCase().equals("module")){
+                            extentTest.log(Status.INFO, "<pre>" + sb.toString() + "</pre>");
+                        }
                     }
                 }
                 if (StartRM) {
                     RM.stopMonitoring(DeviceName, TestCategory);
                 }
             } catch (Exception e) {
-                ScreenShot screenShot = new ScreenShot(driver);
-                screenShot.setScreenName(TestCategory);
-                screenShot.takeScreenshot();
-                sb.append("[异常截图如下]：");
-                extentTest.fail("<pre>" + sb.toString() + "</pre>", MediaEntityBuilder.createScreenCaptureFromPath(TestListener.screenMessageList.get(TestCategory)).build());
-                extentTest.error(e);
+                if (!FailAction.toLowerCase().equals("module")){
+                    ScreenShot screenShot = new ScreenShot(driver);
+                    screenShot.setScreenName(TestCategory);
+                    screenShot.takeScreenshot();
+                    sb.append("[异常截图如下]：");
+                    extentTest.fail("<pre>" + sb.toString() + "</pre>", MediaEntityBuilder.createScreenCaptureFromPath(TestListener.screenMessageList.get(TestCategory)).build());
+                    extentTest.error(e);
+                }
                 FailStep.dealWithFailStep(b, testStart, extentTest);
                 throw e;
             } finally {

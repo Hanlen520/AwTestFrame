@@ -4,14 +4,14 @@
 
 
 <head>
-	<meta charset='utf-8' /> 
+	<meta charset='utf-8' />
 	<meta name='description' content='' />
 	<meta name='robots' content='noodp, noydir' />
 	<meta name='viewport' content='width=device-width, initial-scale=1' />
 	<meta id="timeStampFormat" name="timeStampFormat" content='yyyy-MM-dd HH:mm:ss'/>
 	
-	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css'>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css' />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
 		<link href='http://extentreports.com/resx/dist/css/extent.css' type='text/css' rel='stylesheet' />
 	
@@ -33,7 +33,8 @@
 		<!-- slideout menu -->
 		<ul id='slide-out' class='side-nav fixed hide-on-med-and-down'>
 			<li class='waves-effect active'><a href='#!' view='test-view' onclick="configureView(0);chartsView('test');"><i class='material-icons'>dashboard</i></a></li>
-						<li class='waves-effect'><a href='#!' onclick="configureView(-1);chartsView('dashboard');" view='dashboard-view'><i class='material-icons'>track_changes</i></i></a></li>
+						<li class='waves-effect'><a href='#!' view='category-view' onclick="configureView(1)"><i class='material-icons'>label_outline</i></a></li>
+			<li class='waves-effect'><a href='#!' onclick="configureView(-1);chartsView('dashboard');" view='dashboard-view'><i class='material-icons'>track_changes</i></i></a></li>
 		</ul>
 
 		<!-- report name -->
@@ -46,12 +47,12 @@
 		<ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
 			<li>
                 <a href='#!'>
-                    <span class='label suite-start-time blue darken-3'>2018-05-02 11:25:32</span>
+                    <span class='label suite-start-time blue darken-3'>2018-05-08 14:59:46</span>
 				</a>
 			</li>
 			<li>
                 <a href='#!'>
-                    <span class='label blue darken-3'>3.1.2</span>
+                    <span class='label blue darken-3'>3.1.5</span>
 				</a>
 			</li>
 		</ul>
@@ -79,6 +80,16 @@
 			<!-- test toggle -->
 
 			<!-- category toggle -->
+			<div class='chip transparent'>
+				<a class='dropdown-button category-toggle' data-activates='category-toggle' data-constrainwidth='false' data-beloworigin='true' data-hover='true' href='#'>
+					<i class='material-icons'>local_offer</i> Category
+				</a>
+				<ul id='category-toggle' class='dropdown-content'>
+					<li><a href='#'>夜神</a></li>
+					<li class='divider'></li>
+					<li class='clear'><a href='#!' clear='true'>Clear Filters</a></li>
+				</ul>
+			</div>
 			<!-- category toggle -->
 
 			<!-- clear filters -->
@@ -137,10 +148,10 @@
 					<canvas id='child-analysis' width='100' height='80'></canvas>
 				</div>
 				<div class='block text-small'>
-					<span class='tooltipped' data-position='top' data-tooltip='100%'><span class='strong'>1</span> step(s) passed</span>
+					<span class='tooltipped' data-position='top' data-tooltip='11.111%'><span class='strong'>1</span> step(s) passed</span>
 				</div>
 				<div class='block text-small'>
-					<span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> step(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
+					<span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> step(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='88.889%'>8</span> others
 				</div>
 			</div>
 		</div>
@@ -158,16 +169,21 @@
 				<li class='test displayed active  pass' status='pass' bdd='false' test-id='1'>
 					<div class='test-heading'>
 						<span class='test-name'>1_夜神_AndroidTest</span>
-						<span class='test-time'>2018-05-02 11:25:33</span>
+						<span class='test-time'>2018-05-08 15:00:09</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 					<div class='test-content hide'>
 <div class='test-time-info'>
-	<span class='label start-time'>2018-05-02 11:25:33</span>
-	<span class='label end-time'>2018-05-02 11:25:33</span>
-	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+0ms</span>
+	<span class='label start-time'>2018-05-08 15:00:09</span>
+	<span class='label end-time'>2018-05-08 15:00:36</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 27s+602ms</span>
 </div>
 	<div class='test-desc'>Android客户端发送邮件 </div>
+	<div class='test-attributes'>
+			<div class='category-list'>
+				<span class='category label white-text'>夜神</span>
+			</div>
+	</div>
 	<div class='test-steps'>
 		<table class='bordered table-results'>
 			<thead>
@@ -178,10 +194,101 @@
 				</tr>
 			</thead>
 			<tbody>
+				<tr class='log' status='info'>
+					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+					<td class='timestamp'>3:00:09 PM</td>
+					<td class='step-details'><pre>[步骤]: Step01
+[步骤描述]: 设置登陆账号
+[操作方式]:set
+[关键字]:
+[属性值]:username
+[参数]：maomingtest@163.com
+[返回值]：true</pre></td>
+				</tr>
+				<tr class='log' status='info'>
+					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+					<td class='timestamp'>3:00:09 PM</td>
+					<td class='step-details'><pre>[步骤]: Step02
+[步骤描述]: 设置登陆密码
+[操作方式]:set
+[关键字]:
+[属性值]:password
+[参数]：as123456
+[返回值]：true</pre></td>
+				</tr>
+				<tr class='log' status='info'>
+					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+					<td class='timestamp'>3:00:09 PM</td>
+					<td class='step-details'><pre>[步骤]: Step03
+[步骤描述]: 设置收件人地址
+[操作方式]:set
+[关键字]:
+[属性值]:mail
+[参数]：maomingtest2@163.com
+[返回值]：true</pre></td>
+				</tr>
+				<tr class='log' status='info'>
+					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+					<td class='timestamp'>3:00:09 PM</td>
+					<td class='step-details'><pre>[步骤]: Step04
+[步骤描述]: 设置邮件内容
+[操作方式]:set
+[关键字]:
+[属性值]:content
+[参数]：这是一封测试邮件
+[返回值]：true</pre></td>
+				</tr>
+				<tr class='log' status='info'>
+					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+					<td class='timestamp'>3:00:16 PM</td>
+					<td class='step-details'><pre>[模块]: 用户登陆
+[步骤]: Login.Step01
+[步骤描述]: 输入登陆账号
+[操作方式]:sendkeys
+[关键字]:ById
+[属性值]:com.netease.mail:id/editor_email
+[参数]：maomingtest@163.com
+[返回值]：true</pre></td>
+				</tr>
+				<tr class='log' status='info'>
+					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+					<td class='timestamp'>3:00:24 PM</td>
+					<td class='step-details'><pre>[模块]: 用户登陆
+[步骤]: Login.Step02
+[步骤描述]: 输入登陆密码
+[操作方式]:sendkeys
+[关键字]:ById
+[属性值]:com.netease.mail:id/editor_password
+[参数]：as123456
+[返回值]：true</pre></td>
+				</tr>
+				<tr class='log' status='info'>
+					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+					<td class='timestamp'>3:00:26 PM</td>
+					<td class='step-details'><pre>[模块]: 用户登陆
+[步骤]: Login.Step03
+[步骤描述]: 点击登陆按钮
+[操作方式]:click
+[关键字]:picture
+[属性值]:
+[参数]：LoginButton.png
+[返回值]：true</pre></td>
+				</tr>
+				<tr class='log' status='info'>
+					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+					<td class='timestamp'>3:00:36 PM</td>
+					<td class='step-details'><pre>[步骤]: Step06
+[步骤描述]: 等待10秒
+[操作方式]:wait
+[关键字]:time
+[属性值]:10
+[参数]：
+[返回值]：true</pre></td>
+				</tr>
 				<tr class='log' status='pass'>
 					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-					<td class='timestamp'>11:26:50 AM</td>
-					<td class='step-details'>1_夜神_AndroidTest --- Fail</td>
+					<td class='timestamp'>3:00:39 PM</td>
+					<td class='step-details'>1_夜神_AndroidTest --- Pass</td>
 				</tr>
 			</tbody>
 		</table>
@@ -213,6 +320,76 @@
 
 </div>
 <!-- test view -->
+<div id='category-view' class='view hide'>
+
+	<section id='controls'>
+		<div class='controls grey lighten-4'>
+			<!-- search -->
+			<div class='chip transparent' alt='Search Tests' title='Search Tests'>
+				<a href="#" class='search-div'>
+					<i class='material-icons'>search</i> Search
+				</a>
+				
+				<div class='input-field left hide'>
+					<input id='search-tests' type='text' class='validate browser-default' placeholder='Search Tests...'>
+				</div>
+				
+			</div>
+			<!-- search -->
+		</div>
+	</section>
+
+	<div class='subview-left left'>
+		
+		<div class='view-summary'>
+			<h5>Categories</h3>
+			<ul id='category-collection' class='category-collection'>
+				
+				<li class='category displayed active'>
+					<div class='category-heading'>
+						<span class='category-name'>夜神</span>
+						<span class='category-status right'>
+							<span class='label pass'>1</span>
+						</span>
+					</div>
+					<div class='category-content hide'>
+						<div class='category-status-counts'>
+							<span class='label green accent-4 white-text'>Passed: 1</span>
+							
+							
+						</div>
+					
+						<div class='category-tests'>
+							<table class='bordered table-results'>
+								<thead>
+									<tr>
+										<th>Timestamp</th>
+										<th>TestName</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>2018-05-08 15:00:09</td>
+										<td class='linked' test-id='1'>1_夜神_AndroidTest</td>
+										<td><span class='test-status pass'>pass</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+
+	<div class='subview-right left'>
+		<div class='view-summary'>
+			<h5 class='category-name'></h5>
+		</div>
+	</div>
+</div>
 <!-- category view -->
 <!-- exception view -->
 <div id='dashboard-view' class='view hide'>
@@ -229,25 +406,25 @@
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Steps
-					<div class='panel-lead'>1</div>
+					<div class='panel-lead'>9</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Start
-					<div class='panel-lead'>2018-05-02 11:25:32</div>
+					<div class='panel-lead'>2018-05-08 14:59:46</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 			 		End
-			 		<div class='panel-lead'>2018-05-02 11:26:50</div>
+			 		<div class='panel-lead'>2018-05-08 15:00:40</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Time Taken
-					<div class='panel-lead'>77,956ms</div>
+					<div class='panel-lead'>0h 0m 53s+435ms</div>
 				</div>
 			</div>
 			<div class='col s4'>
@@ -278,6 +455,30 @@
 					</table>
 				</div>
 			</div>
+			<div class='col s6'>
+				<div class='card-panel dashboard-categories'>
+					<span class='right label cyan white-text'>Categories</span><p>&nbsp;</p>
+					
+					<table>
+						<tr>
+							<th>Name</th>
+							<th>Passed</th>
+							<th>Failed</th>
+							<th>Others</th>
+							<th>Passed %</th>
+						</tr>
+						<tr>
+							<td>夜神</td>
+							<td>1</td>
+							<td>0</td>
+							<td>0</td>
+							<td>
+									100%
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -302,7 +503,7 @@
 				errorChild: 0,
 				warningChild: 0,
 				skipChild: 0,
-				infoChild: 0,
+				infoChild: 8,
 				exceptionsChild: 0,
 				
 				passGrandChild: 0,

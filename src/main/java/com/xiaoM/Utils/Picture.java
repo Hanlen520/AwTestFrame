@@ -17,8 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 class Picture {
-  //  final private static String path = TestListener.ProjectPath +"/testCase/"+TestListener.TestCase+"/Picture/";
-  private static String picturePath = TestListener.ProjectPath + "/testCase/" + TestListener.TestCase + "/Picture/";
+  private static String picturePath = TestListener.ProjectPath + "/testCase/" + TestListener.TestCase + "/picture/";
     /**
      * 获取指定控件的图像
      */
@@ -59,7 +58,7 @@ class Picture {
             e.printStackTrace();
         }
         opencv_core.IplImage src = opencv_imgcodecs.cvLoadImage(scrFile.getAbsolutePath());
-        opencv_core.IplImage tmp = opencv_imgcodecs.cvLoadImage(picturePath + targetName + ".png");
+        opencv_core.IplImage tmp = opencv_imgcodecs.cvLoadImage(picturePath + targetName);
         opencv_core.IplImage result = opencv_core.cvCreateImage(opencv_core.cvSize(src.width() - tmp.width() + 1, src.height() - tmp.height() + 1), opencv_core.IPL_DEPTH_32F, 1);
         opencv_core.cvZero(result);
         opencv_imgproc.cvMatchTemplate(src, tmp, result, opencv_imgproc.CV_TM_CCORR_NORMED);
