@@ -1,10 +1,8 @@
 package com.xiaoM.Utils;
 
-import java.io.File;
 import java.net.URL;
 
 import com.aventstack.extentreports.ExtentTest;
-import org.aspectj.weaver.ast.Test;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
