@@ -5,6 +5,7 @@ import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.xiaoM.ReportUtils.TestListener;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileSelector;
 import io.appium.java_client.TouchAction;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.bytedeco.javacpp.opencv_core;
@@ -47,26 +48,26 @@ class ElementAction {
             case "byid":
                 element = driver.findElement(By.id(value));
                 break;
-            case "byname":
-                element = driver.findElement(By.name(value));
+            case "byaccessibilityid":
+                element = driver.findElementByAccessibilityId(value);
                 break;
             case "byclassname":
                 element = driver.findElement(By.className(value));
                 break;
-            case "byTagName":
-                element = driver.findElement(By.tagName(value));
-                break;
             case "byxpath":
                 element = driver.findElement(By.xpath(value));
                 break;
-            case "bycssselector":
-                element = driver.findElement(By.cssSelector(value));
+            case "byandroiduiautomator":
+                element = driver.findElement(MobileSelector.ANDROID_UI_AUTOMATOR.toString(),value);
                 break;
-            case "bylinktext":
-                element = driver.findElement(By.linkText(value));
+            case "byiosclasschain":
+                element = driver.findElement(MobileSelector.IOS_CLASS_CHAIN.toString(),value);
                 break;
-            case "bypartiallinktext":
-                element = driver.findElement(By.partialLinkText(value));
+            case "byiospredicatestring":
+                element = driver.findElement(MobileSelector.IOS_PREDICATE_STRING.toString(),value);
+                break;
+            case "byiosuiautomator":
+                element = driver.findElement(MobileSelector.IOS_UI_AUTOMATION.toString(),value);
                 break;
             default:
                 log.error(TestCategory + "[异常]: 该元素定位方式不存在：" + method);
