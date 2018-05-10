@@ -1,5 +1,6 @@
 package com.xiaoM.Utils;
 
+import com.xiaoM.Driver.AppiumXMDriver;
 import com.xiaoM.ReportUtils.TestListener;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -21,7 +22,7 @@ class Picture {
     /**
      * 获取指定控件的图像
      */
-    static String captureElement(AppiumDriver<MobileElement> driver, WebElement element) throws Exception {
+    static String captureElement(AppiumXMDriver driver, WebElement element) throws Exception {
         // 截图整个页面
         File screen = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         if (element != null) {

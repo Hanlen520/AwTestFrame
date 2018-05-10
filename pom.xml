@@ -78,7 +78,7 @@
 			<artifactId>java-sdk</artifactId>
 			<version>4.1.0</version>
 		</dependency>
-	</dependencies>
+    </dependencies>
 	<build>
 		<plugins>
             <!--将整个工程打包成jar-->

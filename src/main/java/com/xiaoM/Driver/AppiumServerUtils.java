@@ -1,4 +1,4 @@
-package com.xiaoM.Utils;
+package com.xiaoM.Driver;
 
 import java.net.URL;
 
@@ -16,7 +16,7 @@ public class AppiumServerUtils {
 	String ipAddress;
 	int port;
 	String bp;
-	AppiumDriverLocalService service;
+	public AppiumDriverLocalService service;
 	
 	public AppiumServerUtils(){
 	}

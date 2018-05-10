@@ -1,8 +1,11 @@
-package com.xiaoM.Utils;
+package com.xiaoM.Driver;
 
 import java.net.URL;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.xiaoM.Utils.IOMananger;
+import com.xiaoM.Utils.PortProber;
+import com.xiaoM.Utils.UseDevice;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -15,10 +18,10 @@ import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 
- class BaseDriver {
+public class BaseDriver {
     AppiumServerUtils AppiumServer = null;
 
-     AppiumDriver setUpApp(String DeviceName,ExtentTest extentTest) throws Exception {
+     public AppiumXMDriver setUpApp(String DeviceName,ExtentTest extentTest) throws Exception {
         URL url;
         String[][] DeviceBase = IOMananger.readExcelDataXlsx(TestListener.DeviceConfig, DeviceName);
         int Port = PortProber.getFreePort();
@@ -26,7 +29,6 @@ import io.appium.java_client.remote.MobileCapabilityType;
         switch (TestListener.DeviceType.toLowerCase()) {
             case "android":
                 if (DeviceBase == null) {
-                    UseDevice.addDevice(DeviceName);
                     extentTest.fail("设备不存在，请确认 AndroidDevices.xlsx 中存在 " + DeviceName + " 的设备参数");
                     throw new Exception();
                 }
@@ -44,13 +46,12 @@ import io.appium.java_client.remote.MobileCapabilityType;
                 }
                 capabilities.setCapability(MobileCapabilityType.NO_RESET, TestListener.ResetApp);
                 capabilities.setCapability(MobileCapabilityType.UDID, DeviceBase[2][2]);
-                capabilities.setCapability("unicodeKeyboard", true);
-                capabilities.setCapability("resetKeyboard", true);
-                capabilities.setCapability("noSign", true);
+                capabilities.setCapability(AndroidMobileCapabilityType.UNICODE_KEYBOARD, true);
+                capabilities.setCapability(AndroidMobileCapabilityType.RESET_KEYBOARD, true);
+                capabilities.setCapability(MobileCapabilityType.NO_RESET, true);
                 break;
             case "ios":
                 if (DeviceBase == null) {
-                    UseDevice.addDevice(DeviceName);
                     extentTest.fail("设备不存在，请确认 iOSDevices.xlsx 中存在 " + DeviceName + " 的设备参数");
                     throw new Exception();
                 }
@@ -69,13 +70,13 @@ import io.appium.java_client.remote.MobileCapabilityType;
                 break;
             default:
                 UseDevice.addDevice(DeviceName);
-                extentTest.fail("请在 config.xml 中配置 " + DeviceName + " 正确的设备系统类型：Android/iOS");
+                extentTest.fail("请在 config.xml 中配置正确的设备系统类型：Android/iOS");
                 throw new Exception();
         }
-        return new AppiumDriver<MobileElement>(url, capabilities);
+        return new AppiumXMDriver<MobileElement>(url, capabilities);
     }
 
-     AppiumDriver setUpWap(String DeviceName,ExtentTest extentTest) throws Exception {
+    public AppiumXMDriver setUpWap(String DeviceName,ExtentTest extentTest) throws Exception {
         URL url;
         String[][] DeviceBase = IOMananger.readExcelDataXlsx(TestListener.DeviceConfig, DeviceName);
         int Port = PortProber.getFreePort();
@@ -83,7 +84,6 @@ import io.appium.java_client.remote.MobileCapabilityType;
         switch (TestListener.DeviceType.toLowerCase()) {
             case "android":
                 if (DeviceBase == null) {
-                    UseDevice.addDevice(DeviceName);
                     extentTest.fail("设备不存在，请确认 AndroidDevices.xlsx 中存在 " + DeviceName + " 的设备参数");
                     throw new Exception();
                 }
@@ -95,12 +95,11 @@ import io.appium.java_client.remote.MobileCapabilityType;
                 capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, DeviceBase[2][2]);
                 capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, DeviceBase[3][2]);
                 capabilities.setCapability(MobileCapabilityType.UDID, DeviceBase[2][2]);
-                capabilities.setCapability("unicodeKeyboard", true);
-                capabilities.setCapability("resetKeyboard", true);
+                capabilities.setCapability(AndroidMobileCapabilityType.UNICODE_KEYBOARD, true);
+                capabilities.setCapability(AndroidMobileCapabilityType.RESET_KEYBOARD, true);
                 break;
             case "ios":
                 if (DeviceBase == null) {
-                    UseDevice.addDevice(DeviceName);
                     extentTest.fail("设备不存在，请确认 iOSDevices.xlsx 中存在 " + DeviceName + " 的设备参数");
                     throw new Exception();
                 }
@@ -116,13 +115,13 @@ import io.appium.java_client.remote.MobileCapabilityType;
                 break;
             default:
                 UseDevice.addDevice(DeviceName);
-                extentTest.fail("请在 config.xml 中配置 " + DeviceName + " 正确的设备系统类型：Android/iOS");
+                extentTest.fail("请在 config.xml 中配置正确的设备系统类型：Android/iOS");
                 throw new Exception();
         }
-        return new AppiumDriver<MobileElement>(url, capabilities);
+        return new AppiumXMDriver<MobileElement>(url, capabilities);
     }
 
-     AppiumServerUtils getAppiumServer() {
+     public AppiumServerUtils getAppiumServer() {
         return AppiumServer;
     }
 }

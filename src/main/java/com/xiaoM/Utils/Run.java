@@ -6,9 +6,9 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.xiaoM.Android.ResourceMonitoring;
+import com.xiaoM.Driver.AppiumXMDriver;
+import com.xiaoM.Driver.BaseDriver;
 import com.xiaoM.ReportUtils.TestListener;
-
-import io.appium.java_client.AppiumDriver;
 
 public class Run {
     private StringBuilder sb;
@@ -16,7 +16,7 @@ public class Run {
     private String FailAction;
 
     public void runCase(String DeviceName, String Type, String CaseName, String TestCategory, ExtentTest extentTest) throws Exception {
-        AppiumDriver driver ;
+        AppiumXMDriver driver ;
         Location location;
         switch (Type.toLowerCase()) {
             case "app":

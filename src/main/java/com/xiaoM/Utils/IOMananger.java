@@ -48,7 +48,6 @@ public class IOMananger {
 			}
 			return user;
 		}else{
-			System.out.println(sheetName +" 不存在，请确认正确");
 			return null;
 		}
 	}

@@ -3,8 +3,8 @@ package com.xiaoM.Utils;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
+import com.xiaoM.Driver.AppiumXMDriver;
 import com.xiaoM.ReportUtils.TestListener;
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileSelector;
 import io.appium.java_client.TouchAction;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -28,12 +28,12 @@ import java.util.Map;
 
 class ElementAction {
     private Log log = new Log(this.getClass());
-    private AppiumDriver driver;
+    private AppiumXMDriver driver;
     private String TestCategory;
     private Map<String, Object> returnMap;
     private ExtentTest extentTest;
 
-    ElementAction(AppiumDriver driver, String TestCategory, Map<String, Object> returnMap, ExtentTest extentTest) {
+    ElementAction(AppiumXMDriver driver, String TestCategory, Map<String, Object> returnMap, ExtentTest extentTest) {
         this.driver = driver;
         this.TestCategory = TestCategory;
         this.returnMap = returnMap;

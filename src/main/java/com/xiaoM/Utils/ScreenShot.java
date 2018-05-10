@@ -4,23 +4,22 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.xiaoM.Driver.AppiumXMDriver;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 import com.google.common.io.Files;
 import com.xiaoM.ReportUtils.TestListener;
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
 
 public class ScreenShot {
-    private AppiumDriver<MobileElement> driver;
+    private AppiumXMDriver driver;
     private String TestCategory;
     public void setScreenName(String TestCategory) {
         this.TestCategory = TestCategory;
     }
 
-    public ScreenShot(AppiumDriver driver) {
+    public ScreenShot(AppiumXMDriver driver) {
         this.driver = driver;
     }
 

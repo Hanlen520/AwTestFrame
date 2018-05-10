@@ -2,6 +2,7 @@ package com.xiaoM.Utils;
 
 
 import com.baidu.aip.ocr.AipOcr;
+import com.xiaoM.Driver.AppiumXMDriver;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.json.JSONObject;
@@ -18,7 +19,7 @@ public class BaiduOCR {
     private static String API_KEY = "IYfajNLAmiaKQXqMUqdAigtA";
     private static String SECRET_KEY = "5pAoDz0BImDOqqVwDfSr8WAxQ4ORTZat";
 
-    synchronized static String getPictureText(AppiumDriver<MobileElement> driver , WebElement element) throws Exception {
+    synchronized static String getPictureText(AppiumXMDriver<MobileElement> driver , WebElement element) throws Exception {
         AipOcr client = new AipOcr(APP_ID, API_KEY, SECRET_KEY);
         client.setConnectionTimeoutInMillis(2000);
         client.setSocketTimeoutInMillis(60000);
