@@ -13,15 +13,12 @@ import org.openqa.selenium.WebElement;
 
 import java.net.URL;
 
-
 public class AppiumXMDriver<T extends WebElement> extends AppiumDriver<T>
             implements PressesKeyCode, HasNetworkConnection, PushesFiles, StartsActivity,
         FindsByAndroidUIAutomator<T>, LocksAndroidDevice, HasAndroidSettings, HasDeviceDetails,
         HasSupportedPerformanceDataType,HidesKeyboardWithKeyName, ShakesDevice, HasIOSSettings,
         FindsByIosUIAutomation<T>, LocksIOSDevice, PerformsTouchID, FindsByIosNSPredicate<T>,
         FindsByIosClassChain<T> {
-
-
 
     private static String PLATFORM ;
 
@@ -40,12 +37,6 @@ public class AppiumXMDriver<T extends WebElement> extends AppiumDriver<T>
         super(remoteAddress, substituteMobilePlatform(desiredCapabilities, PLATFORM));
     }
 
-    /**
-     * @param service take a look
-     *                at {@link io.appium.java_client.service.local.AppiumDriverLocalService}
-     * @param desiredCapabilities take a look
-     *                            at {@link org.openqa.selenium.Capabilities}
-     */
     public AppiumXMDriver(AppiumDriverLocalService service, Capabilities desiredCapabilities) {
         super(service, substituteMobilePlatform(desiredCapabilities, PLATFORM));
     }

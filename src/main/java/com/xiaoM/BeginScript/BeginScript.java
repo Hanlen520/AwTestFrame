@@ -1,14 +1,14 @@
 package com.xiaoM.BeginScript;
 
 import com.aventstack.extentreports.ExtentTest;
-import com.xiaoM.Utils.Log;
+import com.xiaoM.Utils.Run;
 import com.xiaoM.Utils.UseDevice;
+import com.xiaoM.Utils.Log;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.xiaoM.ReportUtils.TestListener;
-import com.xiaoM.Utils.Run;
 
 public class BeginScript {
     private Log log = new Log(this.getClass());
@@ -36,7 +36,6 @@ public class BeginScript {
         }
         log.info(TestCategory + " --- Pass");
         extentTest.pass(TestCategory + " --- Pass");
-
     }
 
     @AfterSuite

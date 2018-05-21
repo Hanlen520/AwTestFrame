@@ -4,12 +4,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xiaoM.ReportUtils.TestListener;
 import com.xiaoM.Utils.IOMananger;
+import com.xiaoM.ReportUtils.TestListener;
 import com.xiaoM.Utils.Log;
-
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
 
 public class ResourceMonitoring {
     private Log log = new Log(this.getClass());

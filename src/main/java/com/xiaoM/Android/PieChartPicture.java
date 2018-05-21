@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.xiaoM.Utils.IOMananger;
 import com.xiaoM.ReportUtils.TestListener;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
@@ -31,8 +32,6 @@ import org.jfree.chart.renderer.xy.StandardXYBarPainter;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.RectangleInsets;
-
-import com.xiaoM.Utils.IOMananger;
 
 public class PieChartPicture {
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd(HH.mm.ss)");

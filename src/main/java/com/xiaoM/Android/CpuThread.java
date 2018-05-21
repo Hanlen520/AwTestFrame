@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.xiaoM.ReportUtils.TestListener;
 import com.xiaoM.Utils.IOMananger;
+import com.xiaoM.ReportUtils.TestListener;
 
 public class CpuThread extends Thread {
 	int cpuForThisTime;

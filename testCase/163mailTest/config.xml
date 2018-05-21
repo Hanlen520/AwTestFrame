@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configlist>
     <DeviceType>Android</DeviceType><!-- 测试设备系统(Android\iOS) -->
+    <Devices>夜神</Devices>
+    <Appium-Server>INFO</Appium-Server><!-- Appium-Server 日志等级:INFO/DEBUG/ERROR/WARN -->
     <DeviceType_Android>
         <AppName>163mail</AppName><!-- 测试应用名称 -->
+        <Android_AutomationName>Appium</Android_AutomationName><!-- Android自动化测试引擎: Appium/Selendroid/UIAutomator2 -->
         <NoRestApp>false</NoRestApp><!-- 不清除缓存不重置应用 -->
         <ResourceMonitoring type="false"><!-- Android 应用开启性能监控 -->
             <PackageName>com.netease.mail</PackageName><!-- 测试应用的PackageName -->
@@ -12,6 +15,4 @@
     <DeviceType_IOS>
         <bundleId>com.netease.mailmaster</bundleId><!-- 测试应用bundleId（需自行前往Appstore安装应用到手机上） -->
     </DeviceType_IOS>
-    <Devices>夜神</Devices>
-    <Appium-Server>INFO</Appium-Server><!-- Appium-Server 日志等级:INFO/DEBUG/ERROR/WARN -->
 </configlist>

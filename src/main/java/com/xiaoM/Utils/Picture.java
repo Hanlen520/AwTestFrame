@@ -110,7 +110,7 @@ class Picture {
      * @param driver
      * @param targetName(不能为中文名称)
      */
-    public static void pictureClick(AppiumDriver<MobileElement> driver, String targetName) {
+    public static void pictureClick(AppiumXMDriver driver, String targetName) {
         int[] targetLoc = getImageRecognitionLoc(driver, targetName);
         TouchAction action = new TouchAction(driver);
         action.tap(targetLoc[0], targetLoc[1]).perform();

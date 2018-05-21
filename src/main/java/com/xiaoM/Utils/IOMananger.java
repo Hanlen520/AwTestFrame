@@ -86,10 +86,10 @@ public class IOMananger {
 	 */
 	public static String[][] runTime(String sheetname){
 		String[][] Date =  readExcelDataXlsx(TestListener.workbook,sheetname);
-		List<String> ID = new LinkedList<String>();
-		List<String> Type = new LinkedList<String>();
-		List<String> Description = new LinkedList<String>();
-		List<String> CaseName = new LinkedList<String>();
+		List<String> ID = new LinkedList<>();
+		List<String> Type = new LinkedList<>();
+		List<String> Description = new LinkedList<>();
+		List<String> CaseName = new LinkedList<>();
 		for(int i=1;i<Date.length;i++){
 			if(Date[i][0].equals("YES")){
 				ID.add(Date[i][1]);
@@ -123,12 +123,12 @@ public class IOMananger {
 		List<String> txt = null;
 		Scanner in = null;
 		try {
-			txt = new ArrayList<String>();
+			txt = new ArrayList<>();
 			in = new Scanner(new File(filePath));
 			while(in.hasNext()){
 				String str=in.nextLine();
 				if(!str.isEmpty()){
-					txt.add(str.toString());
+					txt.add(str);
 				}
 			}
 		} catch (FileNotFoundException e) {

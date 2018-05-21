@@ -5,13 +5,14 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.xiaoM.Driver.AppiumXMDriver;
 import com.xiaoM.ReportUtils.TestListener;
-import io.appium.java_client.AppiumDriver;
 
 
 public class ExecuteScript  {
-	public AppiumDriver  driver;
-	public  ExecuteScript(AppiumDriver driver) {
+	public AppiumXMDriver driver;
+	public  ExecuteScript(AppiumXMDriver driver) {
 		this.driver = driver;
 	}
 
@@ -42,14 +43,14 @@ public class ExecuteScript  {
 					}
 					@SuppressWarnings("rawtypes")
 					Class[] argsClass = new Class[args.length];
-					argsClass[0] = AppiumDriver.class;
+					argsClass[0] = AppiumXMDriver.class;
 					for (int i = 1, j = args.length; i < j; i++) {
 						argsClass[i] = args[i].getClass();
 					}
 					result = cls.getMethod(methodName.split("\\(")[0], argsClass).invoke(obj, args);
 				} else {
 					methodName = methodName.replace("(\"driver\")", "");
-					result = cls.getMethod(methodName, AppiumDriver.class).invoke(obj, driver);
+					result = cls.getMethod(methodName, AppiumXMDriver.class).invoke(obj, driver);
 				}
 			} else {
 				if (data.contains(",")) {

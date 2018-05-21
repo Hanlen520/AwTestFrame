@@ -3,10 +3,8 @@ package com.xiaoM.Utils;
 
 import com.baidu.aip.ocr.AipOcr;
 import com.xiaoM.Driver.AppiumXMDriver;
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.json.JSONObject;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.HashMap;

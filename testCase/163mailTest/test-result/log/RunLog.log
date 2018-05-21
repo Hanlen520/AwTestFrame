@@ -6,3 +6,7 @@
 [2018-05-09 14:41:39,337] ERROR | 1_夜神 _AndroidTest --- Fail
 [2018-05-10 11:12:11,897] INFO  | 1_夜神_AndroidTest --- Start
 [2018-05-10 11:14:04,786] INFO  | 1_夜神_AndroidTest --- Pass
+[2018-05-10 16:18:39,776] INFO  | 1_夜神_AndroidTest --- Start
+[2018-05-10 16:20:23,210] ERROR | 1_夜神_AndroidTest --- Fail
+[2018-05-11 09:58:00,916] INFO  | 1_夜神_AndroidTest --- Start
+[2018-05-11 09:59:43,856] ERROR | 1_夜神_AndroidTest --- Fail

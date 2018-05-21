@@ -1,20 +1,18 @@
 package com.xiaoM.ReportUtils;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.*;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.xiaoM.Utils.BaseConfig;
 import com.xiaoM.Utils.ExtentManager;
+import com.xiaoM.Utils.IOMananger;
 import com.xiaoM.Utils.XmlUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.dom4j.Element;
 import org.testng.TestListenerAdapter;
 
-import com.xiaoM.Utils.IOMananger;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 
 public class TestListener extends TestListenerAdapter {
