@@ -1,5 +1,5 @@
 # AppiumUiXM
-一个基于Appium的框架，支持Android/iOS，支持多设备并行
+一个基于Appium的关键字驱动框架，支持Android/iOS，支持多设备并行
 # 关键字
 编号|关键字 |描述
 ---|---|---
