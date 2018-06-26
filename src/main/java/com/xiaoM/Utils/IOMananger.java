@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.xiaoM.BeginScript.BeginScript;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.xiaoM.ReportUtils.TestListener;
 
 public class IOMananger {
 	//设置日期格式
@@ -59,7 +59,7 @@ public class IOMananger {
 	 */
 	static int locateTextFromExcel(String sheetName, String cellContent) throws IOException {
 		int i = 0;
-		XSSFSheet sheet = TestListener.workbook.getSheet(sheetName);//读取sheet
+		XSSFSheet sheet = BeginScript.workbook.getSheet(sheetName);//读取sheet
 		if (sheet != null) {
 			int rowNum = sheet.getLastRowNum();
 			for (int j = 0; j <= rowNum; j++) {
@@ -85,7 +85,7 @@ public class IOMananger {
 	 * 获取执行测试用例
 	 */
 	public static String[][] runTime(String sheetname){
-		String[][] Date =  readExcelDataXlsx(TestListener.workbook,sheetname);
+		String[][] Date =  readExcelDataXlsx(BeginScript.workbook,sheetname);
 		List<String> ID = new LinkedList<>();
 		List<String> Type = new LinkedList<>();
 		List<String> Description = new LinkedList<>();
@@ -174,8 +174,8 @@ public class IOMananger {
 	 * 处理日志
 	 */
 	public static void DealwithRunLog(String TestCategory) {
-		String logPath = TestListener.ProjectPath+"/test-output/log/runlogs/"+date;
-		List<String> BrowserLog = IOMananger.readTxtFile(TestListener.ProjectPath+"/test-output/log/runLog.log");
+		String logPath = BeginScript.ProjectPath+"/test-output/log/runlogs/"+date;
+		List<String> BrowserLog = IOMananger.readTxtFile(BeginScript.ProjectPath+"/test-output/log/runLog.log");
 		File destDir = new File(logPath);
 		if (!destDir.exists()) {
 			destDir.mkdirs();
@@ -190,7 +190,7 @@ public class IOMananger {
 				IOMananger.saveToFile(logDriverPath, logDriver);
 			}
 		}
-		TestListener.logList.put(TestCategory,"<spen>运行日志：</spen></br><pre>"+sb.toString()+"</pre>");
+		BeginScript.logList.put(TestCategory,"<spen>运行日志：</spen></br><pre>"+sb.toString()+"</pre>");
 	}
 	
 	/**
@@ -250,9 +250,9 @@ public class IOMananger {
 			workbook = new XSSFWorkbook(is);
 			workbook.close();
 		} catch (Exception e) {
-			ExtentTest extentTest = TestListener.extent.createTest("启动测试失败");
+			ExtentTest extentTest = BeginScript.extent.createTest("启动测试失败");
 			extentTest.fail(e.getMessage());
-			TestListener.extent.flush();
+			BeginScript.extent.flush();
 			System.exit(0);
 		}
 		return workbook;
@@ -262,21 +262,37 @@ public class IOMananger {
 		XSSFWorkbook workbook = null;
 		String devicesPath;
 		try {
-			if(TestListener.DeviceType.toLowerCase().equals("android")){
-				devicesPath = TestListener.ProjectPath + "/devices/AndroidDevices.xlsx";
+			if(BeginScript.DeviceType.toLowerCase().equals("android")){
+				devicesPath = BeginScript.ProjectPath + "/devices/AndroidDevices.xlsx";
 			}else{
-				devicesPath = TestListener.ProjectPath + "/devices/iOSDevices.xlsx";
+				devicesPath = BeginScript.ProjectPath + "/devices/iOSDevices.xlsx";
 			}
 			InputStream is = new FileInputStream(devicesPath);
 			workbook =  new XSSFWorkbook(is);
 			workbook.close();
 		} catch (Exception e) {
-			ExtentTest extentTest = TestListener.extent.createTest("启动测试失败");
+			ExtentTest extentTest = BeginScript.extent.createTest("启动测试失败");
 			extentTest.fail(e.getMessage());
-			TestListener.extent.flush();
+			BeginScript.extent.flush();
 			System.exit(0);
 		}
 		return workbook;
 	}
 
+	public static void deleteDirectory(File file) {
+		if (file.exists()){
+			if (file.isFile()) {// 表示该文件不是文件夹
+				file.delete();
+			} else {
+				// 首先得到当前的路径
+				String[] childFilePaths = file.list();
+				for (String childFilePath : childFilePaths) {
+					File childFile = new File(file.getAbsolutePath() + "/" + childFilePath);
+					deleteDirectory(childFile);
+				}
+				file.delete();
+			}
+		}
+
+	}
 }

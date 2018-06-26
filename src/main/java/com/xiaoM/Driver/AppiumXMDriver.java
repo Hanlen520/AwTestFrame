@@ -1,6 +1,6 @@
 package com.xiaoM.Driver;
 
-import com.xiaoM.ReportUtils.TestListener;
+import com.xiaoM.BeginScript.BeginScript;
 import io.appium.java_client.*;
 import io.appium.java_client.android.*;
 import io.appium.java_client.ios.LocksIOSDevice;
@@ -14,22 +14,25 @@ import org.openqa.selenium.WebElement;
 import java.net.URL;
 
 public class AppiumXMDriver<T extends WebElement> extends AppiumDriver<T>
-            implements PressesKeyCode, HasNetworkConnection, PushesFiles, StartsActivity,
+        implements PressesKeyCode, HasNetworkConnection, PushesFiles, StartsActivity,
         FindsByAndroidUIAutomator<T>, LocksAndroidDevice, HasAndroidSettings, HasDeviceDetails,
-        HasSupportedPerformanceDataType,HidesKeyboardWithKeyName, ShakesDevice, HasIOSSettings,
+        HasSupportedPerformanceDataType, HidesKeyboardWithKeyName, ShakesDevice, HasIOSSettings,
         FindsByIosUIAutomation<T>, LocksIOSDevice, PerformsTouchID, FindsByIosNSPredicate<T>,
         FindsByIosClassChain<T> {
 
-    private static String PLATFORM ;
+    private static String PLATFORM;
 
     /**
      * 后期可添加其他系统
      */
-    static{
-        if(TestListener.DeviceType.toLowerCase().equals("android")){
-            PLATFORM = MobilePlatform.ANDROID;
-        }else{
-            PLATFORM = MobilePlatform.IOS;
+    static {
+        switch (BeginScript.DeviceType.toLowerCase()) {
+            case "android":
+                PLATFORM = MobilePlatform.ANDROID;
+                break;
+            case "ios":
+                PLATFORM = MobilePlatform.IOS;
+                break;
         }
     }
 
@@ -41,4 +44,5 @@ public class AppiumXMDriver<T extends WebElement> extends AppiumDriver<T>
         super(service, substituteMobilePlatform(desiredCapabilities, PLATFORM));
     }
 }
+
 

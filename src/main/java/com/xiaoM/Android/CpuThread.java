@@ -7,8 +7,9 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.xiaoM.BeginScript.BeginScript;
+import com.xiaoM.KeyWord.AdbMoudle;
 import com.xiaoM.Utils.IOMananger;
-import com.xiaoM.ReportUtils.TestListener;
 
 public class CpuThread extends Thread {
 	int cpuForThisTime;
@@ -25,7 +26,7 @@ public class CpuThread extends Thread {
 
 	@Override
 	public void run() {
-		String workSpace = TestListener.ProjectPath+"/test-result/MonitorResoure/Cpu";
+		String workSpace = BeginScript.ProjectPath+"/test-result/MonitorResoure/Cpu";
 		while(true){
 			try {
 				Thread.sleep(50);
@@ -40,7 +41,6 @@ public class CpuThread extends Thread {
 
 	/**
 	 * 读取手机CPU数据
-	 * @param app要测试的应用的包
 	 * @return 返回该次的CPU百分比
 	 * @throws IOException
 	 * @throws InterruptedException
@@ -56,7 +56,7 @@ public class CpuThread extends Thread {
 		String pernum;
 		// 去除百分比的数字
 		int perint;
-		ProcessBuilder pb = new ProcessBuilder(AppiumComm.adb, "-s",device,"shell", "top -d 1 -m 10 -n 1");
+		ProcessBuilder pb = new ProcessBuilder(AdbMoudle.adb, "-s",device,"shell", "top -d 1 -m 10 -n 1");
 		Process p = pb.start();
 		BufferedReader bf = new BufferedReader(new InputStreamReader(p.getInputStream(), "utf-8"));
 		while ((line = bf.readLine()) != null) {

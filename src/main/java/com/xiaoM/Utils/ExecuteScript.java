@@ -6,22 +6,22 @@ import java.net.URLClassLoader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.xiaoM.Driver.AppiumXMDriver;
-import com.xiaoM.ReportUtils.TestListener;
+import com.xiaoM.BeginScript.BeginScript;
+import io.appium.java_client.AppiumDriver;
 
 
 public class ExecuteScript  {
-	public AppiumXMDriver driver;
-	public  ExecuteScript(AppiumXMDriver driver) {
+	public AppiumDriver driver;
+	public  ExecuteScript(AppiumDriver driver) {
 		this.driver = driver;
 	}
 
-	Object runScript(Location location) throws Exception{
+	public Object runScript(Location location) throws Exception{
 		String jarName = location.getParameter();
 		String className = location.getValue().split("::")[0];
 		String methodName = location.getValue().split("::")[1];
 		Object result  ;
-		File file = new File(TestListener.ProjectPath + "/testCase/"+TestListener.TestCase+"/script/" + jarName);//类路径(包文件上一层)
+		File file = new File(BeginScript.ProjectPath + "/testCase/"+BeginScript.TestCase+"/script/" + jarName);//类路径(包文件上一层)
 		URLClassLoader loader = new URLClassLoader(new URL[]{file.toURI().toURL()});//创建类加载器
 		Class<?> cls = loader.loadClass(className);//加载指定类，注意一定要带上类的包名
 		Object obj = cls.newInstance();//初始化一个实例
@@ -43,14 +43,14 @@ public class ExecuteScript  {
 					}
 					@SuppressWarnings("rawtypes")
 					Class[] argsClass = new Class[args.length];
-					argsClass[0] = AppiumXMDriver.class;
+					argsClass[0] = AppiumDriver.class;
 					for (int i = 1, j = args.length; i < j; i++) {
 						argsClass[i] = args[i].getClass();
 					}
 					result = cls.getMethod(methodName.split("\\(")[0], argsClass).invoke(obj, args);
 				} else {
 					methodName = methodName.replace("(\"driver\")", "");
-					result = cls.getMethod(methodName, AppiumXMDriver.class).invoke(obj, driver);
+					result = cls.getMethod(methodName, AppiumDriver.class).invoke(obj, driver);
 				}
 			} else {
 				if (data.contains(",")) {

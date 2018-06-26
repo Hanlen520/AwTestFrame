@@ -1,7 +1,8 @@
 package com.xiaoM.Utils;
 
+import com.google.common.io.Files;
+import com.xiaoM.BeginScript.BeginScript;
 import com.xiaoM.Driver.AppiumXMDriver;
-import com.xiaoM.ReportUtils.TestListener;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
@@ -16,13 +17,14 @@ import javax.imageio.ImageIO;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.nio.file.NoSuchFileException;
 
-class Picture {
-  private static String picturePath = TestListener.ProjectPath + "/testCase/" + TestListener.TestCase + "/picture/";
+public class Picture {
+  private static String picturePath = BeginScript.ProjectPath + "/testCase/" + BeginScript.TestCase + "/picture/";
     /**
      * 获取指定控件的图像
      */
-    static String captureElement(AppiumXMDriver driver, WebElement element) throws Exception {
+    public static String captureElement(AppiumXMDriver driver, WebElement element) throws Exception {
         // 截图整个页面
         File screen = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         if (element != null) {
@@ -37,8 +39,9 @@ class Picture {
             BufferedImage dest = img.getSubimage(p.getX(), p.getY(), rect.width, rect.height);
             // 存为png格式
             ImageIO.write(dest, "png", screen);
+            return screen.getAbsolutePath();
         }
-        return screen.getAbsolutePath();
+        return "false";
     }
 
 
@@ -84,8 +87,16 @@ class Picture {
      * @param targetName(不能为中文名称)
      * @return
      */
-    public static boolean matchTemplate(AppiumDriver<MobileElement> driver, String targetName) {
+    public static boolean matchTemplate(AppiumDriver<MobileElement> driver, String targetName,String TestCategory) throws Exception {
         boolean matchRes;
+        String value_1 = picturePath + targetName;
+        if(!new File(value_1).exists()){
+            throw new NoSuchFileException("");
+        }
+        File dir = new File(BeginScript.ProjectPath + "/Temp/");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
         File scrFile = null;
         try {
             driver.context("NATIVE_APP");//切换到NATIVE_APP进行app截图
@@ -93,8 +104,9 @@ class Picture {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Files.copy(new File(value_1), new File(dir.getAbsolutePath()+"/"+ targetName));
         opencv_core.IplImage src = opencv_imgcodecs.cvLoadImage(scrFile.getAbsolutePath());
-        opencv_core.IplImage tmp = opencv_imgcodecs.cvLoadImage(picturePath + targetName + ".png");
+        opencv_core.IplImage tmp = opencv_imgcodecs.cvLoadImage(dir.getAbsolutePath()+"/"+ targetName);
         opencv_core.IplImage result = opencv_core.cvCreateImage(opencv_core.cvSize(src.width() - tmp.width() + 1, src.height() - tmp.height() + 1), opencv_core.IPL_DEPTH_32F, 1);
         double[] minVal = new double[2];
         double[] maxVal = new double[2];

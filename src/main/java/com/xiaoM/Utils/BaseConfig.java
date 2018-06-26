@@ -1,7 +1,7 @@
 package com.xiaoM.Utils;
 
 
-import com.xiaoM.ReportUtils.TestListener;
+import com.xiaoM.BeginScript.BeginScript;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -15,7 +15,7 @@ public class BaseConfig {
 
     public static Map<String, String[]> getDataBaseConfigXlsx() throws IOException {
         Map<String, String[]> DataBaseConfig = new HashMap<String, String[]>();
-        XSSFSheet sheet = TestListener.workbook.getSheet(SheetName);//读取sheet
+        XSSFSheet sheet = BeginScript.workbook.getSheet(SheetName);//读取sheet
         if (sheet != null) {
             int startRowNum = IOMananger.locateTextFromExcel(SheetName, "数据库配置") + 2;//获取开始行
             int lastRowNum = sheet.getLastRowNum() + 1;//获取总行数
@@ -42,7 +42,7 @@ public class BaseConfig {
 
     public static Map<String, String[]> getReportConfigXlsx() throws IOException {
         Map<String, String[]> ReportConfig = new HashMap<String, String[]>();
-        XSSFSheet sheet = TestListener.workbook.getSheet(SheetName);//读取sheet
+        XSSFSheet sheet = BeginScript.workbook.getSheet(SheetName);//读取sheet
         if (sheet != null) {
             int startRowNum = IOMananger.locateTextFromExcel(SheetName, "在线测试报告配置") + 2;//获取开始行
             int lastRowNum = sheet.getLastRowNum() + 1;//获取总行数
@@ -69,7 +69,7 @@ public class BaseConfig {
 
     public static Map<String, String[]> getOcrConfigXlsx() throws IOException {
         Map<String, String[]> OcrConfig = new HashMap<String, String[]>();
-        XSSFSheet sheet = TestListener.workbook.getSheet(SheetName);//读取sheet
+        XSSFSheet sheet = BeginScript.workbook.getSheet(SheetName);//读取sheet
         if (sheet != null) {
             int startRowNum = IOMananger.locateTextFromExcel(SheetName, "文字识别配置") + 2;//获取开始行
             int lastRowNum = sheet.getLastRowNum() + 1;//获取总行数

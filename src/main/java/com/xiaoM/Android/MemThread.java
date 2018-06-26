@@ -8,8 +8,9 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.xiaoM.BeginScript.BeginScript;
+import com.xiaoM.KeyWord.AdbMoudle;
 import com.xiaoM.Utils.IOMananger;
-import com.xiaoM.ReportUtils.TestListener;
 
 public class MemThread extends Thread {
 	
@@ -27,7 +28,7 @@ public class MemThread extends Thread {
 	public void run() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		String date;
-		String workSpace = TestListener.ProjectPath+"/test-result/MonitorResoure/Mem";
+		String workSpace = BeginScript.ProjectPath+"/test-result/MonitorResoure/Mem";
 		while(true){
 			try {
 				Thread.sleep(50);
@@ -49,7 +50,7 @@ public class MemThread extends Thread {
 	public static Double getMobileMem(String appPackage,String device) throws IOException, InterruptedException {
 		String line;
 		String mem;
-		ProcessBuilder pb = new ProcessBuilder(AppiumComm.adb, "-s",device, "shell", "dumpsys meminfo | grep " + appPackage);
+		ProcessBuilder pb = new ProcessBuilder(AdbMoudle.adb, "-s",device, "shell", "dumpsys meminfo | grep " + appPackage);
 		Process process = pb.start();
 		InputStream is = process.getInputStream();
 		BufferedReader bf = new BufferedReader(new InputStreamReader(is));

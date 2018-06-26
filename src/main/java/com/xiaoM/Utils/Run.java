@@ -5,10 +5,10 @@ import java.util.*;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
+import com.xiaoM.BeginScript.BeginScript;
 import com.xiaoM.Driver.BaseDriver;
 import com.xiaoM.Android.ResourceMonitoring;
 import com.xiaoM.Driver.AppiumXMDriver;
-import com.xiaoM.ReportUtils.TestListener;
 
 public class Run {
     private StringBuilder sb;
@@ -16,7 +16,7 @@ public class Run {
     private String FailAction;
 
     public void runCase(String DeviceName, String Type, String CaseName, String TestCategory, ExtentTest extentTest) throws Exception {
-        AppiumXMDriver driver ;
+        AppiumXMDriver driver;
         Location location;
         switch (Type.toLowerCase()) {
             case "app":
@@ -28,22 +28,22 @@ public class Run {
                 driver = base.setUpWap(DeviceName, extentTest);
                 break;
             default:
-                extentTest.fail("请在 " + TestListener.TestCase + ".xlsx 中选择正确的测试类型：APP/WAP");
+                extentTest.fail("请在 " + BeginScript.TestCase + ".xlsx 中选择正确的测试类型：APP/WAP");
                 throw new Exception();
         }
         extentTest.getModel().setStartTime(new Date());
-        String[][] testStart = IOMananger.readExcelDataXlsx(TestListener.workbook,CaseName);
+        String[][] testStart = IOMananger.readExcelDataXlsx(BeginScript.workbook, CaseName);
         if (testStart != null) {
             ResourceMonitoring RM = null;
             boolean StartRM = false;
-            if (TestListener.Resource_Monitoring.toLowerCase().equals("true") && Type.toLowerCase().equals("app") && TestListener.DeviceType.toLowerCase().equals("android")) {
+            if (BeginScript.Resource_Monitoring.toLowerCase().equals("true") && Type.toLowerCase().equals("app") && BeginScript.DeviceType.toLowerCase().equals("android")) {
                 RM = new ResourceMonitoring();
                 RM.startMonitoring(DeviceName, TestCategory);
                 StartRM = true;
-            } else if (TestListener.Resource_Monitoring.toLowerCase().equals("true") && !Type.toLowerCase().equals("app")) {
+            } else if (BeginScript.Resource_Monitoring.toLowerCase().equals("true") && !Type.toLowerCase().equals("app")) {
                 extentTest.fail("资源监控只适用于 Android 平台的APP");
                 throw new Exception();
-            } else if (TestListener.Resource_Monitoring.toLowerCase().equals("true") && !TestListener.DeviceType.toLowerCase().equals("android")) {
+            } else if (BeginScript.Resource_Monitoring.toLowerCase().equals("true") && !BeginScript.DeviceType.toLowerCase().equals("android")) {
                 extentTest.fail("资源监控只适用于 Android 平台的APP");
                 throw new Exception();
             }
@@ -60,7 +60,6 @@ public class Run {
                         String Step = location.getStep();
                         String Description = location.getDescription();
                         String Action = location.getAction();
-                        String Key = location.getKey();
                         String Value = location.getValue();
                         String Parameter = location.getParameter();
                         FailAction = Action;
@@ -74,21 +73,19 @@ public class Run {
                         }
                         sb.append("[步骤]: " + Step + "\r\n");
                         sb.append("[步骤描述]: " + Description + "\r\n");
-                        sb.append("[操作方式]:" + Action + "\r\n");
-                        sb.append("[关键字]:" + Key + "\r\n");
+                        sb.append("[关键字]:" + Action + "\r\n");
                         sb.append("[属性值]:" + Value + "\r\n");
                         sb.append("[参数]：" + Parameter + "\r\n");
-                        ElementAction elementAction = new ElementAction(driver, TestCategory, returnMap,extentTest);
+                        ElementAction elementAction = new ElementAction(driver, TestCategory, returnMap, extentTest, DeviceName);
                         Object result = elementAction.action(location);
-                        if (result != null) {
-                            if (result.toString().toLowerCase().equals("false")) {
-                                sb.append("[返回值]：False\r\n");
-                                throw new Exception("返回值为 False");
-                            }
-                        }
                         sb.append("[返回值]：" + result);
                         returnMap.put(Step, result);
-                        if (!Action.toLowerCase().equals("module")){
+                        if (result.toString().toLowerCase().equals("false")) {
+                            extentTest.log(Status.FAIL, "<pre>" + sb.toString() + "</pre>");
+                        } else if(Action.toLowerCase().contains("check")) {
+                            extentTest.log(Status.PASS, "<pre>" + sb.toString() + "</pre>");
+                        }else if(Action.toLowerCase().equals("module")){
+                        }else{
                             extentTest.log(Status.INFO, "<pre>" + sb.toString() + "</pre>");
                         }
                     }
@@ -102,7 +99,7 @@ public class Run {
                     screenShot.setScreenName(TestCategory);
                     screenShot.takeScreenshot();
                     sb.append("[异常截图如下]：");
-                    extentTest.fail("<pre>" + sb.toString() + "</pre>", MediaEntityBuilder.createScreenCaptureFromPath(TestListener.screenMessageList.get(TestCategory)).build());
+                    extentTest.fail("<pre>" + sb.toString() + "</pre>", MediaEntityBuilder.createScreenCaptureFromPath(BeginScript.screenMessageList.get(TestCategory)).build());
                     extentTest.error(e);
                 }
                 FailStep.dealWithFailStep(b, testStart, extentTest);
@@ -115,7 +112,7 @@ public class Run {
                 }
             }
         } else {
-            extentTest.fail("该测试用例:" + CaseName + "在 " + TestListener.TestCase + ".xlsx 中没有对应的命名的 sheet");
+            extentTest.fail("该测试用例:" + CaseName + "在 " + BeginScript.TestCase + ".xlsx 中没有对应的命名的 sheet");
             throw new Exception();
         }
     }

@@ -2,7 +2,7 @@ package com.xiaoM.Driver;
 
 import java.net.URL;
 
-import com.xiaoM.ReportUtils.TestListener;
+import com.xiaoM.BeginScript.BeginScript;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.AndroidServerFlag;
@@ -53,7 +53,7 @@ public class AppiumServerUtils {
 		AppiumServiceBuilder builder = new AppiumServiceBuilder();
 		builder.withIPAddress(ipAddress);
 		builder.usingPort(port);
-		builder.withArgument(GeneralServerFlag.LOG_LEVEL, TestListener.Log_Level.toLowerCase());
+		builder.withArgument(GeneralServerFlag.LOG_LEVEL, BeginScript.Log_Level.toLowerCase());
 		builder.withArgument(GeneralServerFlag.SESSION_OVERRIDE);
 		builder.withArgument(AndroidServerFlag.BOOTSTRAP_PORT_NUMBER, bp);
 		service = AppiumDriverLocalService.buildService(builder);

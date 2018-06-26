@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class FailStep {
-    static void dealWithFailStep(int a,String[][] testStart ,ExtentTest test){
+public class FailStep {
+    public static void dealWithFailStep(int a,String[][] testStart ,ExtentTest test){
        for(int i=a+1;i<testStart.length;i++){
            List<String> parameteres = new ArrayList<>(Arrays.asList(testStart[i]));
            Location location = new Location();
@@ -31,7 +31,7 @@ class FailStep {
        }
    }
 
-    static void dealWithMoubleFailStep(int a,String[][] testStart ,ExtentTest test,Location location2){
+    public static void dealWithMoubleFailStep(int a, String[][] testStart, ExtentTest test, Location location2){
         for(int i=a+1;i<testStart.length;i++){
             List<String> parameteres = new ArrayList<>(Arrays.asList(testStart[i]));
             Location location = new Location();

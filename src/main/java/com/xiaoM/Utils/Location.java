@@ -11,22 +11,22 @@ public class Location {
     private String Step;
     private String Description;
     private String Action;
-    private String Key;
+    /*private String Key;*/
     private String Value;
     private String TimeOut;
     private String Parameter;
     private String Expected;
 
-    void setLocation(List<String> Parameteres){
+    public void setLocation(List<String> Parameteres){
         this.IsRun = Parameteres.get(1);
         this.Step = Parameteres.get(2);
         this.Description = Parameteres.get(3);
         this.Action = Parameteres.get(4);
-        this.Key = Parameteres.get(5);
-        this.Value = Parameteres.get(6);
-        this.TimeOut = Parameteres.get(7);
-        this.Parameter = Parameteres.get(8);
-        this.Expected = Parameteres.get(9);
+       /* this.Key = Parameteres.get(5).substring(0, Parameteres.get(5).indexOf("="));*/
+        this.Value = Parameteres.get(5);
+        this.TimeOut = Parameteres.get(6);
+        this.Parameter = Parameteres.get(7);
+        this.Expected = Parameteres.get(8);
     }
 
     public String getIsRun() {
@@ -45,9 +45,9 @@ public class Location {
         return Action;
     }
 
-    public String getKey() {
+   /* public String getKey() {
         return Key;
-    }
+    }*/
 
     public String getValue() {
         return Value;

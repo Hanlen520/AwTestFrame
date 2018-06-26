@@ -13,8 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.xiaoM.BeginScript.BeginScript;
 import com.xiaoM.Utils.IOMananger;
-import com.xiaoM.ReportUtils.TestListener;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -299,7 +299,7 @@ public class PieChartPicture {
 			dir.mkdirs();
 		}
 		String screenPath = dir.getAbsolutePath() + "/"+PictureName +"_"+ date +"_CPU.jpg";
-		TestListener.RmPicture.put(TestCategory + "_CPU","../test-result/snapshot/"+PictureName +"_"+ date +"_CPU.jpg");
+		BeginScript.RmPicture.put(TestCategory + "_CPU","../test-result/snapshot/"+PictureName +"_"+ date +"_CPU.jpg");
 		drawToresultStream(screenPath, chart); // step4: 输出图表到指定的磁盘 
 	}
 	public void MenScreen() throws FileNotFoundException{
@@ -310,7 +310,7 @@ public class PieChartPicture {
 			dir.mkdirs();
 		}
 		String screenPath = dir.getAbsolutePath() + "/"+PictureName  +"_"+ date + "_Men.jpg";
-		TestListener.RmPicture.put(TestCategory + "_Men","../test-result/snapshot/"+PictureName +"_"+ date +"_Men.jpg");
+		BeginScript.RmPicture.put(TestCategory + "_Men","../test-result/snapshot/"+PictureName +"_"+ date +"_Men.jpg");
 		drawToresultStream(screenPath, chart); // step4: 输出图表到指定的磁盘
 	}
 	

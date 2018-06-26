@@ -4,8 +4,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.xiaoM.BeginScript.BeginScript;
+import com.xiaoM.KeyWord.AdbMoudle;
 import com.xiaoM.Utils.IOMananger;
-import com.xiaoM.ReportUtils.TestListener;
 import com.xiaoM.Utils.Log;
 
 public class ResourceMonitoring {
@@ -14,16 +15,16 @@ public class ResourceMonitoring {
 
     public void startMonitoring(String DeviceName, String TestCategory) throws Exception {
         try {
-            String[][] DeviceBase = IOMananger.readExcelDataXlsx(TestListener.DeviceConfig,DeviceName);
+            String[][] DeviceBase = IOMananger.readExcelDataXlsx(BeginScript.DeviceConfig,DeviceName);
             log.info(TestCategory + " 启动资源监控器");
-            String CpuPath = TestListener.ProjectPath + "/test-result/MonitorResoure/Cpu/" + DeviceName + ".txt";
-            String MenPath = TestListener.ProjectPath + "/test-result/MonitorResoure/Mem/" + DeviceName + ".txt";
-            String NetPath = TestListener.ProjectPath + "/test-result/MonitorResoure/Net/" + DeviceName + ".txt";
+            String CpuPath = BeginScript.ProjectPath + "/test-result/MonitorResoure/Cpu/" + DeviceName + ".txt";
+            String MenPath = BeginScript.ProjectPath + "/test-result/MonitorResoure/Mem/" + DeviceName + ".txt";
+            String NetPath = BeginScript.ProjectPath + "/test-result/MonitorResoure/Net/" + DeviceName + ".txt";
             String[] Paths = {CpuPath, MenPath, NetPath};
             IOMananger.deleteFile(Paths);//删除监控日志文件
-            AppiumComm.getMobileAppNet(TestListener.PackageName, DeviceBase[2][2], DeviceName);
-            CpuThread cpuThread = new CpuThread(TestListener.PackageName, DeviceBase[2][2], DeviceName); // CPU监控线程1
-            MemThread memThread = new MemThread(TestListener.PackageName, DeviceBase[2][2], DeviceName);//内存监控线程2
+            AdbMoudle.getMobileAppNet(BeginScript.PackageName, DeviceBase[2][2], DeviceName);
+            CpuThread cpuThread = new CpuThread(BeginScript.PackageName, DeviceBase[2][2], DeviceName); // CPU监控线程1
+            MemThread memThread = new MemThread(BeginScript.PackageName, DeviceBase[2][2], DeviceName);//内存监控线程2
             cpuThread.start();// CPU监控线程启动
             memThread.start();// 内存监控线程启动
         } catch (Exception e) {
@@ -33,20 +34,20 @@ public class ResourceMonitoring {
     }
 
     public void stopMonitoring(String DeviceName, String TestCategory) throws Exception {
-        String[][] DeviceBase = IOMananger.readExcelDataXlsx(TestListener.DeviceConfig,DeviceName);
-        AppiumComm.getMobileAppNet(TestListener.PackageName, DeviceBase[2][2], DeviceName);
-        String CpuPath = TestListener.ProjectPath + "/test-result/MonitorResoure/Cpu/" + DeviceName + ".txt";
-        String MenPath = TestListener.ProjectPath + "/test-result/MonitorResoure/Mem/" + DeviceName + ".txt";
-        String NetPath = TestListener.ProjectPath + "/test-result/MonitorResoure/Net/" + DeviceName + ".txt";
+        String[][] DeviceBase = IOMananger.readExcelDataXlsx(BeginScript.DeviceConfig,DeviceName);
+        AdbMoudle.getMobileAppNet(BeginScript.PackageName, DeviceBase[2][2], DeviceName);
+        String CpuPath = BeginScript.ProjectPath + "/test-result/MonitorResoure/Cpu/" + DeviceName + ".txt";
+        String MenPath = BeginScript.ProjectPath + "/test-result/MonitorResoure/Mem/" + DeviceName + ".txt";
+        String NetPath = BeginScript.ProjectPath + "/test-result/MonitorResoure/Net/" + DeviceName + ".txt";
         List<Integer> cpuList = new ArrayList<Integer>();
         List<Double> menList = new ArrayList<Double>();
         List<Integer> NetList = new ArrayList<Integer>();
         String[] Men;
         String[] Cpu;
-        AppiumComm.adbClearCache(TestListener.PackageName, DeviceName);
-        AppiumComm.forceStop(TestListener.PackageName, DeviceName);
-        String appPackageActivity = TestListener.PackageName + "/" + TestListener.Activity;
-        String luanchTime = AppiumComm.appLuanchTime(appPackageActivity, DeviceBase[2][2]);
+        AdbMoudle.adbClearCache(BeginScript.PackageName, DeviceName);
+        AdbMoudle.forceStop(BeginScript.PackageName, DeviceName);
+        String appPackageActivity = BeginScript.PackageName + "/" + BeginScript.Activity;
+        String luanchTime = AdbMoudle.appLuanchTime(appPackageActivity, DeviceBase[2][2]);
         try {
             int cpuMax;
             Double memMax;

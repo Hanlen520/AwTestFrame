@@ -4,12 +4,12 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.xiaoM.BeginScript.BeginScript;
 import com.xiaoM.Driver.AppiumXMDriver;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 import com.google.common.io.Files;
-import com.xiaoM.ReportUtils.TestListener;
 
 
 public class ScreenShot {
@@ -36,16 +36,15 @@ public class ScreenShot {
 
     public void takeScreenshot() {
         String screenName = TestCategory;
-        File dir = new File("testCase/" + TestListener.TestCase + "/test-result/snapshot");
+        File dir = new File("testCase/" + BeginScript.TestCase + "/test-result/snapshot");
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd(HH.mm.ss)");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HHmmss");
         String date = dateFormat.format(new Date());
-        String path = "../test-result/snapshot/" + screenName + "_" + date + ".jpg";
-        TestListener.screenMessageList.put(TestCategory, path);
-        String screenPath = dir.getAbsolutePath() + "\\" + screenName + "_" + date + ".jpg";
+        String path = "../test-result/snapshot/" + screenName + "_" + date + ".png";
+        BeginScript.screenMessageList.put(TestCategory, path);
+        String screenPath = dir.getAbsolutePath() + "/" + screenName + "_" + date + ".png";
         takeScreenshot(screenPath);
     }
-
 }

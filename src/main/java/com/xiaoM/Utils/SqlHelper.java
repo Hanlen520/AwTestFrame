@@ -9,7 +9,7 @@ public class SqlHelper {
     private  String userName = "";
     private  String password = "";
 
-    SqlHelper(String driver, String url, String userName, String password  ) throws ClassNotFoundException {
+    public SqlHelper(String driver, String url, String userName, String password  ) throws ClassNotFoundException {
         this.url = url;
         this.userName = userName;
         this.password = password;
