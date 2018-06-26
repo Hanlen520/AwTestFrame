@@ -24,7 +24,7 @@ public class JavaScriptModule {
             log.error(TestCategory + ":执行js脚本失败 [ " + location.getValue() + " ]");
             throw e;
         }
-        log.info(TestCategory + ":执行js脚本失败 [ " + location.getValue() + " ]");
+        log.info(TestCategory + ":执行js脚本成功 [ " + location.getValue() + " ]");
         return result;
     }
 
