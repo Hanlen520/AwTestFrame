@@ -1,26 +1,26 @@
-package com.xiaoM.KeyWord;
+package com.xiaoM.KeyWord.Selenium;
 
-import com.xiaoM.Driver.AppiumXMDriver;
-import com.xiaoM.Element.LocationElement;
+import com.xiaoM.Element.LocationWebElement;
 import com.xiaoM.Utils.Location;
 import com.xiaoM.Utils.Log;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 public class SelectModule {
     private Log log = new Log(this.getClass());
-    private AppiumXMDriver driver;
+    private WebDriver driver;
     private String TestCategory;
 
-    public SelectModule(AppiumXMDriver driver, String TestCategory) {
+    public SelectModule(WebDriver driver, String TestCategory) {
         this.driver = driver;
         this.TestCategory = TestCategory;
     }
 
     public boolean selectByIndex(Location location){
-        LocationElement locationElement = new LocationElement(driver, TestCategory);
+        LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
         try {
-            WebElement element = locationElement.waitForElement(location);
+            WebElement element = locationWebElement.waitForElement(location);
             String index = location.getParameter();
             Select SelectMethod = new Select(element);
             int i = Integer.valueOf(index);
@@ -34,9 +34,9 @@ public class SelectModule {
     }
 
     public boolean selectByValue(Location location) {
-        LocationElement locationElement = new LocationElement(driver, TestCategory);
+        LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
         try {
-            WebElement element = locationElement.waitForElement(location);
+            WebElement element = locationWebElement.waitForElement(location);
             String value = location.getParameter();
             Select SelectMethod = new Select(element);
             SelectMethod.selectByValue(value);
@@ -49,9 +49,9 @@ public class SelectModule {
     }
 
     public boolean selectByText(Location location) {
-        LocationElement locationElement = new LocationElement(driver, TestCategory);
+        LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
         try {
-            WebElement element = locationElement.waitForElement(location);
+            WebElement element = locationWebElement.waitForElement(location);
             String Text = location.getParameter();
             Select SelectMethod = new Select(element);
             SelectMethod.selectByVisibleText(Text);

@@ -1,7 +1,7 @@
-package com.xiaoM.KeyWord;
+package com.xiaoM.KeyWord.Appium;
 
 import com.xiaoM.Driver.AppiumXMDriver;
-import com.xiaoM.Element.LocationElement;
+import com.xiaoM.Element.LocationAppElement;
 import com.xiaoM.Utils.Location;
 import com.xiaoM.Utils.Log;
 import org.openqa.selenium.WebElement;
@@ -17,9 +17,9 @@ public class WebIframe {
     }
 
     public boolean switchToIframe(Location location) {
-        LocationElement locationElement = new LocationElement(driver, TestCategory);
+        LocationAppElement locationAppElement = new LocationAppElement(driver, TestCategory);
         try {
-            WebElement element = locationElement.waitForElement(location);
+            WebElement element = locationAppElement.waitForElement(location);
             driver.switchTo().frame(element);
             log.info(TestCategory + "：切换iframe成功 [ " + location.getValue() + " ]");
         } catch (Exception e) {

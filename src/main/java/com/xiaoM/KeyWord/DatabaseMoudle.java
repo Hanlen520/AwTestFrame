@@ -1,6 +1,6 @@
 package com.xiaoM.KeyWord;
 
-import com.xiaoM.BeginScript.BeginScript;
+import com.xiaoM.BeginScript.BeginAppScript;
 import com.xiaoM.Driver.AppiumXMDriver;
 import com.xiaoM.Utils.Location;
 import com.xiaoM.Utils.Log;
@@ -11,19 +11,17 @@ import java.util.Map;
 
 public class DatabaseMoudle {
     private Log log = new Log(this.getClass());
-    private AppiumXMDriver driver;
     private String TestCategory;
     private Map<String, Object> returnMap;
 
-    public DatabaseMoudle(AppiumXMDriver driver, String TestCategory, Map<String, Object> returnMap) {
-        this.driver = driver;
+    public DatabaseMoudle( String TestCategory, Map<String, Object> returnMap) {
         this.TestCategory = TestCategory;
         this.returnMap = returnMap;
     }
 
     public boolean dataBaseUpdata(Location location){
         try {
-            Map<String, String[]> dataBaseConfig = BeginScript.DataBaseConfig;
+            Map<String, String[]> dataBaseConfig = BeginAppScript.DataBaseConfig;
             String[] dataBase = dataBaseConfig.get(location.getParameter());
             String dataBaseType = dataBase[2].toLowerCase();
             String dataBaseDriver;
@@ -52,7 +50,7 @@ public class DatabaseMoudle {
 
     public Object dataBaseQuery(Location location){
         try {
-            Map<String, String[]> dataBaseConfig = BeginScript.DataBaseConfig;
+            Map<String, String[]> dataBaseConfig = BeginAppScript.DataBaseConfig;
             String[] dataBase = dataBaseConfig.get(location.getParameter());
             String dataBaseType = dataBase[2].toLowerCase();
             String dataBaseDriver;

@@ -4,22 +4,22 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.xiaoM.BeginScript.BeginScript;
-import com.xiaoM.Driver.AppiumXMDriver;
+import com.xiaoM.BeginScript.BeginAppScript;
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 import com.google.common.io.Files;
 
 
-public class ScreenShot {
-    private AppiumXMDriver driver;
+public class AppiumScreenShot {
+    private AppiumDriver driver;
     private String TestCategory;
     public void setScreenName(String TestCategory) {
         this.TestCategory = TestCategory;
     }
 
-    public ScreenShot(AppiumXMDriver driver) {
+    public AppiumScreenShot(AppiumDriver driver) {
         this.driver = driver;
     }
 
@@ -36,14 +36,14 @@ public class ScreenShot {
 
     public void takeScreenshot() {
         String screenName = TestCategory;
-        File dir = new File("testCase/" + BeginScript.TestCase + "/test-result/snapshot");
+        File dir = new File("testCase/" + BeginAppScript.TestCase + "/test-result/snapshot");
         if (!dir.exists()) {
             dir.mkdirs();
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HHmmss");
         String date = dateFormat.format(new Date());
         String path = "../test-result/snapshot/" + screenName + "_" + date + ".png";
-        BeginScript.screenMessageList.put(TestCategory, path);
+        BeginAppScript.screenMessageList.put(TestCategory, path);
         String screenPath = dir.getAbsolutePath() + "/" + screenName + "_" + date + ".png";
         takeScreenshot(screenPath);
     }

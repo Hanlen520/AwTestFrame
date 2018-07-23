@@ -1,8 +1,7 @@
-package com.xiaoM.KeyWord;
+package com.xiaoM.KeyWord.Appium;
 
 import com.xiaoM.Android.AndroidSwipeScreen;
-import com.xiaoM.Android.AppiumComm;
-import com.xiaoM.BeginScript.BeginScript;
+import com.xiaoM.BeginScript.BeginAppScript;
 import com.xiaoM.Driver.AppiumXMDriver;
 import com.xiaoM.IOS.IosSwipeScreen;
 import com.xiaoM.Utils.Location;
@@ -22,7 +21,7 @@ public class DeviceMoudle {
 
     public boolean SwipeDown(){
         try {
-            if(BeginScript.DeviceType.toLowerCase().equals("android")){
+            if(BeginAppScript.DeviceType.toLowerCase().equals("android")){
                 AndroidSwipeScreen.swipeDown(driver);
             }else{
                 IosSwipeScreen.swipeDown(driver);
@@ -37,7 +36,7 @@ public class DeviceMoudle {
 
     public boolean SwipeLeft(){
         try {
-            if(BeginScript.DeviceType.toLowerCase().equals("android")){
+            if(BeginAppScript.DeviceType.toLowerCase().equals("android")){
                 AndroidSwipeScreen.swipeLeft(driver);
             }else{
                 IosSwipeScreen.swipeLeft(driver);
@@ -52,7 +51,7 @@ public class DeviceMoudle {
 
     public boolean SwipeRight(){
         try {
-            if(BeginScript.DeviceType.toLowerCase().equals("android")){
+            if(BeginAppScript.DeviceType.toLowerCase().equals("android")){
                 AndroidSwipeScreen.swipeRight(driver);
             }else{
                 IosSwipeScreen.swipeRight(driver);
@@ -67,7 +66,7 @@ public class DeviceMoudle {
 
     public boolean SwipeUp(){
         try {
-            if(BeginScript.DeviceType.toLowerCase().equals("android")){
+            if(BeginAppScript.DeviceType.toLowerCase().equals("android")){
                 AndroidSwipeScreen.swipeUp(driver);
             }else{
                 IosSwipeScreen.swipeUp(driver);
@@ -82,14 +81,14 @@ public class DeviceMoudle {
 
     public boolean restartApp(){
         try {
-            if(BeginScript.DeviceType.toLowerCase().equals("android")){
-                AdbMoudle.forceStop(BeginScript.PackageName,DeviceName);
+            if(BeginAppScript.DeviceType.toLowerCase().equals("android")){
+                AdbMoudle.forceStop(BeginAppScript.PackageName,DeviceName);
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                AdbMoudle.adbStartAPP(BeginScript.AppName+"/"+BeginScript.Activity,DeviceName);
+                AdbMoudle.adbStartAPP(BeginAppScript.AppName+"/"+BeginAppScript.Activity,DeviceName);
             }else{
                 log.warn("IOS设备不支持 restartApp 关键字");
             }
@@ -103,7 +102,7 @@ public class DeviceMoudle {
 
     public boolean installApp(Location location){
         try {
-            if(BeginScript.DeviceType.toLowerCase().equals("android")){
+            if(BeginAppScript.DeviceType.toLowerCase().equals("android")){
                 driver.installApp(location.getValue());
             }else{
                 log.warn("IOS设备不支持 installApp 关键字");

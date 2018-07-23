@@ -1,7 +1,7 @@
-package com.xiaoM.KeyWord;
+package com.xiaoM.KeyWord.Appium;
 
 import com.xiaoM.Driver.AppiumXMDriver;
-import com.xiaoM.Element.LocationElement;
+import com.xiaoM.Element.LocationAppElement;
 import com.xiaoM.Utils.Location;
 import com.xiaoM.Utils.Log;
 import com.xiaoM.Utils.Picture;
@@ -18,9 +18,9 @@ public class ClickModule {
     }
 
     public boolean ClickElement(Location location){
-        LocationElement locationElement = new LocationElement(driver, TestCategory);
+        LocationAppElement locationAppElement = new LocationAppElement(driver, TestCategory);
         try {
-            locationElement.waitForElement(location).click();
+            locationAppElement.waitForElement(location).click();
         } catch (Exception e) {
             log.error(TestCategory + "：点击控件失败 [ " + location.getDescription() + " ]");
             throw e;

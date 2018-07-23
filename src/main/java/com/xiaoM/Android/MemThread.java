@@ -8,8 +8,8 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.xiaoM.BeginScript.BeginScript;
-import com.xiaoM.KeyWord.AdbMoudle;
+import com.xiaoM.BeginScript.BeginAppScript;
+import com.xiaoM.KeyWord.Appium.AdbMoudle;
 import com.xiaoM.Utils.IOMananger;
 
 public class MemThread extends Thread {
@@ -28,7 +28,7 @@ public class MemThread extends Thread {
 	public void run() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		String date;
-		String workSpace = BeginScript.ProjectPath+"/test-result/MonitorResoure/Mem";
+		String workSpace = BeginAppScript.ProjectPath+"/test-result/MonitorResoure/Mem";
 		while(true){
 			try {
 				Thread.sleep(50);

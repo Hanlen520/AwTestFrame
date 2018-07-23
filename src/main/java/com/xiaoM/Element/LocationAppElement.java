@@ -11,14 +11,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.NoSuchElementException;
 
-public class LocationElement {
+public class LocationAppElement {
 
     private Log log = new Log(this.getClass());
     private AppiumXMDriver driver;
     private String TestCategory;
 
 
-    public LocationElement(AppiumXMDriver driver, String TestCategory) {
+    public LocationAppElement(AppiumXMDriver driver, String TestCategory) {
         this.driver = driver;
         this.TestCategory = TestCategory;
     }

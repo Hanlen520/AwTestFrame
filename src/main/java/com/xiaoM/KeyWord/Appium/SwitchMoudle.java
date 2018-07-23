@@ -1,4 +1,4 @@
-package com.xiaoM.KeyWord;
+package com.xiaoM.KeyWord.Appium;
 
 import com.xiaoM.Driver.AppiumXMDriver;
 import com.xiaoM.Utils.Log;

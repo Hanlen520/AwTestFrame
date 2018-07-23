@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.xiaoM.BeginScript.BeginScript;
-import com.xiaoM.KeyWord.AdbMoudle;
+import com.xiaoM.BeginScript.BeginAppScript;
+import com.xiaoM.KeyWord.Appium.AdbMoudle;
 import com.xiaoM.Utils.IOMananger;
 
 public class CpuThread extends Thread {
@@ -26,7 +26,7 @@ public class CpuThread extends Thread {
 
 	@Override
 	public void run() {
-		String workSpace = BeginScript.ProjectPath+"/test-result/MonitorResoure/Cpu";
+		String workSpace = BeginAppScript.ProjectPath+"/test-result/MonitorResoure/Cpu";
 		while(true){
 			try {
 				Thread.sleep(50);

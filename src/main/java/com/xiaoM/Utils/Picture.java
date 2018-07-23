@@ -1,8 +1,10 @@
 package com.xiaoM.Utils;
 
 import com.google.common.io.Files;
-import com.xiaoM.BeginScript.BeginScript;
+import com.xiaoM.BeginScript.BeginAppScript;
+import com.xiaoM.BeginScript.BeginWebScript;
 import com.xiaoM.Driver.AppiumXMDriver;
+import com.xiaoM.Main.MainTest;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
@@ -11,20 +13,24 @@ import org.bytedeco.javacpp.opencv_imgcodecs;
 import org.bytedeco.javacpp.opencv_imgproc;
 import org.openqa.selenium.*;
 import org.openqa.selenium.Point;
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Pattern;
+import org.sikuli.script.Screen;
 
 
 import javax.imageio.ImageIO;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 
 public class Picture {
-  private static String picturePath = BeginScript.ProjectPath + "/testCase/" + BeginScript.TestCase + "/picture/";
+  private static String picturePath = "./testCase/" + MainTest.TestCase + "/picture/";
     /**
      * 获取指定控件的图像
      */
-    public static String captureElement(AppiumXMDriver driver, WebElement element) throws Exception {
+    public static String captureElement(WebDriver driver, WebElement element) throws Exception {
         // 截图整个页面
         File screen = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         if (element != null) {
@@ -93,7 +99,7 @@ public class Picture {
         if(!new File(value_1).exists()){
             throw new NoSuchFileException("");
         }
-        File dir = new File(BeginScript.ProjectPath + "/Temp/");
+        File dir = new File(BeginAppScript.ProjectPath + "/Temp/");
         if (!dir.exists()) {
             dir.mkdirs();
         }
@@ -126,6 +132,30 @@ public class Picture {
         int[] targetLoc = getImageRecognitionLoc(driver, targetName);
         TouchAction action = new TouchAction(driver);
         action.tap(targetLoc[0], targetLoc[1]).perform();
+    }
+
+    public static void webPictureClick(Location location){
+        File dir = new File("./Temp/");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        String value_1 = picturePath + location.getValue();
+        try {
+            Files.copy(new File(value_1), new File(dir.getAbsolutePath()+"/"+ location.getValue()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String path = "./Temp/";
+        String screenshot = path + location.getValue();
+        Screen screen = new Screen();
+        Pattern from = new Pattern(screenshot);
+        try {
+            if (screen.wait(from, 10) != null) {
+                screen.click(from);
+            }
+        } catch (FindFailed findFailed) {
+            findFailed.printStackTrace();
+        }
     }
 
 }

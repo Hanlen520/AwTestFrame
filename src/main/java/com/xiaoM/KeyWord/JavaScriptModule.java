@@ -1,16 +1,16 @@
 package com.xiaoM.KeyWord;
 
-import com.xiaoM.Driver.AppiumXMDriver;
 import com.xiaoM.Utils.Location;
 import com.xiaoM.Utils.Log;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 
 public class JavaScriptModule {
     private Log log = new Log(this.getClass());
-    private AppiumXMDriver driver;
+    private WebDriver driver;
     private String TestCategory;
 
-    public JavaScriptModule(AppiumXMDriver driver, String TestCategory) {
+    public JavaScriptModule(WebDriver driver, String TestCategory) {
         this.driver = driver;
         this.TestCategory = TestCategory;
     }
@@ -24,9 +24,10 @@ public class JavaScriptModule {
             log.error(TestCategory + ":执行js脚本失败 [ " + location.getValue() + " ]");
             throw e;
         }
-        log.info(TestCategory + ":执行js脚本成功 [ " + location.getValue() + " ]");
+        log.info(TestCategory + ":执行js脚本 [ " + location.getValue() + " ]");
+        if (result == null) {
+            return true;
+        }
         return result;
     }
-
-
 }

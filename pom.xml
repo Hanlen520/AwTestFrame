@@ -3,13 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.xiaoM</groupId>
-	<artifactId>AppiumUiXMClient</artifactId>
+	<artifactId>AWTestFrame</artifactId>
 	<version>2.0</version>
 	<packaging>jar</packaging>
 
-	<name>AppiumUiXM</name>
-	<url>http://maven.apache.org</url>
-
+	<name>AWTestFrame</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -77,6 +75,11 @@
 			<groupId>com.baidu.aip</groupId>
 			<artifactId>java-sdk</artifactId>
 			<version>4.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sikulix</groupId>
+			<artifactId>sikulixapi</artifactId>
+			<version>1.1.2</version>
 		</dependency>
 	</dependencies>
 	<build>

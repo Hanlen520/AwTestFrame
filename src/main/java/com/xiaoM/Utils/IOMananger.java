@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.aventstack.extentreports.ExtentTest;
-import com.xiaoM.BeginScript.BeginScript;
+import com.xiaoM.BeginScript.BeginAppScript;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -24,9 +24,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 public class IOMananger {
-	//设置日期格式
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	//获取当前日期
 	private static String date = dateFormat.format(new Date());
 	/**
 	 * 读取excel
@@ -57,9 +55,9 @@ public class IOMananger {
 	 * @param sheetName Sheet
 	 * @param cellContent 文本
 	 */
-	static int locateTextFromExcel(String sheetName, String cellContent) throws IOException {
+	static int locateTextFromExcel(XSSFWorkbook workbook,String sheetName, String cellContent) throws IOException {
 		int i = 0;
-		XSSFSheet sheet = BeginScript.workbook.getSheet(sheetName);//读取sheet
+		XSSFSheet sheet = workbook.getSheet(sheetName);//读取sheet
 		if (sheet != null) {
 			int rowNum = sheet.getLastRowNum();
 			for (int j = 0; j <= rowNum; j++) {
@@ -84,26 +82,26 @@ public class IOMananger {
 	/**
 	 * 获取执行测试用例
 	 */
-	public static String[][] runTime(String sheetname){
-		String[][] Date =  readExcelDataXlsx(BeginScript.workbook,sheetname);
+	public static String[][] runTime(XSSFWorkbook workbook,String sheetname){
+		String[][] Date =  readExcelDataXlsx(workbook,sheetname);
 		List<String> ID = new LinkedList<>();
-		List<String> Type = new LinkedList<>();
-		List<String> Description = new LinkedList<>();
+		List<String> Module = new LinkedList<>();
 		List<String> CaseName = new LinkedList<>();
+		List<String> Remark = new LinkedList<>();
 		for(int i=1;i<Date.length;i++){
-			if(Date[i][0].equals("YES")){
+			if(Date[i][0].toLowerCase().equals("y")){
 				ID.add(Date[i][1]);
-				Type.add(Date[i][2]);
-				Description.add(Date[i][3]);
-				CaseName.add(Date[i][4]);
+				Module.add(Date[i][2]);
+				CaseName.add(Date[i][3]);
+				Remark.add(Date[i][4]);
 			}
 		}
 		String[][] runTime  = new String[CaseName.size()][4];
 		for(int k =0;k<CaseName.size();k++){
 			runTime[k][0]=ID.get(k);
-			runTime[k][1]=Type.get(k);
-			runTime[k][2]=Description.get(k);
-			runTime[k][3]=CaseName.get(k);
+			runTime[k][1]=Module.get(k);
+			runTime[k][2]=CaseName.get(k);
+			runTime[k][3]=Remark.get(k);
 		}
 		return runTime;
 	}
@@ -174,8 +172,8 @@ public class IOMananger {
 	 * 处理日志
 	 */
 	public static void DealwithRunLog(String TestCategory) {
-		String logPath = BeginScript.ProjectPath+"/test-output/log/runlogs/"+date;
-		List<String> BrowserLog = IOMananger.readTxtFile(BeginScript.ProjectPath+"/test-output/log/runLog.log");
+		String logPath = BeginAppScript.ProjectPath+"/test-output/log/runlogs/"+date;
+		List<String> BrowserLog = IOMananger.readTxtFile(BeginAppScript.ProjectPath+"/test-output/log/runLog.log");
 		File destDir = new File(logPath);
 		if (!destDir.exists()) {
 			destDir.mkdirs();
@@ -190,7 +188,7 @@ public class IOMananger {
 				IOMananger.saveToFile(logDriverPath, logDriver);
 			}
 		}
-		BeginScript.logList.put(TestCategory,"<spen>运行日志：</spen></br><pre>"+sb.toString()+"</pre>");
+		BeginAppScript.logList.put(TestCategory,"<spen>运行日志：</spen></br><pre>"+sb.toString()+"</pre>");
 	}
 	
 	/**
@@ -250,9 +248,9 @@ public class IOMananger {
 			workbook = new XSSFWorkbook(is);
 			workbook.close();
 		} catch (Exception e) {
-			ExtentTest extentTest = BeginScript.extent.createTest("启动测试失败");
+			ExtentTest extentTest = BeginAppScript.extent.createTest("启动测试失败");
 			extentTest.fail(e.getMessage());
-			BeginScript.extent.flush();
+			BeginAppScript.extent.flush();
 			System.exit(0);
 		}
 		return workbook;
@@ -262,18 +260,18 @@ public class IOMananger {
 		XSSFWorkbook workbook = null;
 		String devicesPath;
 		try {
-			if(BeginScript.DeviceType.toLowerCase().equals("android")){
-				devicesPath = BeginScript.ProjectPath + "/devices/AndroidDevices.xlsx";
+			if(BeginAppScript.DeviceType.toLowerCase().equals("android")){
+				devicesPath = BeginAppScript.ProjectPath + "/devices/AndroidDevices.xlsx";
 			}else{
-				devicesPath = BeginScript.ProjectPath + "/devices/iOSDevices.xlsx";
+				devicesPath = BeginAppScript.ProjectPath + "/devices/iOSDevices.xlsx";
 			}
 			InputStream is = new FileInputStream(devicesPath);
 			workbook =  new XSSFWorkbook(is);
 			workbook.close();
 		} catch (Exception e) {
-			ExtentTest extentTest = BeginScript.extent.createTest("启动测试失败");
+			ExtentTest extentTest = BeginAppScript.extent.createTest("启动测试失败");
 			extentTest.fail(e.getMessage());
-			BeginScript.extent.flush();
+			BeginAppScript.extent.flush();
 			System.exit(0);
 		}
 		return workbook;

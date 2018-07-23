@@ -1,9 +1,8 @@
-package com.xiaoM.KeyWord;
+package com.xiaoM.KeyWord.Selenium;
 
 import com.google.common.io.Files;
-import com.xiaoM.BeginScript.BeginScript;
-import com.xiaoM.Driver.AppiumXMDriver;
-import com.xiaoM.Element.LocationElement;
+import com.xiaoM.Element.LocationWebElement;
+import com.xiaoM.Main.MainTest;
 import com.xiaoM.Utils.FingerPrint;
 import com.xiaoM.Utils.Location;
 import com.xiaoM.Utils.Log;
@@ -11,6 +10,7 @@ import com.xiaoM.Utils.Match;
 import org.bytedeco.javacpp.opencv_core;
 import org.bytedeco.javacpp.opencv_imgcodecs;
 import org.bytedeco.javacpp.opencv_imgproc;
+import org.openqa.selenium.WebDriver;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -18,20 +18,20 @@ import java.util.Map;
 
 public class CheckMoudle {
     private Log log = new Log(this.getClass());
-    private AppiumXMDriver driver;
+    private WebDriver driver;
     private String TestCategory;
     private Map<String, Object> returnMap;
 
-    public CheckMoudle(AppiumXMDriver driver, String TestCategory, Map<String, Object> returnMap) {
+    public CheckMoudle(WebDriver driver, String TestCategory, Map<String, Object> returnMap) {
         this.driver = driver;
         this.TestCategory = TestCategory;
         this.returnMap = returnMap;
     }
 
     public boolean CheckElementNotNull(Location location) {
-        LocationElement locationElement = new LocationElement(driver, TestCategory);
+        LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
         try {
-            locationElement.waitForElement(location);
+            locationWebElement.waitForElement(location);
         } catch (Exception e) {
             log.error(TestCategory + "：检查控件不为空失败 [ " + location.getDescription() + " ]");
             return false;
@@ -41,9 +41,9 @@ public class CheckMoudle {
     }
 
     public boolean CheckElementIsNull(Location location) {
-        LocationElement locationElement = new LocationElement(driver, TestCategory);
+        LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
         try {
-            locationElement.waitForElement(location);
+            locationWebElement.waitForElement(location);
         } catch (Exception e) {
             log.info(TestCategory + "：检查控件为空成功 [ " + location.getDescription() + " ]");
             return true;
@@ -110,8 +110,8 @@ public class CheckMoudle {
     public boolean CheckPictureByOpenCV(Location location) {
         try {
             String value_0 = location.getValue();
-            String value_1 = "./testCase/" + BeginScript.TestCase + "/picture/" + location.getExpected();
-            File dir = new File(BeginScript.ProjectPath + "/Temp/");
+            String value_1 = "./testCase/" + MainTest.TestCase + "/picture/" + location.getExpected();
+            File dir = new File("./Temp/");
             if (!dir.exists()) {
                 dir.mkdirs();
             }
@@ -146,7 +146,7 @@ public class CheckMoudle {
             String value_0 = location.getValue();
             String value_1 = location.getExpected();
             FingerPrint fp1 = new FingerPrint(ImageIO.read(new File(value_0)));
-            FingerPrint fp2 = new FingerPrint(ImageIO.read(new File(BeginScript.ProjectPath + "/picture/" + value_1)));
+            FingerPrint fp2 = new FingerPrint(ImageIO.read(new File( "./picture/" + value_1)));
             double compare_result = fp1.compare(fp2);
             if (compare_result >= 0.8f) {
                 log.info(TestCategory + "：调用哈希算法图片校验通过 [ 相似度: " + compare_result + " ]");

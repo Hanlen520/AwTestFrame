@@ -1,6 +1,6 @@
 package com.xiaoM.Driver;
 
-import com.xiaoM.BeginScript.BeginScript;
+import com.xiaoM.BeginScript.BeginAppScript;
 import io.appium.java_client.*;
 import io.appium.java_client.android.*;
 import io.appium.java_client.ios.LocksIOSDevice;
@@ -9,6 +9,7 @@ import io.appium.java_client.ios.ShakesDevice;
 import io.appium.java_client.remote.MobilePlatform;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.net.URL;
@@ -18,7 +19,7 @@ public class AppiumXMDriver<T extends WebElement> extends AppiumDriver<T>
         FindsByAndroidUIAutomator<T>, LocksAndroidDevice, HasAndroidSettings, HasDeviceDetails,
         HasSupportedPerformanceDataType, HidesKeyboardWithKeyName, ShakesDevice, HasIOSSettings,
         FindsByIosUIAutomation<T>, LocksIOSDevice, PerformsTouchID, FindsByIosNSPredicate<T>,
-        FindsByIosClassChain<T> {
+        FindsByIosClassChain<T> ,WebDriver {
 
     private static String PLATFORM;
 
@@ -26,7 +27,7 @@ public class AppiumXMDriver<T extends WebElement> extends AppiumDriver<T>
      * 后期可添加其他系统
      */
     static {
-        switch (BeginScript.DeviceType.toLowerCase()) {
+        switch (BeginAppScript.DeviceType.toLowerCase()) {
             case "android":
                 PLATFORM = MobilePlatform.ANDROID;
                 break;

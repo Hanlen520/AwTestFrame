@@ -1,12 +1,14 @@
-package com.xiaoM.KeyWord;
+package com.xiaoM.KeyWord.Selenium;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
-import com.xiaoM.BeginScript.BeginScript;
+import com.xiaoM.BeginScript.BeginAppScript;
 import com.xiaoM.Driver.AppiumXMDriver;
+import com.xiaoM.Main.MainTest;
 import com.xiaoM.Utils.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.WebDriver;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -16,13 +18,13 @@ import java.util.List;
 import java.util.Map;
 
 public class RunModule {
-    private AppiumXMDriver driver;
+    private WebDriver driver;
     private String TestCategory;
     private Map<String, Object> returnMap;
     private ExtentTest extentTest;
     private String DeviceName;
 
-    public RunModule(AppiumXMDriver driver, String TestCategory, Map<String, Object> returnMap, ExtentTest extentTest,String DeviceName) {
+    public RunModule(WebDriver driver, String TestCategory, Map<String, Object> returnMap, ExtentTest extentTest, String DeviceName) {
         this.driver = driver;
         this.TestCategory = TestCategory;
         this.returnMap = returnMap;
@@ -31,7 +33,7 @@ public class RunModule {
     }
 
     public Object moduleMethod(Location location2) throws Exception {
-        String moudlePath = BeginScript.ProjectPath + "/testCase/" + BeginScript.TestCase + "/module.xlsx";
+        String moudlePath = "./testCase/" + MainTest.TestCase + "/module.xlsx";
         String sheetName = location2.getValue();
         InputStream is = new FileInputStream(moudlePath);
         XSSFWorkbook workbook = new XSSFWorkbook(is);
@@ -46,7 +48,7 @@ public class RunModule {
                 Location location = new Location();
                 location.setLocation(parameteres);
                 sb = new StringBuilder();
-                if (location.getIsRun().equals("YES")) {
+                if (location.getIsRun().toLowerCase().equals("y")) {
                     String Step = sheetName + "." + location.getStep();
                     String Description = location.getDescription();
                     String Action = location.getAction();
@@ -66,8 +68,8 @@ public class RunModule {
                     sb.append("[关键字]:" + Action + "\r\n");
                     sb.append("[属性值]:" + Value + "\r\n");
                     sb.append("[参数]：" + Parameter + "\r\n");
-                    ElementAction elementAction = new ElementAction(driver, TestCategory, returnMap, extentTest,DeviceName);
-                    Object result = elementAction.action(location);
+                    SeleniumAction appiumAction = new SeleniumAction(driver, TestCategory, returnMap, extentTest,DeviceName);
+                    Object result = appiumAction.action(location);
                     sb.append("[返回值]：" + result);
                     returnMap.put(Step, result);
                     if(result.toString().toLowerCase().equals("false")){
@@ -80,11 +82,12 @@ public class RunModule {
                 }
             }
         } catch (Exception e) {
-            ScreenShot screenShot = new ScreenShot(driver);
+            e.printStackTrace();
+            SeleniumScreenShot screenShot = new SeleniumScreenShot(driver);
             screenShot.setScreenName(TestCategory);
             screenShot.takeScreenshot();
             sb.append("[异常截图如下]：");
-            extentTest.fail("<pre>" + sb.toString() + "</pre>", MediaEntityBuilder.createScreenCaptureFromPath(BeginScript.screenMessageList.get(TestCategory)).build());
+            extentTest.fail("<pre>" + sb.toString() + "</pre>", MediaEntityBuilder.createScreenCaptureFromPath(BeginAppScript.screenMessageList.get(TestCategory)).build());
             extentTest.error(e);
             FailStep.dealWithMoubleFailStep(b, moduleStep, extentTest,location2);
             throw e;

@@ -3,7 +3,7 @@ package com.xiaoM.Driver;
 import java.net.URL;
 
 import com.aventstack.extentreports.ExtentTest;
-import com.xiaoM.BeginScript.BeginScript;
+import com.xiaoM.BeginScript.BeginAppScript;
 import com.xiaoM.Utils.IOMananger;
 import com.xiaoM.Utils.PortProber;
 import com.xiaoM.Utils.UseDevice;
@@ -17,16 +17,16 @@ import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 
-public class BaseDriver {
+public class AppBaseDriver {
     AppiumServerUtils AppiumServer = null;
     AppiumXMDriver driver = null;
 
     public AppiumXMDriver setUpApp(String DeviceName, ExtentTest extentTest) throws Exception {
         URL url;
-        String[][] DeviceBase = IOMananger.readExcelDataXlsx(BeginScript.DeviceConfig, DeviceName);
+        String[][] DeviceBase = IOMananger.readExcelDataXlsx(BeginAppScript.DeviceConfig, DeviceName);
         int Port = PortProber.getFreePort();
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        switch (BeginScript.DeviceType.toLowerCase()) {
+        switch (BeginAppScript.DeviceType.toLowerCase()) {
             case "android":
                 if (DeviceBase == null) {
                     extentTest.fail("设备不存在，请确认 AndroidDevices.xlsx 中存在 " + DeviceName + " 的设备参数");
@@ -34,17 +34,17 @@ public class BaseDriver {
                 }
                 AppiumServer = new AppiumServerUtils(DeviceBase[1][2], Port, String.valueOf(PortProber.getFreePort()));
                 url = AppiumServer.startServer();
-                String appPath = BeginScript.ProjectPath + "/testCase/" + BeginScript.TestCase + "/apps/" + BeginScript.AppName + ".apk";
+                String appPath = BeginAppScript.ProjectPath + "/testCase/" + BeginAppScript.TestCase + "/apps/" + BeginAppScript.AppName + ".apk";
                 capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.APPIUM);
                 capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
                 capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, DeviceBase[2][2]);
                 capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, DeviceBase[3][2]);
                 capabilities.setCapability(MobileCapabilityType.APP, appPath);
-                if (BeginScript.PackageName != null && BeginScript.Activity != null) {
-                    capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, BeginScript.PackageName);
-                    capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, BeginScript.Activity);
+                if (BeginAppScript.PackageName != null && BeginAppScript.Activity != null) {
+                    capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, BeginAppScript.PackageName);
+                    capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, BeginAppScript.Activity);
                 }
-                capabilities.setCapability(MobileCapabilityType.NO_RESET, BeginScript.ResetApp);
+                capabilities.setCapability(MobileCapabilityType.NO_RESET, BeginAppScript.ResetApp);
                 capabilities.setCapability(MobileCapabilityType.UDID, DeviceBase[2][2]);
                 capabilities.setCapability(AndroidMobileCapabilityType.UNICODE_KEYBOARD, true);
                 capabilities.setCapability(AndroidMobileCapabilityType.RESET_KEYBOARD, true);
@@ -56,7 +56,7 @@ public class BaseDriver {
                 }
                 AppiumServer = new AppiumServerUtils();
                 url = AppiumServer.startServer(DeviceBase[1][2], Port);
-                String bundleId = BeginScript.bundleId;
+                String bundleId = BeginAppScript.bundleId;
                 capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
                 capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS");
                 capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, DeviceBase[3][2]);
@@ -83,10 +83,10 @@ public class BaseDriver {
 
     public AppiumXMDriver setUpWap(String DeviceName, ExtentTest extentTest) throws Exception {
         URL url;
-        String[][] DeviceBase = IOMananger.readExcelDataXlsx(BeginScript.DeviceConfig, DeviceName);
+        String[][] DeviceBase = IOMananger.readExcelDataXlsx(BeginAppScript.DeviceConfig, DeviceName);
         int Port = PortProber.getFreePort();
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        switch (BeginScript.DeviceType.toLowerCase()) {
+        switch (BeginAppScript.DeviceType.toLowerCase()) {
             case "android":
                 if (DeviceBase == null) {
                     extentTest.fail("设备不存在，请确认 AndroidDevices.xlsx 中存在 " + DeviceName + " 的设备参数");
