@@ -1,5 +1,5 @@
-# AppiumUiXM
-一个基于Appium的关键字驱动框架，支持Android/iOS，支持多设备并行
+# AWTestFrame
+一个UI自动化测试关键字驱动框架，采用Excel管理测试数据，支持WEB/Android/iOS，支持多设备并行
 # 关键字
 编号|关键字 |描述
 ---|---|---
