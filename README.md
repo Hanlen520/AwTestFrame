@@ -1,6 +1,26 @@
 # AWTestFrame
 一个UI自动化测试关键字驱动框架，采用Excel管理测试数据，支持WEB/Android/iOS，支持多设备并行
-# 通用关键字
+## 运行
+将工程打包后放到一个文件夹内，例如：AwTestFrame。文件夹目录如下：
+
+关键字|描述
+---|---
+devices|存放移动设备参数
+lib|引用的jar包
+testCase|测试用例存放
+AwTestFrame-2.0.jar|工程打包文件
+
+### 执行命令
+
+```
+java -jar AwTestFrame-2.0.jar -c <测试用例> -t <测试类型> -r <线程数>
+```
+#### 例子：
+```
+java -jar AwTestFrame-2.0.jar -c 163WebMail -t web -r 1
+```
+
+## 通用关键字
 编号|关键字 |描述
 ---|---|---
 1|SetParam|设置参数
@@ -40,7 +60,7 @@
 34|ElementSendkeys|控件输入内容
 35|Module|调用模块
 
-# 手机端专有关键字
+## 手机端专有关键字
 编号|关键字 |描述
 ---|---|---
 1|AdbSendkeys|ADB输入内容
@@ -54,7 +74,7 @@
 9|InstallAPP|安装APP
 10|PressAndroidKeycode|模拟Android键盘输入
 
-# WEB端专有关键字
+## WEB端专有关键字
 编号|关键字 |描述
 ---|---|---
 1|DobuleClickElement|鼠标双击控件
