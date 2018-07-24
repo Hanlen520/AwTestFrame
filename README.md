@@ -1,4 +1,4 @@
-# AWTestFrame
+# AwTestFrame
 一个UI自动化测试关键字驱动框架，采用Excel管理测试数据，支持WEB/Android/iOS，支持多设备并行
 ## 运行
 将工程打包后放到一个文件夹内，例如：AwTestFrame。文件夹目录如下：
