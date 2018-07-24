@@ -1,4 +1,4 @@
-package com.xiaoM.Utils;
+package com.xiaoM.Appium;
 
 import java.io.File;
 import java.net.URL;
@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.xiaoM.BeginScript.BeginAppScript;
+import com.xiaoM.Utils.Location;
 import io.appium.java_client.AppiumDriver;
 
 

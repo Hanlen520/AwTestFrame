@@ -134,7 +134,7 @@ public class Picture {
         action.tap(targetLoc[0], targetLoc[1]).perform();
     }
 
-    public static void webPictureClick(Location location){
+    public static void webPictureClick(Location location) throws Exception {
         File dir = new File("./Temp/");
         if (!dir.exists()) {
             dir.mkdirs();
@@ -149,12 +149,8 @@ public class Picture {
         String screenshot = path + location.getValue();
         Screen screen = new Screen();
         Pattern from = new Pattern(screenshot);
-        try {
-            if (screen.wait(from, 10) != null) {
-                screen.click(from);
-            }
-        } catch (FindFailed findFailed) {
-            findFailed.printStackTrace();
+        if (screen.wait(from, 10) != null) {
+            screen.click(from);
         }
     }
 

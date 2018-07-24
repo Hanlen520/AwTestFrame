@@ -1,6 +1,7 @@
-package com.xiaoM.Utils;
+package com.xiaoM.Selenium;
 
 import com.xiaoM.Main.MainTest;
+import com.xiaoM.Utils.Location;
 import org.openqa.selenium.WebDriver;
 
 import java.io.File;

@@ -24,17 +24,18 @@ public class WaitModule {
     }
 
     public boolean waitByTime(Location location) {
+        log.info(TestCategory + "：等待 [ " + location.getValue() + "秒 ]");
         int millis = Integer.valueOf(location.getValue()) * 1000;
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        log.info(TestCategory + "：等待 [ " + location.getValue() + "秒 ]");
         return true;
     }
 
     public boolean waitByPictureAppear(Location location) {
+        log.info(TestCategory + "：等待目标图片出现 [ " + location.getValue() + " ]");
         String picturePath = "./testCase/" + MainTest.TestCase + "/picture/";
         File dir = new File("./Temp/");
         if (!dir.exists()) {

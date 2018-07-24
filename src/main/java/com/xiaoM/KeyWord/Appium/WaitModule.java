@@ -16,21 +16,21 @@ public class WaitModule {
     }
 
     public boolean waitByTime(Location location) {
+        log.info(TestCategory + "：等待 [ " + location.getValue() + "秒 ]");
         int millis = Integer.valueOf(location.getValue()) * 1000;
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        log.info(TestCategory + "：等待 [ " + location.getValue() + "秒 ]");
         return true;
     }
 
     public boolean waitByPictureAppear(Location location) throws Exception {
+        log.error(TestCategory + "：等待目标图片出现 [  "+location.getValue()+"  ]");
         long time = System.currentTimeMillis();
         while (true) {
             if (System.currentTimeMillis() > time + 6000) {
-                log.error(TestCategory + "：等待60秒目标图片[  "+location.getValue()+"  ]没有匹配成功");
                 throw new NoSuchFieldException();
             }
             if (Picture.matchTemplate(driver, location.getValue(),TestCategory)) {

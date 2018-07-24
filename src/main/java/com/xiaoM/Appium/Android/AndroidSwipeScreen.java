@@ -1,4 +1,4 @@
-package com.xiaoM.Android;
+package com.xiaoM.Appium.Android;
 
 import com.xiaoM.Driver.AppiumXMDriver;
 import io.appium.java_client.TouchAction;

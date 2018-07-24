@@ -44,7 +44,7 @@ public class MainTest {
         suites.add(suite);
         TestNG TestStart = new TestNG();
         TestStart.setXmlSuites(suites);
-        TestStart.setUseDefaultListeners(false);//不使用默认监听器
+        TestStart.setUseDefaultListeners(false);
         TestStart.run();
     }
 }

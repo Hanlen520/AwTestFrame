@@ -1,22 +1,23 @@
-package com.xiaoM.Utils;
+package com.xiaoM.Appium;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.xiaoM.Driver.AppiumXMDriver;
+import com.xiaoM.KeyWord.Appium.*;
 import com.xiaoM.KeyWord.DatabaseMoudle;
 import com.xiaoM.KeyWord.JavaScriptModule;
-import com.xiaoM.KeyWord.Selenium.*;
 import com.xiaoM.KeyWord.SetModule;
-import org.openqa.selenium.WebDriver;
+import com.xiaoM.Utils.Location;
 
 import java.util.Map;
 
-public class SeleniumAction {
-    private WebDriver driver;
+public class AppiumAction {
+    private AppiumXMDriver driver;
     private String TestCategory;
     private Map<String, Object> returnMap;
     private ExtentTest extentTest;
     private String DeviceName;
 
-    public SeleniumAction(WebDriver driver, String TestCategory, Map<String, Object> returnMap, ExtentTest extentTest, String DeviceName) {
+    public AppiumAction(AppiumXMDriver driver, String TestCategory, Map<String, Object> returnMap, ExtentTest extentTest, String DeviceName) {
         this.driver = driver;
         this.TestCategory = TestCategory;
         this.returnMap = returnMap;
@@ -35,14 +36,13 @@ public class SeleniumAction {
         CheckMoudle checkMoudle;
         DatabaseMoudle databaseMoudle;
         ScriptModule scriptModule;
+        SwitchMoudle switchMoudle;
         WebIframe webIframe;
         RunModule runModule;
-        BroswerModule broswerModule;
+        DeviceMoudle deviceMoudle;
+        AdbMoudle adbMoudle;
         String method = location.getAction().toLowerCase();
         switch (method) {
-            case "open":
-                broswerModule = new BroswerModule(driver, TestCategory);
-                return broswerModule.OpenUrl(location);
             case "setparam":
                 setModule = new SetModule();
                 return setModule.setPsaram(TestCategory, returnMap, location);
@@ -76,6 +76,9 @@ public class SeleniumAction {
             case "elementsendkeys":
                 sendKeysModule = new SendKeysModule(driver, TestCategory);
                 return sendKeysModule.SendKeys(location);
+            case "adbsendkeys":
+                adbMoudle = new AdbMoudle(driver, TestCategory);
+                return adbMoudle.adbInputText(DeviceName,location);
             case "waitbytime":
                 waitModule = new WaitModule(driver, TestCategory);
                 return waitModule.waitByTime(location);
@@ -124,6 +127,12 @@ public class SeleniumAction {
             case "script":
                 scriptModule = new ScriptModule(driver, TestCategory);
                 return scriptModule.script(location);
+            case "switchtowebview":
+                switchMoudle = new SwitchMoudle(driver, TestCategory);
+                return switchMoudle.switchToWebview();
+            case "switchtonative":
+                switchMoudle = new SwitchMoudle(driver, TestCategory);
+                return switchMoudle.switchToNative();
             case "switchtoframe":
                 webIframe = new WebIframe(driver, TestCategory);
                 return webIframe.switchToIframe(location);
@@ -136,6 +145,33 @@ public class SeleniumAction {
             case "module":
                 runModule = new RunModule(driver, TestCategory, returnMap, extentTest, DeviceName);
                 return runModule.moduleMethod(location);
+            case "swipeup":
+                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
+                return deviceMoudle.SwipeUp();
+            case "swipedown":
+                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
+                return deviceMoudle.SwipeDown();
+            case "swipeleft":
+                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
+                return deviceMoudle.SwipeLeft();
+            case "swiperight":
+                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
+                return deviceMoudle.SwipeRight();
+            case "restartapp":
+                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
+                return deviceMoudle.restartApp();
+            case "removeapp":
+                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
+                return deviceMoudle.removeApp(location);
+            case "resetapp":
+                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
+                return deviceMoudle.resetApp();
+            case "installapp":
+                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
+                return deviceMoudle.installApp(location);
+            case"pressandroidkeycode":
+                adbMoudle = new AdbMoudle(driver, TestCategory);
+                return adbMoudle.PressAndroidKeycode(location);
             default:
                 throw new NullPointerException("不支持该关键字");
         }

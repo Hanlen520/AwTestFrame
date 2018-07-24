@@ -3,6 +3,7 @@ package com.xiaoM.BeginScript;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.xiaoM.Main.MainTest;
+import com.xiaoM.Selenium.RunWebMode;
 import com.xiaoM.Utils.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.dom4j.Element;

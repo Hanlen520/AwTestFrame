@@ -2,6 +2,8 @@ package com.xiaoM.BeginScript;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.xiaoM.Appium.RunAppMode;
+import com.xiaoM.Appium.UseDevice;
 import com.xiaoM.Main.MainTest;
 import com.xiaoM.Utils.*;
 import io.appium.java_client.service.local.AppiumServiceBuilder;

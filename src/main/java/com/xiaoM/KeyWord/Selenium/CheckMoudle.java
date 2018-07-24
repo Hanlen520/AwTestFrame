@@ -29,26 +29,24 @@ public class CheckMoudle {
     }
 
     public boolean CheckElementNotNull(Location location) {
+        log.info(TestCategory + "：检查控件不为空 [ " + location.getDescription() + " ]");
         LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
         try {
             locationWebElement.waitForElement(location);
         } catch (Exception e) {
-            log.error(TestCategory + "：检查控件不为空失败 [ " + location.getDescription() + " ]");
             return false;
         }
-        log.info(TestCategory + "：检查控件不为空成功 [ " + location.getDescription() + " ]");
         return true;
     }
 
     public boolean CheckElementIsNull(Location location) {
+        log.info(TestCategory + "：检查控件为空 [ " + location.getDescription() + " ]");
         LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
         try {
             locationWebElement.waitForElement(location);
         } catch (Exception e) {
-            log.info(TestCategory + "：检查控件为空成功 [ " + location.getDescription() + " ]");
             return true;
         }
-        log.error(TestCategory + "：检查控件为空失败 [ " + location.getDescription() + " ]");
         return false;
     }
 
@@ -60,11 +58,10 @@ public class CheckMoudle {
         } else if (value_1.contains("${")) {
             value_1 = Match.replaceKeys(returnMap, value_1);
         }
+        log.info(TestCategory + "：文本校验(String) 预期值 [ " + value_1 + "  ] 实际值 [ " + value_0 + " ]");
         if (value_1.equals(value_0)) {
-            log.info(TestCategory + "：检查成功 预期值 [ " + value_1 + "  ] 实际值 [ " + value_0 + " ]");
             return true;
         } else {
-            log.error(TestCategory + "：检查失败 预期值 [ " + value_1 + "  ] 实际值 [ " + value_0 + " ]");
             return false;
         }
     }
@@ -77,13 +74,12 @@ public class CheckMoudle {
         } else if (value_1.contains("${")) {
             value_1 = Match.replaceKeys(returnMap, value_1);
         }
+        log.info(TestCategory + "：文本校验(int) 预期值 [ " + value_1 + "  ] 实际值 [ " + value_0 + " ]");
         int A = Integer.valueOf(value_0);
         int B = Integer.valueOf(value_1);
         if (A == B) {
-            log.info(TestCategory + "：检查成功 预期值 [ " + value_1 + "  ] 实际值 [ " + value_0 + " ]");
             return true;
         } else {
-            log.error(TestCategory + "：检查失败 预期值 [ " + value_1 + "  ] 实际值 [ " + value_0 + " ]");
             return false;
         }
     }
@@ -96,13 +92,12 @@ public class CheckMoudle {
         } else if (value_1.contains("${")) {
             value_1 = Match.replaceKeys(returnMap, value_1);
         }
+        log.info(TestCategory + "：文本校验(Double) 预期值 [ " + value_1 + "  ] 实际值 [ " + value_0 + " ]");
         Double C = Double.valueOf(value_0);
         Double D = Double.valueOf(value_1);
         if (C.equals(D)) {
-            log.info(TestCategory + "：检查成功 预期值 [ " + value_1 + "  ] 实际值 [ " + value_0 + " ]");
             return true;
         } else {
-            log.error(TestCategory + "：检查失败 预期值 [ " + value_1 + "  ] 实际值 [ " + value_0 + " ]");
             return false;
         }
     }
@@ -159,23 +154,5 @@ public class CheckMoudle {
             log.error(TestCategory + "：调用哈希算法图片校验异常");
         }
         return false;
-    }
-
-    public static void main(String[] args) {
-        String value_0 = "./test-result\\snapshot\\Temp\\20180622225353.png";
-        String value_1= "./test-result\\snapshot\\Temp\\20180622225353.png";
-        opencv_core.IplImage src = opencv_imgcodecs.cvLoadImage(value_0);
-        opencv_core.IplImage tmp = opencv_imgcodecs.cvLoadImage(value_1);
-        opencv_core.IplImage result = opencv_core.cvCreateImage(opencv_core.cvSize(src.width() - tmp.width() + 1, src.height() - tmp.height() + 1), opencv_core.IPL_DEPTH_32F, 1);
-        opencv_core.cvZero(result);
-        opencv_imgproc.cvMatchTemplate(src, tmp, result, opencv_imgproc.CV_TM_CCORR_NORMED);
-        double[] minVal = new double[2];
-        double[] maxVal = new double[2];
-        opencv_core.cvMinMaxLoc(result, minVal, maxVal);
-        double compare_result = maxVal[0];
-        opencv_core.cvReleaseImage(src);
-        opencv_core.cvReleaseImage(tmp);
-        opencv_core.cvReleaseImage(result);
-        System.out.println(compare_result);
     }
 }

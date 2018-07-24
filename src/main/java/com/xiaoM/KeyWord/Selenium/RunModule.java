@@ -4,8 +4,9 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.xiaoM.BeginScript.BeginAppScript;
-import com.xiaoM.Driver.AppiumXMDriver;
 import com.xiaoM.Main.MainTest;
+import com.xiaoM.Selenium.SeleniumAction;
+import com.xiaoM.Selenium.SeleniumScreenShot;
 import com.xiaoM.Utils.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebDriver;
@@ -43,7 +44,7 @@ public class RunModule {
         int b = 0;
         try {
             for (int a = 1; a < moduleStep.length; a++) {
-                b=a;
+                b = a;
                 List<String> parameteres = new ArrayList<>(Arrays.asList(moduleStep[a]));
                 Location location = new Location();
                 location.setLocation(parameteres);
@@ -68,15 +69,15 @@ public class RunModule {
                     sb.append("[关键字]:" + Action + "\r\n");
                     sb.append("[属性值]:" + Value + "\r\n");
                     sb.append("[参数]：" + Parameter + "\r\n");
-                    SeleniumAction appiumAction = new SeleniumAction(driver, TestCategory, returnMap, extentTest,DeviceName);
+                    SeleniumAction appiumAction = new SeleniumAction(driver, TestCategory, returnMap, extentTest, DeviceName);
                     Object result = appiumAction.action(location);
                     sb.append("[返回值]：" + result);
                     returnMap.put(Step, result);
-                    if(result.toString().toLowerCase().equals("false")){
+                    if (result.toString().toLowerCase().equals("false")) {
                         extentTest.log(Status.FAIL, "<pre>" + sb.toString() + "</pre>");
-                    }else if(Action.toLowerCase().contains("check")) {
+                    } else if (Action.toLowerCase().contains("check")) {
                         extentTest.log(Status.PASS, "<pre>" + sb.toString() + "</pre>");
-                    }else {
+                    } else {
                         extentTest.log(Status.INFO, "<pre>" + sb.toString() + "</pre>");
                     }
                 }
@@ -86,10 +87,10 @@ public class RunModule {
             SeleniumScreenShot screenShot = new SeleniumScreenShot(driver);
             screenShot.setScreenName(TestCategory);
             screenShot.takeScreenshot();
-            sb.append("[异常截图如下]：");
+            sb.append("[异常截图如下]：" + "\r\n");
             extentTest.fail("<pre>" + sb.toString() + "</pre>", MediaEntityBuilder.createScreenCaptureFromPath(BeginAppScript.screenMessageList.get(TestCategory)).build());
             extentTest.error(e);
-            FailStep.dealWithMoubleFailStep(b, moduleStep, extentTest,location2);
+            FailStep.dealWithMoubleFailStep(b, moduleStep, extentTest, location2);
             throw e;
         }
         return true;

@@ -16,15 +16,14 @@ public class JavaScriptModule {
     }
 
     public Object javaScriptMethod(Location location) {
+        log.info(TestCategory + ": 执行js脚本 [ " + location.getValue() + " ]");
         Object result;
         try {
             JavascriptExecutor js = (JavascriptExecutor) driver;
             result = js.executeScript(location.getValue());
         } catch (Exception e) {
-            log.error(TestCategory + ":执行js脚本失败 [ " + location.getValue() + " ]");
             throw e;
         }
-        log.info(TestCategory + ":执行js脚本 [ " + location.getValue() + " ]");
         if (result == null) {
             return true;
         }

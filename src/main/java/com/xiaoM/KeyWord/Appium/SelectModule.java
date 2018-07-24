@@ -18,6 +18,7 @@ public class SelectModule {
     }
 
     public boolean selectByIndex(Location location){
+        log.info(TestCategory + "：下拉控件选择内容 [ 描述： " + location.getDescription() +" 选择内容： index=" + location.getParameter() + " ]");
         LocationAppElement locationAppElement = new LocationAppElement(driver, TestCategory);
         try {
             WebElement element = locationAppElement.waitForElement(location);
@@ -26,14 +27,13 @@ public class SelectModule {
             int i = Integer.valueOf(index);
             SelectMethod.selectByIndex(i);
         } catch (Exception e) {
-            log.error(TestCategory + "：控件选择失败 [ " + location.getDescription() + " ]");
             throw e;
         }
-        log.info(TestCategory + "：控件选择成功 [ " + location.getDescription() + " ]");
         return true;
     }
 
     public boolean selectByValue(Location location) {
+        log.info(TestCategory + "：下拉控件选择内容 [ 描述： " + location.getDescription() +" 选择内容： value=" + location.getParameter() + " ]");
         LocationAppElement locationAppElement = new LocationAppElement(driver, TestCategory);
         try {
             WebElement element = locationAppElement.waitForElement(location);
@@ -41,14 +41,14 @@ public class SelectModule {
             Select SelectMethod = new Select(element);
             SelectMethod.selectByValue(value);
         } catch (Exception e) {
-            log.error(TestCategory + "：控件选择失败 [ " + location.getDescription() + " ]");
             throw e;
         }
-        log.info(TestCategory + "：控件选择成功 [ " + location.getDescription() + " ]");
         return true;
     }
 
     public boolean selectByText(Location location) {
+        log.info(TestCategory + "：下拉控件选择内容 [ 描述： " + location.getDescription() +" 选择内容： text=" + location.getParameter() + " ]");
+
         LocationAppElement locationAppElement = new LocationAppElement(driver, TestCategory);
         try {
             WebElement element = locationAppElement.waitForElement(location);
@@ -56,10 +56,8 @@ public class SelectModule {
             Select SelectMethod = new Select(element);
             SelectMethod.selectByVisibleText(Text);
         } catch (Exception e) {
-            log.error(TestCategory + "：控件选择失败 [ " + location.getDescription() + " ]");
             throw e;
         }
-        log.info(TestCategory + "：控件选择成功 [ " + location.getDescription() + " ]");
         return true;
     }
 }

@@ -25,15 +25,15 @@ public class GetModule {
      * @return
      */
     public WebElement getElement(Location location) {
+        log.info(TestCategory + "：获取控件 [ " + location.getDescription() + " ]");
         LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
         WebElement element;
         try {
             element = locationWebElement.waitForElement(location);
         } catch (Exception e) {
-            log.error(TestCategory + "：获取控件失败 [ " + location.getDescription() + " ]");
             throw e;
         }
-        log.info(TestCategory + "：获取控件成功 [ " + element.toString() + " ]");
+
         return element;
     }
 
@@ -43,15 +43,14 @@ public class GetModule {
      * @return
      */
     public String getElementText(Location location) {
+        log.info(TestCategory + "：获取控件文本 [ " + location.getDescription() + " ]");
         LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
         String result;
         try {
             result = locationWebElement.waitForElement(location).getText();
         } catch (Exception e) {
-            log.error(TestCategory + "：获取控件文本失败 [ " + location.getDescription() + " ]");
             throw e;
         }
-        log.info(TestCategory + "：获取控件文本成功 [ " + result + " ]");
         return result;
     }
 
@@ -61,15 +60,14 @@ public class GetModule {
      * @return
      */
     public String getElementSize(Location location) {
+        log.info(TestCategory + "：获取控件尺寸 [ " + location.getDescription() + " ]");
         LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
         String result;
         try {
             result = locationWebElement.waitForElement(location).getSize().toString();
         } catch (Exception e) {
-            log.error(TestCategory + "：获取控件尺寸失败 [ " + location.getDescription() + " ]");
             throw e;
         }
-        log.info(TestCategory + "：获取控件尺寸成功 [ " + result + " ]");
         return result;
     }
 
@@ -79,16 +77,15 @@ public class GetModule {
      * @return
      */
     public String getElementiPcture(Location location) throws Exception {
+        log.info(TestCategory + "：获取控件图片 [ " + location.getDescription() + " ]");
         LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
-        String result = null;
+        String result ;
         try {
             WebElement element = locationWebElement.waitForElement(location);
             result = Picture.captureElement(driver, element);
         } catch (Exception e) {
-            log.error(TestCategory + "：获取控件图片失败 [ " + location.getDescription() + " ]");
-            e.printStackTrace();
+            throw e;
         }
-        log.info(TestCategory + "：获取控件图片成功 [ " + result + " ]");
         return result;
     }
 
@@ -98,16 +95,15 @@ public class GetModule {
      * @return
      */
     public String getElementiPctureText(Location location) throws Exception {
+        log.info(TestCategory + "：获取控件图片文本 [ " + location.getDescription() + " ]");
         LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
         String result;
         try {
             WebElement element = locationWebElement.waitForElement(location);
             result = BaiduOCR.getPictureText(driver, element);
         } catch (Exception e) {
-            log.error(TestCategory + "：获取控件图片文本失败 [ " + location.getDescription() + " ]");
             throw e;
         }
-        log.info(TestCategory + "：获取控件图片文本成功 [ " + result + " ]");
         return result;
     }
 
@@ -117,15 +113,14 @@ public class GetModule {
      * @return
      */
     public String getElementiAttribute(Location location){
+        log.info(TestCategory + "：获取控件属性成功 [ " + location.getDescription() + " ]");
         LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
         String result;
         try {
             result = locationWebElement.waitForElement(location).getAttribute(location.getParameter());
         } catch (Exception e) {
-            log.error(TestCategory + "：获取控件属性失败 [ " + location.getDescription() + " ]");
             throw e;
         }
-        log.info(TestCategory + "：获取控件属性成功 [ " + result + " ]");
         return result;
     }
 

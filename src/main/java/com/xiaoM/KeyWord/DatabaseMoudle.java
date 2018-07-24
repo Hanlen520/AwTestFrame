@@ -1,7 +1,6 @@
 package com.xiaoM.KeyWord;
 
 import com.xiaoM.BeginScript.BeginAppScript;
-import com.xiaoM.Driver.AppiumXMDriver;
 import com.xiaoM.Utils.Location;
 import com.xiaoM.Utils.Log;
 import com.xiaoM.Utils.SqlHelper;
@@ -20,6 +19,7 @@ public class DatabaseMoudle {
     }
 
     public boolean dataBaseUpdata(Location location){
+        log.info(TestCategory + ": 执行数据库操作 [ " + location.getValue() + " ]");
         try {
             Map<String, String[]> dataBaseConfig = BeginAppScript.DataBaseConfig;
             String[] dataBase = dataBaseConfig.get(location.getParameter());
@@ -40,15 +40,15 @@ public class DatabaseMoudle {
             SqlHelper sqlHelper = new SqlHelper(dataBaseDriver, url, userName, passWord);
             String sql = location.getValue();
             sqlHelper.executeUpdate(sql);
-            log.info(TestCategory + ": 执行数据库操作成功 [ " + location.getValue() + " ]");
+
         } catch (Exception e) {
-            log.error(TestCategory + ": 执行数据库操作失败 [ " + location.getValue() + " ]");
             return false;
         }
         return true;
     }
 
     public Object dataBaseQuery(Location location){
+        log.info(TestCategory + ": 执行数据库操作 [ " + location.getValue() + " ]");
         try {
             Map<String, String[]> dataBaseConfig = BeginAppScript.DataBaseConfig;
             String[] dataBase = dataBaseConfig.get(location.getParameter());
@@ -71,11 +71,9 @@ public class DatabaseMoudle {
             ResultSet result = sqlHelper.executeQuery(sql);
             if (result.first()) {
                 String getresult = result.getString(1);
-                log.info(TestCategory + ": 执行数据库操作成功 [ " + location.getValue() + " ]");
                 return getresult;
             }
         } catch (Exception e) {
-            log.error(TestCategory + ": 执行数据库操作失败 [ " + location.getValue() + " ]");
             return false;
         }
         return true;

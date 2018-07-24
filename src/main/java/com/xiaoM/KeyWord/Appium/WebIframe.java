@@ -17,35 +17,32 @@ public class WebIframe {
     }
 
     public boolean switchToIframe(Location location) {
+        log.info(TestCategory + "：切换Frame标签 [ " + location.getDescription() + " ]");
         LocationAppElement locationAppElement = new LocationAppElement(driver, TestCategory);
         try {
             WebElement element = locationAppElement.waitForElement(location);
             driver.switchTo().frame(element);
-            log.info(TestCategory + "：切换iframe成功 [ " + location.getValue() + " ]");
         } catch (Exception e) {
-            log.error(TestCategory + "：切换iframe失败 [ " + location.getValue() + " ]");
             throw e;
         }
         return true;
     }
 
     public boolean switchToParentFrame() {
+        log.info(TestCategory + "：切换父级Frame标签");
         try {
             driver.switchTo().parentFrame();
-            log.info(TestCategory + "：切换父级iframe成功");
         } catch (Exception e) {
-            log.info(TestCategory + "：切换父级iframe失败");
             throw e;
         }
         return true;
     }
 
     public boolean switchToDefaultContent() {
+        log.info(TestCategory + "：切换默认Frame");
         try {
             driver.switchTo().defaultContent();
-            log.info(TestCategory + "：切换默认Frame成功");
         } catch (Exception e) {
-            log.info(TestCategory + "：切换默认Frame失败");
             throw e;
         }
         return true;

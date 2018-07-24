@@ -14,34 +14,30 @@ public class SwitchMoudle {
     }
 
     public boolean switchToWebview(){
+        log.info(TestCategory + " :切换进入WEBVIEW");
         try {
             driver.getContextHandles().forEach((handle) -> {
                 if (handle.toString().contains("WEBVIEW")) {
                     driver.context(handle.toString());
-                    log.info(TestCategory + ":切换进入WEBVIEW成功");
-                }else{
-                    log.error(TestCategory + ":当前页面不存在WEBVIEW页");
                 }
             });
             return true;
         } catch (Exception e) {
-            log.error(TestCategory + ":切换进入WEBVIEW发生异常");
-           return false;
+           throw e;
         }
     }
 
     public boolean switchToNative(){
+        log.info(TestCategory + ":切换进入Native");
         try {
             driver.getContextHandles().forEach((handle) -> {
                 if (handle.toString().contains("Native")) {
                     driver.context(handle.toString());
-                    log.info(TestCategory + ":切换进入Native成功");
                 }
             });
             return true;
         } catch (Exception e) {
-            log.error(TestCategory + ":切换进入Native发生异常");
-            return false;
+            throw e;
         }
     }
 }

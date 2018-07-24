@@ -1,9 +1,9 @@
 package com.xiaoM.KeyWord.Appium;
 
-import com.xiaoM.Android.AndroidSwipeScreen;
+import com.xiaoM.Appium.Android.AndroidSwipeScreen;
 import com.xiaoM.BeginScript.BeginAppScript;
 import com.xiaoM.Driver.AppiumXMDriver;
-import com.xiaoM.IOS.IosSwipeScreen;
+import com.xiaoM.Appium.IOS.IosSwipeScreen;
 import com.xiaoM.Utils.Location;
 import com.xiaoM.Utils.Log;
 

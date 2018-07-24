@@ -1,4 +1,4 @@
-package com.xiaoM.Utils;
+package com.xiaoM.Selenium;
 
 import com.google.common.io.Files;
 import com.xiaoM.Main.MainTest;

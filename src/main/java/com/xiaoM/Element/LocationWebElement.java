@@ -71,7 +71,6 @@ public class LocationWebElement {
             webElement = (new WebDriverWait(driver, timeout)).until(
                     (ExpectedCondition<WebElement>) dr -> getElement(fashion, value));
         } catch (Exception e) {
-            log.error(TestCategory + "：查找控件失败 [ 方式：" + fashion + " 属性值：" + value + "]");
             throw e;
         }
         return webElement;

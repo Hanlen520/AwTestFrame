@@ -6,7 +6,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.xiaoM.BeginScript.BeginAppScript;
 import com.xiaoM.Utils.IOMananger;
 import com.xiaoM.Utils.PortProber;
-import com.xiaoM.Utils.UseDevice;
+import com.xiaoM.Appium.UseDevice;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 

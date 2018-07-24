@@ -1,7 +1,7 @@
 package com.xiaoM.KeyWord.Appium;
 
 import com.xiaoM.Driver.AppiumXMDriver;
-import com.xiaoM.Utils.AppiumExecuteScript;
+import com.xiaoM.Appium.AppiumExecuteScript;
 import com.xiaoM.Utils.Location;
 import com.xiaoM.Utils.Log;
 

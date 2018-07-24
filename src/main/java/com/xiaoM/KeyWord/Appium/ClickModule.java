@@ -18,38 +18,35 @@ public class ClickModule {
     }
 
     public boolean ClickElement(Location location){
+        log.info(TestCategory + "：点击控件 [ " + location.getDescription() + " ]");
         LocationAppElement locationAppElement = new LocationAppElement(driver, TestCategory);
         try {
             locationAppElement.waitForElement(location).click();
         } catch (Exception e) {
-            log.error(TestCategory + "：点击控件失败 [ " + location.getDescription() + " ]");
             throw e;
         }
-        log.info(TestCategory + "：点击控件成功 [ " + location.getDescription() + " ]");
         return true;
     }
 
     public boolean ClickCoordinate(Location location){
+        log.info(TestCategory + "：点击坐标 [ " + location.getValue() + " ]");
         try {
             int x = Integer.valueOf(location.getValue().split(":")[0]);
             int y = Integer.valueOf(location.getValue().split(":")[1]);
             new TouchAction(driver).tap(x, y).perform();
         } catch (NumberFormatException e) {
-            log.error(TestCategory + "：点击坐标失败 [ " + location.getValue() + " ]");
             throw e;
         }
-        log.info(TestCategory + "：点击坐标成功 [ " + location.getValue() + " ]");
         return true;
     }
 
     public boolean ClickPicture(Location location){
+        log.info(TestCategory + "：点击图片 [ " + location.getValue() + " ]");
         try {
             Picture.pictureClick(driver, location.getValue());
         } catch (Exception e) {
-            log.error(TestCategory + "：点击图片失败 [ " + location.getValue() + " ]");
             throw e;
         }
-        log.info(TestCategory + "：点击图片成功 [ " + location.getValue() + " ]");
         return true;
     }
 }

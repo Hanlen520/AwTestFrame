@@ -2,7 +2,7 @@ package com.xiaoM.KeyWord.Selenium;
 
 import com.xiaoM.Utils.Location;
 import com.xiaoM.Utils.Log;
-import com.xiaoM.Utils.SeleniumExecuteScript;
+import com.xiaoM.Selenium.SeleniumExecuteScript;
 import org.openqa.selenium.WebDriver;
 
 public class ScriptModule {

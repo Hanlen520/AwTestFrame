@@ -1,4 +1,4 @@
-package com.xiaoM.IOS;
+package com.xiaoM.Appium.IOS;
 
 import com.xiaoM.Driver.AppiumXMDriver;
 import org.openqa.selenium.JavascriptExecutor;

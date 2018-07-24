@@ -1,4 +1,4 @@
-package com.xiaoM.Utils;
+package com.xiaoM.Appium;
 
 import com.xiaoM.BeginScript.BeginAppScript;
 

@@ -5,7 +5,9 @@ import com.xiaoM.Utils.Location;
 import com.xiaoM.Utils.Log;
 import com.xiaoM.Utils.Picture;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.sikuli.script.FindFailed;
 
 public class ClickModule {
     private Log log = new Log(this.getClass());
@@ -18,8 +20,8 @@ public class ClickModule {
     }
 
     public boolean ClickElement(Location location){
-        LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
         log.info(TestCategory + "：点击控件 [ " + location.getDescription() + " ]");
+        LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
         try {
             locationWebElement.waitForElement(location).click();
         } catch (Exception e) {
@@ -28,20 +30,56 @@ public class ClickModule {
         return true;
     }
 
+    public boolean DobuleClickElement(Location location){
+        log.info(TestCategory + "：双击控件 [ " + location.getDescription() + " ]");
+        LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
+        try {
+            WebElement element = locationWebElement.waitForElement(location);
+            new Actions(driver).doubleClick(element).perform();
+        } catch (Exception e) {
+            throw e;
+        }
+        return true;
+    }
+
+    public boolean RightClickElement(Location location){
+        log.info(TestCategory + "：右击控件 [ " + location.getDescription() + " ]");
+        LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
+        try {
+            WebElement element = locationWebElement.waitForElement(location);
+            new Actions(driver).contextClick(element).perform();
+        } catch (Exception e) {
+            throw e;
+        }
+        return true;
+    }
+
+    public boolean HoverElement(Location location){
+        log.info(TestCategory + "：鼠标悬停 [ " + location.getDescription() + " ]");
+        LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
+        try {
+            WebElement element = locationWebElement.waitForElement(location);
+            new Actions(driver).moveToElement(element).perform();
+        } catch (Exception e) {
+            throw e;
+        }
+        return true;
+    }
+
     public boolean ClickCoordinate(Location location){
+        log.info(TestCategory + "：点击坐标 [ " + location.getValue() + " ]");
         try {
             int x = Integer.valueOf(location.getValue().split(":")[0]);
             int y = Integer.valueOf(location.getValue().split(":")[1]);
             new Actions(driver).moveByOffset(x,y).click().release();
         } catch (NumberFormatException e) {
-            log.error(TestCategory + "：点击坐标失败 [ " + location.getValue() + " ]");
             throw e;
         }
-        log.info(TestCategory + "：点击坐标成功 [ " + location.getValue() + " ]");
         return true;
     }
 
-    public boolean ClickPicture(Location location){
+    public boolean ClickPicture(Location location) throws Exception {
+        log.info(TestCategory + "：点击图片 [ " + location.getValue() + " ]");
         Picture.webPictureClick(location);
         return true;
     }

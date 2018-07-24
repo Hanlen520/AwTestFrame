@@ -1,22 +1,23 @@
-package com.xiaoM.Utils;
+package com.xiaoM.Selenium;
 
 import com.aventstack.extentreports.ExtentTest;
-import com.xiaoM.Driver.AppiumXMDriver;
-import com.xiaoM.KeyWord.Appium.*;
 import com.xiaoM.KeyWord.DatabaseMoudle;
 import com.xiaoM.KeyWord.JavaScriptModule;
+import com.xiaoM.KeyWord.Selenium.*;
 import com.xiaoM.KeyWord.SetModule;
+import com.xiaoM.Utils.Location;
+import org.openqa.selenium.WebDriver;
 
 import java.util.Map;
 
-public class AppiumAction {
-    private AppiumXMDriver driver;
+public class SeleniumAction {
+    private WebDriver driver;
     private String TestCategory;
     private Map<String, Object> returnMap;
     private ExtentTest extentTest;
     private String DeviceName;
 
-    public AppiumAction(AppiumXMDriver driver, String TestCategory, Map<String, Object> returnMap, ExtentTest extentTest, String DeviceName) {
+    public SeleniumAction(WebDriver driver, String TestCategory, Map<String, Object> returnMap, ExtentTest extentTest, String DeviceName) {
         this.driver = driver;
         this.TestCategory = TestCategory;
         this.returnMap = returnMap;
@@ -35,13 +36,15 @@ public class AppiumAction {
         CheckMoudle checkMoudle;
         DatabaseMoudle databaseMoudle;
         ScriptModule scriptModule;
-        SwitchMoudle switchMoudle;
         WebIframe webIframe;
         RunModule runModule;
-        DeviceMoudle deviceMoudle;
-        AdbMoudle adbMoudle;
+        BroswerModule broswerModule;
+        AlertModule alertModule;
         String method = location.getAction().toLowerCase();
         switch (method) {
+            case "open":
+                broswerModule = new BroswerModule(driver, TestCategory);
+                return broswerModule.OpenUrl(location);
             case "setparam":
                 setModule = new SetModule();
                 return setModule.setPsaram(TestCategory, returnMap, location);
@@ -66,6 +69,15 @@ public class AppiumAction {
             case "clickelement":
                 clickModule = new ClickModule(driver, TestCategory);
                 return clickModule.ClickElement(location);
+            case "dobuleclickelement":
+                clickModule = new ClickModule(driver, TestCategory);
+                return clickModule.DobuleClickElement(location);
+            case "rightclickelement":
+                clickModule = new ClickModule(driver, TestCategory);
+                return clickModule.RightClickElement(location);
+            case "hoverelement":
+                clickModule = new ClickModule(driver, TestCategory);
+                return clickModule.HoverElement(location);
             case "clickcoordinate":
                 clickModule = new ClickModule(driver, TestCategory);
                 return clickModule.ClickCoordinate(location);
@@ -75,9 +87,6 @@ public class AppiumAction {
             case "elementsendkeys":
                 sendKeysModule = new SendKeysModule(driver, TestCategory);
                 return sendKeysModule.SendKeys(location);
-            case "adbsendkeys":
-                adbMoudle = new AdbMoudle(driver, TestCategory);
-                return adbMoudle.adbInputText(DeviceName,location);
             case "waitbytime":
                 waitModule = new WaitModule(driver, TestCategory);
                 return waitModule.waitByTime(location);
@@ -126,12 +135,6 @@ public class AppiumAction {
             case "script":
                 scriptModule = new ScriptModule(driver, TestCategory);
                 return scriptModule.script(location);
-            case "switchtowebview":
-                switchMoudle = new SwitchMoudle(driver, TestCategory);
-                return switchMoudle.switchToWebview();
-            case "switchtonative":
-                switchMoudle = new SwitchMoudle(driver, TestCategory);
-                return switchMoudle.switchToNative();
             case "switchtoframe":
                 webIframe = new WebIframe(driver, TestCategory);
                 return webIframe.switchToIframe(location);
@@ -144,33 +147,39 @@ public class AppiumAction {
             case "module":
                 runModule = new RunModule(driver, TestCategory, returnMap, extentTest, DeviceName);
                 return runModule.moduleMethod(location);
-            case "swipeup":
-                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
-                return deviceMoudle.SwipeUp();
-            case "swipedown":
-                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
-                return deviceMoudle.SwipeDown();
-            case "swipeleft":
-                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
-                return deviceMoudle.SwipeLeft();
-            case "swiperight":
-                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
-                return deviceMoudle.SwipeRight();
-            case "restartapp":
-                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
-                return deviceMoudle.restartApp();
-            case "removeapp":
-                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
-                return deviceMoudle.removeApp(location);
-            case "resetapp":
-                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
-                return deviceMoudle.resetApp();
-            case "installapp":
-                deviceMoudle = new DeviceMoudle(driver, TestCategory, DeviceName);
-                return deviceMoudle.installApp(location);
-            case"pressandroidkeycode":
-                adbMoudle = new AdbMoudle(driver, TestCategory);
-                return adbMoudle.PressAndroidKeycode(location);
+            case "windowmaxsize":
+                broswerModule = new BroswerModule(driver, TestCategory);
+                return broswerModule.WindowMaxSize();
+            case "windowsetsize":
+                broswerModule = new BroswerModule(driver, TestCategory);
+                return broswerModule.WindowSetSize(location);
+            case "switchtolastwindow":
+                broswerModule = new BroswerModule(driver, TestCategory);
+                return broswerModule.SwitchToLastWindow();
+            case "switchtowindow":
+                broswerModule = new BroswerModule(driver, TestCategory);
+                return broswerModule.SwitchToWindow(location);
+            case"windowrefresh":
+                broswerModule = new BroswerModule(driver, TestCategory);
+                return broswerModule.WindowRefresh();
+            case"windowback":
+                broswerModule = new BroswerModule(driver, TestCategory);
+                return broswerModule.WindowBack();
+            case"windowforward":
+                broswerModule = new BroswerModule(driver, TestCategory);
+                return broswerModule.WindowForward();
+            case "acceptalert":
+                alertModule = new AlertModule(driver, TestCategory);
+                return alertModule.AcceptAlert();
+            case "dismissalert":
+                alertModule = new AlertModule(driver, TestCategory);
+                return alertModule.DismissAlert();
+            case "alertgettext":
+                alertModule = new AlertModule(driver, TestCategory);
+                return alertModule.AlertGetText();
+            case "alertinputtext":
+                alertModule = new AlertModule(driver, TestCategory);
+                return alertModule.AlertInputText(location);
             default:
                 throw new NullPointerException("不支持该关键字");
         }

@@ -16,14 +16,13 @@ public class SendKeysModule {
     }
 
     public boolean SendKeys(Location location){
+        log.info(TestCategory + "：控件输入内容 [ 描述： " + location.getDescription() +" 输入内容： " + location.getParameter() + " ]");
         LocationAppElement locationAppElement = new LocationAppElement(driver, TestCategory);
         try {
             locationAppElement.waitForElement(location).sendKeys(location.getParameter());
         } catch (Exception e) {
-            log.error(TestCategory + "：控件输入失败 [ " + location.getDescription() + " ]");
             throw e;
         }
-        log.info(TestCategory + "：控件输入成功 [ " + location.getDescription() + " ]");
         return true;
     }
 }
