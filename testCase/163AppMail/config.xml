@@ -3,7 +3,7 @@
     <MobileTest>
         <DeviceType>Android</DeviceType><!-- 测试设备系统(Android\iOS) -->
         <Appium-Server>INFO</Appium-Server><!-- Appium-Server 日志等级:INFO/DEBUG/ERROR/WARN -->
-        <Device>三星i9192</Device>
+        <Device>红米4A</Device>
         <AndroidConfig>
             <AppName>163mail</AppName><!-- 测试应用名称 -->
             <NoRestApp>False</NoRestApp><!-- 不清除缓存不重置应用 -->

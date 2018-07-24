@@ -69,6 +69,12 @@ public class SeleniumAction {
             case "clickelement":
                 clickModule = new ClickModule(driver, TestCategory);
                 return clickModule.ClickElement(location);
+            case "longpresselement":
+                clickModule = new ClickModule(driver, TestCategory);
+                return clickModule.LongPressElement(location);
+            case "longpresscoordinate":
+                clickModule = new ClickModule(driver, TestCategory);
+                return clickModule.LongPressCoordinate(location);
             case "dobuleclickelement":
                 clickModule = new ClickModule(driver, TestCategory);
                 return clickModule.DobuleClickElement(location);

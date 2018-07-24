@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.xiaoM</groupId>
-	<artifactId>AWTestFrame</artifactId>
+	<artifactId>AwTestFrame</artifactId>
 	<version>2.0</version>
 	<packaging>jar</packaging>
 
-	<name>AWTestFrame</name>
+	<name>AwTestFrame</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>

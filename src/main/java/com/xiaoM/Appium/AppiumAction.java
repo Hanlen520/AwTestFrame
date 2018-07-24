@@ -73,6 +73,12 @@ public class AppiumAction {
             case "clickpicture":
                 clickModule = new ClickModule(driver, TestCategory);
                 return clickModule.ClickPicture(location);
+            case "longpresselement":
+                clickModule = new ClickModule(driver, TestCategory);
+                return clickModule.LongPressElement(location);
+            case "longpresscoordinate":
+                clickModule = new ClickModule(driver, TestCategory);
+                return clickModule.LongPressCoordinate(location);
             case "elementsendkeys":
                 sendKeysModule = new SendKeysModule(driver, TestCategory);
                 return sendKeysModule.SendKeys(location);

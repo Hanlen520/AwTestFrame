@@ -19,7 +19,7 @@ public class ExtentManager {
         htmlReporter.config().setDocumentTitle("自动化测试报告 -- designed by xiaoM");//html标题
         htmlReporter.config().setReportName(MainTest.TestCase + " 测试报告");
         htmlReporter.config().setTheme(Theme.STANDARD);//主题：黑/白
-        htmlReporter.config().setEncoding("utf-8");//gb2312
+        htmlReporter.config().setEncoding("gb2312");//gb2312
         htmlReporter.config().setChartVisibilityOnOpen(false);
         htmlReporter.config().setResourceCDN(ResourceCDN.EXTENTREPORTS);
         htmlReporter.config().setTimeStampFormat("yyyy-MM-dd HH:mm:ss");

@@ -75,8 +75,6 @@ public class BeginAppScript {
         } catch (Exception e) {
             ExtentTest extentTest = extent.createTest("初始化测试失败");
             extentTest.fail(e);
-            extent.flush();
-            System.exit(0);
         }
     }
 
@@ -88,7 +86,6 @@ public class BeginAppScript {
     @Test(dataProvider = "TestCases")
     public void runCase(String ID, String Module, String CaseName,String Remark){
         String RunDevice = UseDevice.getDevice();//获取设备
-        log.info(RunDevice);
         String TestCategory = ID + "_" + Module + "_" + CaseName;
         log.info(TestCategory + " --- Start");
         ExtentTest extentTest = extent.createTest(TestCategory, Remark);//测试报告增加一个节点

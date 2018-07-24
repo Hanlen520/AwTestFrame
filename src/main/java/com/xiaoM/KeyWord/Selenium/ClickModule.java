@@ -6,6 +6,7 @@ import com.xiaoM.Utils.Log;
 import com.xiaoM.Utils.Picture;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.sikuli.script.FindFailed;
 
@@ -53,6 +54,33 @@ public class ClickModule {
         }
         return true;
     }
+
+    public boolean LongPressElement(Location location) throws Exception {
+        log.info(TestCategory + "：长按控件 [ " + location.getDescription() + " ]");
+        LocationWebElement locationWebElement = new LocationWebElement(driver, TestCategory);
+        try {
+            WebElement element = locationWebElement.waitForElement(location);
+            new Actions(driver).clickAndHold(element).perform();
+            Thread.sleep(2);
+            new Actions(driver).clickAndHold(element).release();
+        } catch (Exception e) {
+            throw e;
+        }
+        return true;
+    }
+
+    public boolean LongPressCoordinate(Location location){
+        log.info(TestCategory + "：长按坐标 [ " + location.getValue() + " ]");
+        try {
+            int x = Integer.valueOf(location.getValue().split(":")[0]);
+            int y = Integer.valueOf(location.getValue().split(":")[1]);
+            new Actions(driver).moveByOffset(x,y).clickAndHold().perform();
+        } catch (NumberFormatException e) {
+            throw e;
+        }
+        return true;
+    }
+
 
     public boolean HoverElement(Location location){
         log.info(TestCategory + "：鼠标悬停 [ " + location.getDescription() + " ]");
