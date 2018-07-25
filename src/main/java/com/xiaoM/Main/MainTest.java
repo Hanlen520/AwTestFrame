@@ -1,6 +1,8 @@
 package com.xiaoM.Main;
 
+import com.xiaoM.Utils.TestngListener;
 import org.testng.TestNG;
+import org.testng.internal.ClassHelper;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
@@ -18,15 +20,16 @@ public class MainTest {
     public static String BrowserName;
     public static String Devcie;
     public static String bundleId;
-    public static String NoRestApp;
+    public static String NoRestApp = "false";
     public static String PackageName;
     public static String Activity;
     public static String AppName;
     public static String AppiumServer = "INFO";
     public static Map<String, String> screenMessageList = new HashMap<>();
+    public static Map<String,String> commonParam = new HashMap<>();
 
     public static void main(String[] args) {
-        //args = new String[] {"-testcase", "163WebMail","-type", "web", "-browser", "chrome"};
+        args = new String[] {"-testcase", "163WebMail","-type", "web", "-browser", "chrome"};
         for (int i = 0; i < args.length; i++) {
             switch (args[i].toLowerCase()) {
                 case "-testcase":
@@ -88,6 +91,8 @@ public class MainTest {
         suites.add(suite);
         TestNG TestStart = new TestNG();
         TestStart.setXmlSuites(suites);
+        TestngListener testngListener = new TestngListener();
+        TestStart.addListener(testngListener);
         TestStart.setUseDefaultListeners(false);
         TestStart.run();
     }

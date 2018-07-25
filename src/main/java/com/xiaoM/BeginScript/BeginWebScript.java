@@ -45,6 +45,7 @@ public class BeginWebScript {
             workbook = IOMananger.getCaseExcel(CasePath);
             RunCase = IOMananger.runTime(workbook,"TestCases");//获取具体需要执行的测试用例
             DataBaseConfig = BaseConfig.getDataBaseConfigXlsx(workbook);//获取数据库配置
+            MainTest.commonParam = IOMananger.getCommonParam(workbook);
         } catch (Exception e) {
             log.error("启动测试失败");
             ExtentTest extentTest = extent.createTest("启动测试失败");
@@ -61,7 +62,7 @@ public class BeginWebScript {
     }
 
     @Test(dataProvider = "TestCases")
-    public void runCaserunCase(String ID, String Module, String CaseName,String Remark){
+    public void runCaserunCase(String ID, String Module, String CaseName,String Remark) throws Exception {
         String TestCategory = ID + "_" + Module + "_" + CaseName;
         log.info("测试用例: " + TestCategory + " --- Start");
         ExtentTest extentTest = extent.createTest(TestCategory, Remark);
@@ -72,6 +73,7 @@ public class BeginWebScript {
         } catch (Exception e) {
             log.error(TestCategory + " --- Fail");
             e.printStackTrace();
+            throw e;
         }
     }
 

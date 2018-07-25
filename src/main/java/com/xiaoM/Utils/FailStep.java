@@ -13,7 +13,7 @@ public class FailStep {
            List<String> parameteres = new ArrayList<>(Arrays.asList(testStart[i]));
            Location location = new Location();
            location.setLocation(parameteres);
-           if (location.getIsRun().equals("YES")) {
+           if (location.getIsRun().toLowerCase().equals("y")) {
                StringBuilder sb = new StringBuilder();
                String Step = location.getStep();
                String Description = location.getDescription();
@@ -36,7 +36,7 @@ public class FailStep {
             List<String> parameteres = new ArrayList<>(Arrays.asList(testStart[i]));
             Location location = new Location();
             location.setLocation(parameteres);
-            if (location.getIsRun().equals("YES")) {
+            if (location.getIsRun().toLowerCase().equals("y")) {
                 StringBuilder sb = new StringBuilder();
                 String Step = location2.getValue() + "." + location.getStep();
                 String Description = location.getDescription();

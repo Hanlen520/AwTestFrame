@@ -88,7 +88,7 @@ public class RunModule {
             screenShot.setScreenName(TestCategory);
             screenShot.takeScreenshot();
             sb.append("[异常截图如下]：" + "\r\n");
-            extentTest.fail("<pre>" + sb.toString() + "</pre>", MediaEntityBuilder.createScreenCaptureFromPath(BeginAppScript.screenMessageList.get(TestCategory)).build());
+            extentTest.fail("<pre>" + sb.toString() + "</pre>", MediaEntityBuilder.createScreenCaptureFromPath(MainTest.screenMessageList.get(TestCategory)).build());
             extentTest.error(e);
             FailStep.dealWithMoubleFailStep(b, moduleStep, extentTest, location2);
             throw e;

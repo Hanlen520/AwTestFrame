@@ -32,7 +32,6 @@ public class BeginAppScript {
     public static String DeviceType;//设备类型
     public static String ResetApp;//是否重置应用
     public static String AppName;//Android APP的文件名
-    public static String Resource_Monitoring;
     public static String PackageName;//Android APP的包名
     public static String Activity;//Android APP的Activity
     public static String bundleId;//IOS应用的标识名
@@ -70,6 +69,7 @@ public class BeginAppScript {
             DeviceConfig = IOMananger.getDeviceExcel();//获取测试设备Excel内容
             RunCase = IOMananger.runTime(workbook,"TestCases");//获取具体需要执行的测试用例
             DataBaseConfig = BaseConfig.getDataBaseConfigXlsx(workbook);//获取数据库配置
+            MainTest.commonParam = IOMananger.getCommonParam(workbook);
         } catch (Exception e) {
             ExtentTest extentTest = extent.createTest("初始化测试失败");
             extentTest.fail(e);

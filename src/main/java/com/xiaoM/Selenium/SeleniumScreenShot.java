@@ -20,6 +20,7 @@ public class SeleniumScreenShot {
        this.driver = driver;
    }
    private void takeScreenshot(String screenPath) {
+        driver.switchTo().defaultContent();
        try {
            File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
            Files.copy(scrFile, new File(screenPath));
