@@ -44,30 +44,28 @@ public class BeginAppScript {
     @BeforeSuite
     public void init(){
         try {
-            Element config = XmlUtils.readConfigXml();
             String os = System.getProperty("os.name");
             if (os.contains("Mac")) {
                 String appiumPath = "/usr/local/lib/node_modules/appium/build/lib/main.js";
                 System.setProperty(AppiumServiceBuilder.APPIUM_PATH, appiumPath);
             }
-            if(config.element("MobileTest").elementText("Device").contains(",")){
-                String[] devices = config.element("MobileTest").elementText("Device").split(",");
+            if(MainTest.Devcie.contains(",")){
+                String[] devices = MainTest.Devcie.split(",");
                 deviceList.addAll(Arrays.asList(devices));
             }else{
-                deviceList.add(config.element("MobileTest").elementText("Device"));
+                deviceList.add(MainTest.Devcie);
             }
-            Log_Level = config.element("MobileTest").elementText("Appium-Server");
+            Log_Level = MainTest.AppiumServer;
             ProjectPath = new File(System.getProperty("user.dir")).getPath();// 工程根目录
             TestCase = MainTest.TestCase;
             CasePath = ProjectPath + "/testCase/" + TestCase + "/main.xlsx";
             TestType = MainTest.TestType;
-            DeviceType = config.element("MobileTest").elementText("DeviceType");
-            ResetApp = config.element("MobileTest").element("AndroidConfig").elementText("NoRestApp");
-            AppName = config.element("MobileTest").element("AndroidConfig").elementText("AppName");
-            Resource_Monitoring = config.element("MobileTest").element("AndroidConfig").elementText("ResourceMonitoring");
-            PackageName = config.element("MobileTest").element("AndroidConfig").elementText("PackageName");
-            Activity = config.element("MobileTest").element("AndroidConfig").elementText("Activity");
-            bundleId = config.element("MobileTest").element("IOSConfig").elementText("bundleId");
+            DeviceType = MainTest.OS;
+            ResetApp = MainTest.NoRestApp;
+            AppName = MainTest.AppName;
+            PackageName = MainTest.PackageName;
+            Activity = MainTest.Activity;
+            bundleId = MainTest.bundleId;
             workbook = IOMananger.getCaseExcel(CasePath);//获取测试用例Excel内容
             DeviceConfig = IOMananger.getDeviceExcel();//获取测试设备Excel内容
             RunCase = IOMananger.runTime(workbook,"TestCases");//获取具体需要执行的测试用例

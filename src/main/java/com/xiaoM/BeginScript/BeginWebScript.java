@@ -6,7 +6,6 @@ import com.xiaoM.Main.MainTest;
 import com.xiaoM.Selenium.RunWebMode;
 import com.xiaoM.Utils.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.dom4j.Element;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
@@ -39,10 +38,9 @@ public class BeginWebScript {
             OS = "LINUX";
         }
         try {
-            Element root = XmlUtils.readConfigXml();
             ProjectPath = new File(System.getProperty("user.dir")).getPath();// 工程根目录
             TestCase = MainTest.TestCase;
-            BrowserName = root.element("WebConfig").elementText("BrowserName");
+            BrowserName = MainTest.BrowserName;
             String CasePath = ProjectPath + "/testCase/" + TestCase + "/main.xlsx";
             workbook = IOMananger.getCaseExcel(CasePath);
             RunCase = IOMananger.runTime(workbook,"TestCases");//获取具体需要执行的测试用例

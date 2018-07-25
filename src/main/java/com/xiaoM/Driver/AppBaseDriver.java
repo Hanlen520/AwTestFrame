@@ -34,7 +34,7 @@ public class AppBaseDriver {
                 }
                 AppiumServer = new AppiumServerUtils(DeviceBase[1][2], Port, String.valueOf(PortProber.getFreePort()));
                 url = AppiumServer.startServer();
-                String appPath = BeginAppScript.ProjectPath + "/testCase/" + BeginAppScript.TestCase + "/apps/" + BeginAppScript.AppName + ".apk";
+                String appPath = BeginAppScript.ProjectPath + "/testCase/" + BeginAppScript.TestCase + "/apps/" + BeginAppScript.AppName;
                 capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.APPIUM);
                 capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
                 capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, DeviceBase[2][2]);

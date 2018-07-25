@@ -39,7 +39,7 @@ public class RunAppMode {
         extentTest.getModel().setStartTime(new Date());
         String[][] testStart = IOMananger.readExcelDataXlsx(BeginAppScript.workbook, CaseName);
         if (testStart != null) {
-            ResourceMonitoring RM = null;
+            /*ResourceMonitoring RM = null;
             boolean StartRM = false;
             if (BeginAppScript.Resource_Monitoring.toLowerCase().equals("true") && Type.toLowerCase().equals("app") && BeginAppScript.DeviceType.toLowerCase().equals("android")) {
                 RM = new ResourceMonitoring();
@@ -51,7 +51,7 @@ public class RunAppMode {
             } else if (BeginAppScript.Resource_Monitoring.toLowerCase().equals("true") && !BeginAppScript.DeviceType.toLowerCase().equals("android")) {
                 extentTest.fail("资源监控只适用于 Android 平台的APP");
                 throw new Exception();
-            }
+            }*/
             Map<String, Object> returnMap = new HashMap<>();
             int b = 0;
             try {
@@ -95,9 +95,9 @@ public class RunAppMode {
                         }
                     }
                 }
-                if (StartRM) {
+                /*if (StartRM) {
                     RM.stopMonitoring(DeviceName, TestCategory);
-                }
+                }*/
             } catch (Exception e) {
                 if (!FailAction.toLowerCase().equals("module")){
                     AppiumScreenShot screenShot = new AppiumScreenShot(driver);
