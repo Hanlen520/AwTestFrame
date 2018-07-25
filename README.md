@@ -113,3 +113,7 @@ java -jar AwTestFrame-2.0.jar -testcase 163WebMail -type WEB -browser chrome -th
 12|DismissAlert|解散Alert弹窗
 13|AlertGetText|获取Alert弹窗内容
 14|AlertInputText|向Alert输入内容
+
+### 最后
+希望能得到使用者反馈 
+QQ：362950631
