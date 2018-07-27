@@ -2,7 +2,6 @@ package com.xiaoM.Main;
 
 import com.xiaoM.Utils.TestngListener;
 import org.testng.TestNG;
-import org.testng.internal.ClassHelper;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
@@ -14,9 +13,9 @@ import java.util.Map;
 
 public class MainTest {
     public static String TestCase;
-    public static String TestType;
+    public static String TestType = "app";
     private static int Thread = 1;
-    public static String OS;
+    public static String OS="android";
     public static String BrowserName;
     public static String Devcie;
     public static String bundleId;
@@ -29,7 +28,10 @@ public class MainTest {
     public static Map<String,String> commonParam = new HashMap<>();
 
     public static void main(String[] args) {
-        args = new String[] {"-testcase", "163WebMail","-type", "web", "-browser", "chrome"};
+      args = new String[] {"-testcase", "163AppMail","-os","android","-type", "app","-device","夜神", "-appname", "163mail.apk","-packagename", "com.netease.mail", "-activity" ,"com.netease.mobimail.activity.LaunchActivity"};
+/*
+        args = new String[] {"-testcase", "163WebMail","-type", "web", "-browser","chrome"};
+*/
         for (int i = 0; i < args.length; i++) {
             switch (args[i].toLowerCase()) {
                 case "-testcase":
@@ -61,6 +63,7 @@ public class MainTest {
                     break;
                 case "-activity":
                     Activity = args[i + 1];
+                    break;
                 case "-appname":
                     AppName = args[i + 1];
                     break;

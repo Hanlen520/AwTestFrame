@@ -64,7 +64,7 @@ public class BeginWebScript {
     @Test(dataProvider = "TestCases")
     public void runCaserunCase(String ID, String Module, String CaseName,String Remark) throws Exception {
         String TestCategory = ID + "_" + Module + "_" + CaseName;
-        log.info("测试用例: " + TestCategory + " --- Start");
+        log.info(TestCategory + " --- Start");
         ExtentTest extentTest = extent.createTest(TestCategory, Remark);
         extentTest.assignCategory(Module);
         try {
@@ -80,5 +80,7 @@ public class BeginWebScript {
     @AfterSuite
     public void afterSuite() {
         extent.flush();
+        File file = new File("./Temp/");
+        IOMananger.deleteDirectory(file);
     }
 }

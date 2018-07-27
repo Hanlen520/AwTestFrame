@@ -73,12 +73,15 @@ public class BeginAppScript {
         } catch (Exception e) {
             ExtentTest extentTest = extent.createTest("初始化测试失败");
             extentTest.fail(e);
+            extent.flush();
+            e.printStackTrace();
+            System.exit(0);
         }
     }
 
     @DataProvider(parallel = true)
     public Object[][] TestCases() {
-        return RunCase;
+        return BeginAppScript.RunCase;
     }
 
     @Test(dataProvider = "TestCases")
@@ -100,8 +103,8 @@ public class BeginAppScript {
 
     @AfterSuite
     public void afterSuite() {
+        extent.flush();
         File file = new File("./Temp/");
         IOMananger.deleteDirectory(file);
-        extent.flush();
     }
 }

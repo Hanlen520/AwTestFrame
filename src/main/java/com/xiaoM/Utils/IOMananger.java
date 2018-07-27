@@ -82,24 +82,30 @@ public class IOMananger {
      */
     public static String[][] runTime(XSSFWorkbook workbook, String sheetname) {
         String[][] Date = readExcelDataXlsx(workbook, sheetname);
-        List<String> ID = new LinkedList<>();
-        List<String> Module = new LinkedList<>();
-        List<String> CaseName = new LinkedList<>();
-        List<String> Remark = new LinkedList<>();
-        for (int i = 1; i < Date.length; i++) {
-            if (Date[i][0].toLowerCase().equals("y")) {
-                ID.add(Date[i][1]);
-                Module.add(Date[i][2]);
-                CaseName.add(Date[i][3]);
-                Remark.add(Date[i][4]);
+        String[][] runTime = new String[0][];
+        try {
+            List<String> ID = new LinkedList<>();
+            List<String> Module = new LinkedList<>();
+            List<String> CaseName = new LinkedList<>();
+            List<String> Remark = new LinkedList<>();
+            for (int i = 1; i < Date.length; i++) {
+                if (Date[i][0].toLowerCase().equals("y")) {
+                    ID.add(Date[i][1]);
+                    Module.add(Date[i][2]);
+                    CaseName.add(Date[i][3]);
+                    Remark.add(Date[i][4]);
+                }
             }
-        }
-        String[][] runTime = new String[CaseName.size()][4];
-        for (int k = 0; k < CaseName.size(); k++) {
-            runTime[k][0] = ID.get(k);
-            runTime[k][1] = Module.get(k);
-            runTime[k][2] = CaseName.get(k);
-            runTime[k][3] = Remark.get(k);
+            runTime = new String[CaseName.size()][4];
+            for (int k = 0; k < CaseName.size(); k++) {
+                runTime[k][0] = ID.get(k);
+                runTime[k][1] = Module.get(k);
+                runTime[k][2] = CaseName.get(k);
+                runTime[k][3] = Remark.get(k);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return runTime;
     }
@@ -251,10 +257,7 @@ public class IOMananger {
             workbook = new XSSFWorkbook(is);
             workbook.close();
         } catch (Exception e) {
-            ExtentTest extentTest = BeginAppScript.extent.createTest("启动测试失败");
-            extentTest.fail(e.getMessage());
-            BeginAppScript.extent.flush();
-            System.exit(0);
+            e.printStackTrace();
         }
         return workbook;
     }
@@ -264,18 +267,15 @@ public class IOMananger {
         String devicesPath;
         try {
             if (BeginAppScript.DeviceType.toLowerCase().equals("android")) {
-                devicesPath = BeginAppScript.ProjectPath + "/devices/AndroidDevices.xlsx";
+                devicesPath = "./devices/AndroidDevices.xlsx";
             } else {
-                devicesPath = BeginAppScript.ProjectPath + "/devices/iOSDevices.xlsx";
+                devicesPath = "./devices/iOSDevices.xlsx";
             }
             InputStream is = new FileInputStream(devicesPath);
             workbook = new XSSFWorkbook(is);
             workbook.close();
         } catch (Exception e) {
-            ExtentTest extentTest = BeginAppScript.extent.createTest("启动测试失败");
-            extentTest.fail(e.getMessage());
-            BeginAppScript.extent.flush();
-            System.exit(0);
+            e.printStackTrace();
         }
         return workbook;
     }
