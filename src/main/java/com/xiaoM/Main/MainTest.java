@@ -28,7 +28,7 @@ public class MainTest {
     public static Map<String,String> commonParam = new HashMap<>();
 
     public static void main(String[] args) {
-      args = new String[] {"-testcase", "163AppMail","-os","android","-type", "app","-device","夜神", "-appname", "163mail.apk","-packagename", "com.netease.mail", "-activity" ,"com.netease.mobimail.activity.LaunchActivity"};
+      //args = new String[] {"-testcase", "163AppMail","-os","android","-type", "app","-device","夜神", "-appname", "163mail.apk","-packagename", "com.netease.mail", "-activity" ,"com.netease.mobimail.activity.LaunchActivity"};
 /*
         args = new String[] {"-testcase", "163WebMail","-type", "web", "-browser","chrome"};
 */
