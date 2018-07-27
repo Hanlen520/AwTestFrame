@@ -17,6 +17,9 @@ testCase/163WebMail/module.xlsx|测试脚本模块
 AwTestFrame-2.0.jar|工程打包生成文件
 ### 图形界面执行（只支持Win系统）
 关于图形界面 [点我](https://github.com/xiaoMGitHub/AwTestFrameClient)
+
+下载地址：[传送门](https://pan.baidu.com/s/12s-EhC25uGaStv6s7tB5cQ) 密码: juey
+
 ![image](https://github.com/xiaoMGitHub/home/blob/master/picture/AwTestFrame.png)
 ### 命令行运行
 传入参数|描述|示例
