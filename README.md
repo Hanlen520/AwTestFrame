@@ -25,7 +25,7 @@ AwTestFrame-2.0.jar|工程打包生成文件
 -browser|WEB测试指定浏览器|-browser chrome
 -thread|开启线程数 | -thread 2
 -device|APP/WAP测试指定测试设备 | -device 小米5
--os|测试设备的系统（Android/iOS）|-os Android
+-os|测试设备的系统（Android/iOS）|-os Android （默认为android）
 -bundleid|iOSApp测试须添加该参数 |-bundleid com.xiaom.test
 -norest|不清除缓存不重置应用 |-norest true （默认为false）
 -appname|Android测试应用（须将应用放在测试用例文件夹下的apps文件夹内）|-appname 163mail.apk
@@ -42,6 +42,8 @@ java -jar AwTestFrame-2.0.jar -testcase 163AppMail -type wap -os ios -thread 1
 ```
 java -jar AwTestFrame-2.0.jar -testcase 163WebMail -type WEB -browser chrome -thread 1
 ```
+### 测试报告
+![image](https://github.com/xiaoMGitHub/home/blob/master/picture/AwTestFrame.png)
 # 关键字说明
 ## 通用关键字
 编号|关键字 |描述
