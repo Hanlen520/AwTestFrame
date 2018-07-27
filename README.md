@@ -16,6 +16,7 @@ testCase/163WebMail/main.xlsx|测试脚本步骤
 testCase/163WebMail/module.xlsx|测试脚本模块
 AwTestFrame-2.0.jar|工程打包生成文件
 ### 图形界面执行（只支持Win系统）
+关于图形界面 [点我](https://github.com/xiaoMGitHub/AwTestFrameClient)
 ![image](https://github.com/xiaoMGitHub/home/blob/master/picture/AwTestFrame.png)
 ### 命令行运行
 传入参数|描述|示例
@@ -43,7 +44,7 @@ java -jar AwTestFrame-2.0.jar -testcase 163AppMail -type wap -os ios -thread 1
 java -jar AwTestFrame-2.0.jar -testcase 163WebMail -type WEB -browser chrome -thread 1
 ```
 ### 测试报告
-![image](https://github.com/xiaoMGitHub/home/blob/master/picture/AwTestFrame2.png)
+![image](https://github.com/xiaoMGitHub/home/blob/master/picture/AwTestFrame.png)
 # 关键字说明
 ## 通用关键字
 编号|关键字 |描述
