@@ -21,7 +21,7 @@ AwTestFrame-2.0.jar|工程打包生成文件
 下载地址：[传送门](https://pan.baidu.com/s/12s-EhC25uGaStv6s7tB5cQ) 密码: juey
 
 ![image](https://github.com/xiaoMGitHub/home/blob/master/picture/AwTestFrame.png)
-### 命令行运行
+### 命令行运行（支持Win/OSX/Linux系统）
 传入参数|描述|示例
 ---|---|---
 -testcase|需要执行的测试用例|-testcase 163WebMail
