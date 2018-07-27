@@ -15,7 +15,8 @@ testCase/163WebMail/script|存放被调用的外部脚本
 testCase/163WebMail/main.xlsx|测试脚本步骤
 testCase/163WebMail/module.xlsx|测试脚本模块
 AwTestFrame-2.0.jar|工程打包生成文件
-
+### 图形界面执行（只支持Win系统）
+![image](https://github.com/xiaoMGitHub/home/blob/master/picture/AwTestFrame.png)
 ### 命令行运行
 传入参数|描述|示例
 ---|---|---
@@ -113,7 +114,3 @@ java -jar AwTestFrame-2.0.jar -testcase 163WebMail -type WEB -browser chrome -th
 12|DismissAlert|解散Alert弹窗
 13|AlertGetText|获取Alert弹窗内容
 14|AlertInputText|向Alert输入内容
-
-### 最后
-希望能得到使用者反馈 
-QQ：362950631
