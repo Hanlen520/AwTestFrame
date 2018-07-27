@@ -44,7 +44,7 @@ java -jar AwTestFrame-2.0.jar -testcase 163AppMail -type wap -os ios -thread 1
 java -jar AwTestFrame-2.0.jar -testcase 163WebMail -type WEB -browser chrome -thread 1
 ```
 ### 测试报告
-![image](https://github.com/xiaoMGitHub/home/blob/master/picture/AwTestFrame.png)
+![image](https://github.com/xiaoMGitHub/home/blob/master/picture/AwTestFrame2.png)
 # 关键字说明
 ## 通用关键字
 编号|关键字 |描述
