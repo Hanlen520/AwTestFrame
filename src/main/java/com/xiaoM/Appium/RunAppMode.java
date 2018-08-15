@@ -60,7 +60,7 @@ public class RunAppMode {
                     List<String> parameteres = new ArrayList<>(Arrays.asList(testStart[a]));
                     location = new Location();
                     location.setLocation(parameteres);
-                    if (location.getIsRun().equals("YES")) {
+                    if (location.getIsRun().toLowerCase().equals("y")) {
                         sb = new StringBuilder();
                         String Step = location.getStep();
                         String Description = location.getDescription();

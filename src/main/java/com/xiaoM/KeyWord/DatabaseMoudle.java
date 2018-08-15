@@ -1,6 +1,6 @@
 package com.xiaoM.KeyWord;
 
-import com.xiaoM.BeginScript.BeginAppScript;
+import com.xiaoM.Main.MainTest;
 import com.xiaoM.Utils.Location;
 import com.xiaoM.Utils.Log;
 import com.xiaoM.Utils.SqlHelper;
@@ -21,7 +21,7 @@ public class DatabaseMoudle {
     public boolean dataBaseUpdata(Location location){
         log.info(TestCategory + ": 执行数据库操作 [ " + location.getValue() + " ]");
         try {
-            Map<String, String[]> dataBaseConfig = BeginAppScript.DataBaseConfig;
+            Map<String, String[]> dataBaseConfig = MainTest.DataBaseConfig;
             String[] dataBase = dataBaseConfig.get(location.getParameter());
             String dataBaseType = dataBase[2].toLowerCase();
             String dataBaseDriver;
@@ -42,7 +42,7 @@ public class DatabaseMoudle {
             sqlHelper.executeUpdate(sql);
 
         } catch (Exception e) {
-            return false;
+            e.printStackTrace();
         }
         return true;
     }
@@ -50,7 +50,7 @@ public class DatabaseMoudle {
     public Object dataBaseQuery(Location location){
         log.info(TestCategory + ": 执行数据库操作 [ " + location.getValue() + " ]");
         try {
-            Map<String, String[]> dataBaseConfig = BeginAppScript.DataBaseConfig;
+            Map<String, String[]> dataBaseConfig = MainTest.DataBaseConfig;
             String[] dataBase = dataBaseConfig.get(location.getParameter());
             String dataBaseType = dataBase[2].toLowerCase();
             String dataBaseDriver;
@@ -74,7 +74,7 @@ public class DatabaseMoudle {
                 return getresult;
             }
         } catch (Exception e) {
-            return false;
+            e.printStackTrace();
         }
         return true;
     }

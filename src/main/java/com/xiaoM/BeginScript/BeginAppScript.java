@@ -68,7 +68,7 @@ public class BeginAppScript {
             workbook = IOMananger.getCaseExcel(CasePath);//获取测试用例Excel内容
             DeviceConfig = IOMananger.getDeviceExcel();//获取测试设备Excel内容
             RunCase = IOMananger.runTime(workbook,"TestCases");//获取具体需要执行的测试用例
-            DataBaseConfig = BaseConfig.getDataBaseConfigXlsx(workbook);//获取数据库配置
+            MainTest.DataBaseConfig = BaseConfig.getDataBaseConfigXlsx(workbook);//获取数据库配置
             MainTest.commonParam = IOMananger.getCommonParam(workbook);
         } catch (Exception e) {
             ExtentTest extentTest = extent.createTest("初始化测试失败");

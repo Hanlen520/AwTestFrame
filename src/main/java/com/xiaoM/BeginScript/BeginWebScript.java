@@ -44,7 +44,7 @@ public class BeginWebScript {
             String CasePath = ProjectPath + "/testCase/" + TestCase + "/main.xlsx";
             workbook = IOMananger.getCaseExcel(CasePath);
             RunCase = IOMananger.runTime(workbook,"TestCases");//获取具体需要执行的测试用例
-            DataBaseConfig = BaseConfig.getDataBaseConfigXlsx(workbook);//获取数据库配置
+            MainTest.DataBaseConfig = BaseConfig.getDataBaseConfigXlsx(workbook);//获取数据库配置
             MainTest.commonParam = IOMananger.getCommonParam(workbook);
         } catch (Exception e) {
             log.error("启动测试失败");

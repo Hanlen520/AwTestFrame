@@ -24,6 +24,7 @@ public class MainTest {
     public static String Activity;
     public static String AppName;
     public static String AppiumServer = "INFO";
+    public static Map<String, String[]> DataBaseConfig = new HashMap<>();
     public static Map<String, String> screenMessageList = new HashMap<>();
     public static Map<String,String> commonParam = new HashMap<>();
 

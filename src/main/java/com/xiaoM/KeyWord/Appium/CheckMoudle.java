@@ -102,7 +102,7 @@ public class CheckMoudle {
         }
     }
 
-    public boolean CheckPictureByOpenCV(Location location) {
+    public Object CheckPictureByOpenCV(Location location) {
         try {
             String value_0 = location.getValue();
             String value_1 = "./testCase/" + MainTest.TestCase + "/picture/" + location.getExpected();
@@ -125,33 +125,41 @@ public class CheckMoudle {
             opencv_core.cvReleaseImage(result);
             if (compare_result > 0.95f) {
                 log.info(TestCategory + "：调用OpenCV图片校验通过 [ 相似度: " + compare_result + " ]");
-                return true;
+                return compare_result;
             } else {
                 log.error(TestCategory + "：调用OpenCV图片校验失败 [ 相似度: " + compare_result + " ]");
-                return false;
+                return compare_result;
             }
         } catch (Exception e) {
             log.error(TestCategory + "：调用OpenCV图片校验异常");
+            e.printStackTrace();
         }
         return false;
     }
 
-    public boolean CheckPictureByHash(Location location) {
+    public Object CheckPictureByHash(Location location) {
         try {
             String value_0 = location.getValue();
-            String value_1 = location.getExpected();
+            String value_1 = "./testCase/" + MainTest.TestCase + "/picture/" + location.getExpected();
+            File dir = new File("./Temp/");
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+           /* String value_0 = location.getValue();
+            String value_1 = location.getExpected();*/
             FingerPrint fp1 = new FingerPrint(ImageIO.read(new File(value_0)));
-            FingerPrint fp2 = new FingerPrint(ImageIO.read(new File( "./picture/" + value_1)));
+            FingerPrint fp2 = new FingerPrint(ImageIO.read(new File( "./Temp/" + value_1)));
             double compare_result = fp1.compare(fp2);
             if (compare_result >= 0.8f) {
                 log.info(TestCategory + "：调用哈希算法图片校验通过 [ 相似度: " + compare_result + " ]");
-                return true;
+                return compare_result;
             } else {
                 log.error(TestCategory + "：调用哈希算法图片校验失败 [ 相似度: " + compare_result + " ]");
-                return false;
+                return compare_result;
             }
         } catch (Exception e) {
             log.error(TestCategory + "：调用哈希算法图片校验异常");
+            e.printStackTrace();
         }
         return false;
     }
