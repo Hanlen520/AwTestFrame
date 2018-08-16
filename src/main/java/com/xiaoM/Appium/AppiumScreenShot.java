@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.xiaoM.BeginScript.BeginAppScript;
+import com.xiaoM.Utils.Log;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -13,6 +14,7 @@ import com.google.common.io.Files;
 
 
 public class AppiumScreenShot {
+    Log log = new Log(this.getClass());
     private AppiumDriver driver;
     private String TestCategory;
     public void setScreenName(String TestCategory) {
@@ -30,7 +32,7 @@ public class AppiumScreenShot {
             File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             Files.copy(scrFile, new File(screenPath));
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("截图失败");
         }
     }
 

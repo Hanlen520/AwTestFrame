@@ -96,6 +96,7 @@ public class BeginAppScript {
             log.info(TestCategory + " --- Pass");
         } catch (Exception e) {
             log.error(TestCategory + " --- Fail");
+            e.printStackTrace();
         }finally {
             UseDevice.addDevice(RunDevice);
         }

@@ -2,6 +2,7 @@ package com.xiaoM.Selenium;
 
 import com.google.common.io.Files;
 import com.xiaoM.Main.MainTest;
+import com.xiaoM.Utils.Log;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SeleniumScreenShot {
+    Log log = new Log(this.getClass());
    private WebDriver driver;
    private String TestCategory;
     public void setScreenName(String TestCategory){
@@ -25,7 +27,7 @@ public class SeleniumScreenShot {
            File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
            Files.copy(scrFile, new File(screenPath));
        } catch (Exception e) {
-           e.printStackTrace();
+           log.warn("截图失败");
        }
    }
 
