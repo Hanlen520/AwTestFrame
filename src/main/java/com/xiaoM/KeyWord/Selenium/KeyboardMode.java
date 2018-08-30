@@ -1,9 +1,11 @@
 package com.xiaoM.KeyWord.Selenium;
 
+import com.xiaoM.Element.LocationWebElement;
 import com.xiaoM.Utils.Location;
 import com.xiaoM.Utils.Log;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 public class KeyboardMode {
@@ -121,8 +123,37 @@ public class KeyboardMode {
     }
 
     public boolean SendKeys(Location location) {
-        log.info(TestCategory + "：模拟键盘操作 [ " + location.getValue().toLowerCase() +" ]");
-        new Actions(driver).sendKeys(getKeys(location.getValue().toLowerCase()));
+        log.info(TestCategory + "：模拟键盘操作 [ " + location.getParameter().toLowerCase() + " ]");
+        String value = location.getParameter().contains("\\+") ? location.getParameter().split("\\+")[1].trim() : location.getParameter();
+        if (location.getParameter().toLowerCase().contains("shift")) {
+            if (location.getValue().isEmpty() || location.getValue() == "") {
+                new Actions(driver).keyDown(Keys.SHIFT).sendKeys(value).keyUp(Keys.SHIFT).perform();
+            } else {
+                WebElement element = new LocationWebElement(driver, TestCategory).waitForElement(location);
+                new Actions(driver).keyDown(Keys.SHIFT).sendKeys(element, value).keyUp(Keys.SHIFT).perform();
+            }
+        } else if (location.getParameter().toLowerCase().contains("ctrl")) {
+            if (location.getValue().isEmpty() || location.getValue() == "") {
+                new Actions(driver).keyDown(Keys.CONTROL).sendKeys(value).keyUp(Keys.CONTROL).perform();
+            } else {
+                WebElement element = new LocationWebElement(driver, TestCategory).waitForElement(location);
+                new Actions(driver).keyDown(Keys.CONTROL).sendKeys(element, value).keyUp(Keys.CONTROL).perform();
+            }
+        } else if (location.getParameter().toLowerCase().contains("alt")) {
+            if (location.getValue().isEmpty() || location.getValue() == "") {
+                new Actions(driver).keyDown(Keys.ALT).sendKeys(value).keyUp(Keys.ALT).perform();
+            } else {
+                WebElement element = new LocationWebElement(driver, TestCategory).waitForElement(location);
+                new Actions(driver).keyDown(Keys.ALT).sendKeys(element, value).keyUp(Keys.ALT).perform();
+            }
+        } else {
+            if (location.getValue().isEmpty() || location.getValue() == "") {
+                new Actions(driver).sendKeys(getKeys(location.getParameter().toLowerCase())).perform();
+            } else {
+                WebElement element = new LocationWebElement(driver, TestCategory).waitForElement(location);
+                new Actions(driver).sendKeys(element, getKeys(location.getParameter().toLowerCase())).perform();
+            }
+        }
         return true;
     }
 }
