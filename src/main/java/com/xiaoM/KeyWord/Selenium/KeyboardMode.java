@@ -72,7 +72,6 @@ public class KeyboardMode {
                 return Keys.MULTIPLY;
             case "meta":
                 return Keys.META;
-
             case "f1":
                 return Keys.F1;
             case "f2":
@@ -97,7 +96,6 @@ public class KeyboardMode {
                 return Keys.F11;
             case "f12":
                 return Keys.F12;
-
             case "numpad0":
                 return Keys.NUMPAD0;
             case "numpad1":

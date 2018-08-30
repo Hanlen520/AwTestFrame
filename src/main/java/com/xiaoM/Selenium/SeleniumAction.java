@@ -41,7 +41,7 @@ public class SeleniumAction {
         BroswerModule broswerModule;
         AlertModule alertModule;
         KeyboardMode keyboardMode;
-        String method = location.getAction().toLowerCase();
+        String method = location.getAction().toLowerCase().trim();
         switch (method) {
             case "open":
                 broswerModule = new BroswerModule(driver, TestCategory);
