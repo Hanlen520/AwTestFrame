@@ -30,9 +30,7 @@ public class MainTest {
 
     public static void main(String[] args) {
       //args = new String[] {"-testcase", "163AppMail","-os","android","-type", "app","-device","夜神", "-appname", "163mail.apk","-packagename", "com.netease.mail", "-activity" ,"com.netease.mobimail.activity.LaunchActivity"};
-/*
         args = new String[] {"-testcase", "163WebMail","-type", "web", "-browser","chrome"};
-*/
         for (int i = 0; i < args.length; i++) {
             switch (args[i].toLowerCase()) {
                 case "-testcase":
@@ -95,8 +93,6 @@ public class MainTest {
         suites.add(suite);
         TestNG TestStart = new TestNG();
         TestStart.setXmlSuites(suites);
-        TestngListener testngListener = new TestngListener();
-        TestStart.addListener(testngListener);
         TestStart.setUseDefaultListeners(false);
         TestStart.run();
     }

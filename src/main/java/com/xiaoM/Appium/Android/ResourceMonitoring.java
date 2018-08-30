@@ -13,7 +13,7 @@ public class ResourceMonitoring {
     private Log log = new Log(this.getClass());
     private DecimalFormat df = new DecimalFormat("0.00");//格式化数值，保留两位小数
 
-    public void startMonitoring(String DeviceName, String TestCategory) throws Exception {
+    public void startMonitoring(String DeviceName, String TestCategory) {
         try {
             String[][] DeviceBase = IOMananger.readExcelDataXlsx(BeginAppScript.DeviceConfig,DeviceName);
             log.info(TestCategory + " 启动资源监控器");
@@ -29,11 +29,11 @@ public class ResourceMonitoring {
             memThread.start();// 内存监控线程启动
         } catch (Exception e) {
             log.error(TestCategory + " 启动资源监控器失败");
-            throw e;
+            e.printStackTrace();
         }
     }
 
-    public void stopMonitoring(String DeviceName, String TestCategory) throws Exception {
+    public void stopMonitoring(String DeviceName, String TestCategory) {
         String[][] DeviceBase = IOMananger.readExcelDataXlsx(BeginAppScript.DeviceConfig,DeviceName);
         AdbMoudle.getMobileAppNet(BeginAppScript.PackageName, DeviceBase[2][2], DeviceName);
         String CpuPath = BeginAppScript.ProjectPath + "/test-result/MonitorResoure/Cpu/" + DeviceName + ".txt";
@@ -91,7 +91,7 @@ public class ResourceMonitoring {
             log.info(TestCategory + " " + DeviceName + " 关闭资源监控器");
         } catch (Exception e) {
             log.error(TestCategory + " " + DeviceName + " 读取资源监控信息失败");
-            throw e;
+           e.printStackTrace();
         }
     }
 }

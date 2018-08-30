@@ -40,6 +40,7 @@ public class SeleniumAction {
         RunModule runModule;
         BroswerModule broswerModule;
         AlertModule alertModule;
+        KeyboardMode keyboardMode;
         String method = location.getAction().toLowerCase();
         switch (method) {
             case "open":
@@ -186,6 +187,9 @@ public class SeleniumAction {
             case "alertinputtext":
                 alertModule = new AlertModule(driver, TestCategory);
                 return alertModule.AlertInputText(location);
+            case "keyboard":
+                keyboardMode = new KeyboardMode(driver, TestCategory);
+                return keyboardMode.SendKeys(location);
             default:
                 throw new NullPointerException("不支持该关键字");
         }

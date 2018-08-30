@@ -17,12 +17,12 @@ public class JavaScriptModule {
 
     public Object javaScriptMethod(Location location) {
         log.info(TestCategory + ": 执行js脚本 [ " + location.getValue() + " ]");
-        Object result;
+        Object result = null;
         try {
             JavascriptExecutor js = (JavascriptExecutor) driver;
             result = js.executeScript(location.getValue());
         } catch (Exception e) {
-            throw e;
+           e.printStackTrace();
         }
         if (result == null) {
             return true;

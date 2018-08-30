@@ -20,21 +20,24 @@ public class RunAppMode {
     private AppBaseDriver base;
     private String FailAction;
 
-    public void runCase(String DeviceName, String Type, String CaseName, String TestCategory, ExtentTest extentTest) throws Exception {
-        AppiumXMDriver driver;
+    public void runCase(String DeviceName, String Type, String CaseName, String TestCategory, ExtentTest extentTest) throws Exception, Error {
+        AppiumXMDriver driver = null;
         Location location;
         switch (Type.toLowerCase()) {
             case "app":
                 base = new AppBaseDriver();
-                driver = base.setUpApp(DeviceName, extentTest);
+                driver = base.setUpApp(DeviceName, extentTest, CaseName);
                 break;
             case "wap":
                 base = new AppBaseDriver();
-                driver = base.setUpWap(DeviceName, extentTest);
+                driver = base.setUpWap(DeviceName, extentTest, CaseName);
                 break;
             default:
                 extentTest.fail("请在 " + BeginAppScript.TestCase + ".xlsx 中选择正确的测试类型：APP/WAP");
                 throw new Exception();
+        }
+        if (driver == null) {
+            throw new NullPointerException("实例化 driver 失败");
         }
         extentTest.getModel().setStartTime(new Date());
         String[][] testStart = IOMananger.readExcelDataXlsx(BeginAppScript.workbook, CaseName);
@@ -87,10 +90,11 @@ public class RunAppMode {
                         returnMap.put(Step, result);
                         if (result.toString().toLowerCase().equals("false")) {
                             extentTest.log(Status.FAIL, "<pre>" + sb.toString() + "</pre>");
-                        } else if(Action.toLowerCase().contains("check")) {
+                            throw new Error();
+                        } else if (Action.toLowerCase().contains("check")) {
                             extentTest.log(Status.PASS, "<pre>" + sb.toString() + "</pre>");
-                        }else if(Action.toLowerCase().equals("module")){
-                        }else{
+                        } else if (Action.toLowerCase().equals("module")) {
+                        } else {
                             extentTest.log(Status.INFO, "<pre>" + sb.toString() + "</pre>");
                         }
                     }
@@ -99,7 +103,7 @@ public class RunAppMode {
                     RM.stopMonitoring(DeviceName, TestCategory);
                 }*/
             } catch (Exception e) {
-                if (!FailAction.toLowerCase().equals("module")){
+                if (!FailAction.toLowerCase().equals("module")) {
                     AppiumScreenShot screenShot = new AppiumScreenShot(driver);
                     screenShot.setScreenName(TestCategory);
                     screenShot.takeScreenshot();

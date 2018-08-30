@@ -85,7 +85,7 @@ public class BeginAppScript {
     }
 
     @Test(dataProvider = "TestCases")
-    public void runCase(String ID, String Module, String CaseName,String Remark){
+    public void runCase(String ID, String Module, String CaseName,String Remark) throws Exception,Error {
         String RunDevice = UseDevice.getDevice();//获取设备
         String TestCategory = ID + "_" + Module + "_" + CaseName;
         log.info(TestCategory + " --- Start");
@@ -94,9 +94,9 @@ public class BeginAppScript {
         try {
             new RunAppMode().runCase(RunDevice, TestType, CaseName, TestCategory, extentTest);
             log.info(TestCategory + " --- Pass");
-        } catch (Exception e) {
+        } catch (Exception | Error e) {
             log.error(TestCategory + " --- Fail");
-            e.printStackTrace();
+            throw e;
         }finally {
             UseDevice.addDevice(RunDevice);
         }

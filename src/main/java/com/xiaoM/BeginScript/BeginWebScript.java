@@ -72,7 +72,6 @@ public class BeginWebScript {
             log.info(TestCategory + " --- Pass");
         } catch (Exception e) {
             log.error(TestCategory + " --- Fail");
-            e.printStackTrace();
             throw e;
         }
     }
